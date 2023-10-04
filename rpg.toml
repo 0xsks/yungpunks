@@ -1,0 +1,16 @@
+name = 'My Game'
+
+modules = [
+    './main',
+    '@rpgjs/mobile-gui',
+    '@rpgjs/default-gui',
+    '@rpgjs/gamepad'
+]
+
+[start]
+    map = 'simplemap'
+    graphic = 'hero'
+    hitbox = [16, 16]
+
+[express]
+   static = ''
