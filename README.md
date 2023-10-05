@@ -15,9 +15,9 @@ node_modules = lmeow
 
 main  
  events  
- spritesheets
- worlds
-  world .world
+ spritesheets  
+ worlds  
+  world .world  
   maps structure  (/main/maps/world/)  
    Map  .tmx  
   ->  Tileset .tsx  
