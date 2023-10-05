@@ -19,7 +19,7 @@ const player = {
     if (player2.getVariable("AFTER_INTRO")) {
       return;
     }
-    await player2.showText("Welcome to the start of RPGJS. Short presentation of the structure:");
+    await player2.showText("Welcome to the new age of RPGJS. Short presentation of the structure:");
     await player2.showText("1. Open the map src/modules/main/server/maps/tmx/samplemap.tmx with Tiled Map Editor !");
     await player2.showText("2. All the modules are in src/modules/index.ts, it is a suite of systems to make a complete set. Remove modules or add some!");
     await player2.showText("3. The global configuration is done in src/config");
