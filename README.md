@@ -17,9 +17,9 @@ main
  events  
  spritesheets  
  worlds  
-  world .world  
-  maps structure  (/main/maps/world/)  
-   Map  .tmx  
+ ->world .world  
+ maps structure  (/main/maps/world/)  
+  ->Map  .tmx  
   ->  Tileset .tsx  
   ->  Tileset .png  
   ->  Props .tsx  
