@@ -2,7 +2,7 @@ import { RpgPlayer, type RpgPlayerHooks, Control, Components } from '@rpgjs/serv
 
 const player: RpgPlayerHooks = {
     onConnected(player: RpgPlayer) {
-        player.name = 'YourName'
+        player.name = 'YungPunk'
         player.setComponentsTop(Components.text('{name}'))
     },
     onInput(player: RpgPlayer, { input }) {
@@ -14,11 +14,10 @@ const player: RpgPlayerHooks = {
         if (player.getVariable('AFTER_INTRO')) {
             return
         }
-        await player.showText('Welcome to the start of RPGJS. Short presentation of the structure:')
-        await player.showText('1. Open the map src/modules/main/server/maps/tmx/samplemap.tmx with Tiled Map Editor !')
-        await player.showText('2. All the modules are in src/modules/index.ts, it is a suite of systems to make a complete set. Remove modules or add some!')
-        await player.showText('3. The global configuration is done in src/config')
-        await player.showText('And, please, support the project on github https://github.com/RSamaium/RPG-JS ! :)')
+        await player.showText('Welcome to YungPunks: A new social identity ecosystem.')
+        await player.showText('On-chain identities, available to all, that can own and trade assets, earn XP, Achievements and Rewards, share in the decision making with the community, and build applications to benefit the whole YungPunk ecosystem.')
+        await player.showText('With digital sovereignty, open-source technology and decentralization at their core, YungPunks are a new identity ecosystem, closer to a protocol than a pfp.')
+        await player.showText('Are you ready, Punk?')
         player.setVariable('AFTER_INTRO', true)
     }
 }

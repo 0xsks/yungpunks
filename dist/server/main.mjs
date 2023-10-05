@@ -5,7 +5,7 @@ const client$3 = null;
 const _main_worlds_myworldworld = { "maps": [{ "fileName": "maps/simplemap.tmx", "height": 640, "width": 800, "x": 64, "y": -160 }, { "fileName": "maps/simplemap2.tmx", "height": 640, "width": 640, "x": -160, "y": 480 }], "onlyShowAdjacentMaps": false, "type": "world", "basePath": "./main/worlds", "id": "./main/worlds/myworld.world" };
 const player = {
   onConnected(player2) {
-    player2.name = "YourName";
+    player2.name = "YungPunk";
     player2.setComponentsTop(Components.text("{name}"));
   },
   onInput(player2, {
@@ -19,11 +19,10 @@ const player = {
     if (player2.getVariable("AFTER_INTRO")) {
       return;
     }
-    await player2.showText("Welcome to the start of RPGJS. Short presentation of the structure:");
-    await player2.showText("1. Open the map src/modules/main/server/maps/tmx/samplemap.tmx with Tiled Map Editor !");
-    await player2.showText("2. All the modules are in src/modules/index.ts, it is a suite of systems to make a complete set. Remove modules or add some!");
-    await player2.showText("3. The global configuration is done in src/config");
-    await player2.showText("And, please, support the project on github https://github.com/RSamaium/RPG-JS ! :)");
+    await player2.showText("Welcome to YungPunks: A new social identity ecosystem.");
+    await player2.showText("On-chain identities, available to all, that can own and trade assets, earn XP, Achievements and Rewards, share in the decision making with the community, and build applications to benefit the whole YungPunk ecosystem.");
+    await player2.showText("With digital sovereignty, open-source technology and decentralization at their core, YungPunks are a new identity ecosystem, closer to a protocol than a pfp.");
+    await player2.showText("Are you ready, Punk?");
     player2.setVariable("AFTER_INTRO", true);
   }
 };
