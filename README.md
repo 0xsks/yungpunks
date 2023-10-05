@@ -18,7 +18,7 @@ main
  spritesheets
  worlds
   world .world
-  maps structure  (/main/maps/world/)
+  maps structure  (/main/maps/world/)  
    Map  .tmx  
   ->  Tileset .tsx  
   ->  Tileset .png  
