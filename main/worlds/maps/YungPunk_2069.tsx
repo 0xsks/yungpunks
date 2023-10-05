@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="2">
- <tileset firstgid="1" source="yungpunks_main_tileset.tsx"/>
- <tileset firstgid="401" source="yungpunks_props.tsx"/>
+ <tileset firstgid="1" source="D:/Personal Art 2022 - Major Era/Punks-Deriv/Neo-Zero/maps/yungPunks_2069/yungpunks_main_tileset.tsx"/>
+ <tileset firstgid="401" source="D:/Personal Art 2022 - Major Era/Punks-Deriv/Neo-Zero/maps/yungPunks_2069/yungpunks_props.tsx"/>
  <layer id="1" name="Tile Layer 1" width="60" height="34">
   <data encoding="csv">
 85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,
@@ -78,14 +78,11 @@
 166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,186,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,166,186,166,166,166,166,166,166,166,166
 </data>
  </layer>
- <objectgroup id="4" name="starting-point" class="start" offsetx="45" offsety="27">
-  <properties>
-   <property name="Type" type="object" value="0"/>
-  </properties>
-  <object id="1" type="start" x="688" y="409">
+ <objectgroup id="4" name="starting-point">
+  <object id="1" x="735.333" y="437.333">
    <properties>
     <property name="Name" value="Start Position"/>
-    <property name="Type" type="object" value="1"/>
+    <property name="Type" type="object" value="0"/>
    </properties>
    <point/>
   </object>
