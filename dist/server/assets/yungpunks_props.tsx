@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.2" name="Neo-Zero Props" tilewidth="16" tileheight="16" tilecount="100" columns="10">
- <image source="../neo-zero pngs/neo_zero_props_and_items_01 (1).png" width="160" height="160"/>
+ <image source="neo_zero_props_and_items_01_1.png" width="160" height="160"/>
  <tile id="3">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="2" width="16" height="14"/>

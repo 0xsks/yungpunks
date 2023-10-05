@@ -60275,8 +60275,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   ], 2);
 }
 const NotificationUi = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
-const vitePluginRequire_1696282746240_66692885 = "/assets/error_002-76810ec3.ogg";
-const vitePluginRequire_1696282746238_59075267 = "/assets/confirmation_002-33b17a9a.ogg";
+const vitePluginRequire_1696518047313_59271584 = "/assets/error_002-76810ec3.ogg";
+const vitePluginRequire_1696518047311_64018362 = "/assets/confirmation_002-33b17a9a.ogg";
 var __defProp$3 = Object.defineProperty;
 var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
 var __decorateClass$3 = (decorators, target, key, kind) => {
@@ -60292,8 +60292,8 @@ let GuiSounds = class {
 };
 GuiSounds = __decorateClass$3([Sound$1({
   sounds: {
-    alert: vitePluginRequire_1696282746238_59075267,
-    error: vitePluginRequire_1696282746240_66692885
+    alert: vitePluginRequire_1696518047311_64018362,
+    error: vitePluginRequire_1696518047313_59271584
   }
 })], GuiSounds);
 var __defProp$2 = Object.defineProperty;
@@ -60527,8 +60527,8 @@ else {
   window.joypad = {};
   a22("Your browser does not support the Gamepad API - https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API");
 }
-const vitePluginRequire_1696282746249_22366670 = "/assets/error_002-76810ec3.ogg";
-const vitePluginRequire_1696282746248_44596477 = "/assets/confirmation_002-33b17a9a.ogg";
+const vitePluginRequire_1696518047323_66254622 = "/assets/error_002-76810ec3.ogg";
+const vitePluginRequire_1696518047322_4204554 = "/assets/confirmation_002-33b17a9a.ogg";
 var __defProp$1 = Object.defineProperty;
 var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
 var __decorateClass$1 = (decorators, target, key, kind) => {
@@ -60544,8 +60544,8 @@ let GamePadSounds = class {
 };
 GamePadSounds = __decorateClass$1([Sound$1({
   sounds: {
-    connect: vitePluginRequire_1696282746248_44596477,
-    disconnect: vitePluginRequire_1696282746249_22366670
+    connect: vitePluginRequire_1696518047322_4204554,
+    disconnect: vitePluginRequire_1696518047323_66254622
   }
 })], GamePadSounds);
 const icon = "/assets/gamepad-e5a5597c.svg";
