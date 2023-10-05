@@ -1,4 +1,4 @@
-//Punk
+//MMORPG for yung punks
 
 To run local server:\
 npm install\
