@@ -1,9 +1,9 @@
-//MMORPG for yung punks
+//MMORPG for YungPunks-2069
 
 To run local server:\
 npm install\
 npm run dev\
-http://localhost:3000  
+http://localhost:3000
 \
 To buidl:\
 NODE_ENV=production npm run build\
