@@ -1,0 +1,16 @@
+<mxfile host="Electron" modified="2023-10-10T17:39:42.724Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="2TeNIxTAgwXFAFeL1ieP" version="22.0.2" type="device">
+  <diagram name="Page-1" id="oIcE0wvlNkMezRrvK1hX">
+    <mxGraphModel dx="624" dy="403" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="an-lNMseAexXGBWM_czE-8" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.graphics.pieChart;parts=42,31,14,7,6;partColors=#9AC7BF,#3482D0,#C04417,#0D0424,#FF1CF7;strokeWidth=2;partsCount=5;noLabel=0;movableLabel=0;treeFolding=0;enumerate=0;comic=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="an-lNMseAexXGBWM_czE-9" value="&lt;div&gt;69b tokens&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#4eff33&quot;&gt;-&amp;gt;Eco/Incentive - 42%&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#3399ff&quot;&gt;-&amp;gt;DAO - 30.8%&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#cc6600&quot;&gt;-&amp;gt;DEV - 14.20%&lt;/font&gt;&lt;/div&gt;&lt;div&gt;-&amp;gt;Private investors - 6.9%&lt;/div&gt;&lt;div&gt;--&amp;gt;Added to social mining pool&lt;/div&gt;&lt;div&gt;--&amp;gt;Till its gone&lt;/div&gt;&lt;div&gt;--&amp;gt;Chest + airdrop&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#ff21da&quot;&gt;-&amp;gt;6.1% Community grants &lt;/font&gt;-&amp;nbsp;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="60" y="250" width="160" height="180" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
