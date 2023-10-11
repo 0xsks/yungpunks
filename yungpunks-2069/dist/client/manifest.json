@@ -1,5 +1,5 @@
 {
-  "_vendor-75e184ff.js": {
+  "_vendor-caa38ddf.js": {
     "assets": [
       "assets/error_002-76810ec3.ogg",
       "assets/confirmation_002-33b17a9a.ogg",
@@ -10,17 +10,28 @@
       "assets/back-0ba37d78.png"
     ],
     "css": [
-      "assets/vendor-0ad5f402.css"
+      "assets/vendor-27f7e0e8.css"
     ],
-    "file": "assets/vendor-75e184ff.js"
+    "dynamicImports": [
+      "node_modules/@rpgjs/chat/node_modules/@rpgjs/client/lib/Gui/React.js"
+    ],
+    "file": "assets/vendor-caa38ddf.js"
   },
   "index.html": {
-    "file": "assets/main-fac298bd.js",
+    "file": "assets/main-3921beea.js",
     "imports": [
-      "_vendor-75e184ff.js"
+      "_vendor-caa38ddf.js"
     ],
     "isEntry": true,
     "src": "index.html"
+  },
+  "node_modules/@rpgjs/chat/node_modules/@rpgjs/client/lib/Gui/React.js": {
+    "file": "assets/React-8bee3b58.js",
+    "imports": [
+      "_vendor-caa38ddf.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "node_modules/@rpgjs/chat/node_modules/@rpgjs/client/lib/Gui/React.js"
   },
   "node_modules/@rpgjs/default-gui/src/assets/controls/back.png": {
     "file": "assets/back-0ba37d78.png",
@@ -59,7 +70,7 @@
     "src": "node_modules/@rpgjs/mobile-gui/src/assets/flatDark35.png"
   },
   "vendor.css": {
-    "file": "assets/vendor-0ad5f402.css",
+    "file": "assets/vendor-27f7e0e8.css",
     "src": "vendor.css"
   }
 }

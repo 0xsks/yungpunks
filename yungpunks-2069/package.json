@@ -9,6 +9,7 @@
         "node": ">=14"
     },
     "dependencies": {
+        "@rpgjs/chat": "^4.0.3",
         "@rpgjs/client": "4.0.0",
         "@rpgjs/default-gui": "^4.0.0",
         "@rpgjs/gamepad": "^4.0.0",

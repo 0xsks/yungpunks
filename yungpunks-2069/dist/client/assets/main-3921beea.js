@@ -1,4 +1,4 @@
-import { S as Spritesheet, P as Presets, R as RpgModule, _ as _rpgjs_mobile_gui, a as _rpgjs_default_gui, b as _rpgjs_gamepad, e as entryPoint, l as lookup } from "./vendor-75e184ff.js";
+import { S as Spritesheet, P as Presets, R as RpgModule, m as mmorpg, _ as _rpgjs_mobile_gui, a as _rpgjs_default_gui, b as _rpgjs_gamepad, e as entryPoint, l as lookup } from "./vendor-caa38ddf.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -71,8 +71,8 @@ var __decorateClass = (decorators, target, key, kind) => {
   return result;
 };
 Characters.images = {
-  "female": "main/spritesheets/characters/female.png",
-  "hero": "main/spritesheets/characters/hero.png"
+  "female": "/main/spritesheets/characters/female.png",
+  "hero": "/main/spritesheets/characters/hero.png"
 };
 Characters.prototype.width = 96;
 Characters.prototype.height = 128;
@@ -93,6 +93,7 @@ const _main = {
   server
 };
 const modules = [
+  mmorpg,
   _main,
   _rpgjs_mobile_gui,
   _rpgjs_default_gui,

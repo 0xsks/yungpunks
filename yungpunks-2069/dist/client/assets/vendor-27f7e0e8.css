@@ -1,22 +1,44 @@
-
-.controls[data-v-46297a15] {
+.chat[data-v-624067e8] {
+  position: absolute;
+  z-index: 101;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 70;
+}
+.chat input[data-v-624067e8] {
+  padding: 10px;
+  width: 300px;
+}
+.chat ul[data-v-624067e8] {
+  list-style: none;
+  color: white;
+  font-family: "Arial";
+  padding: 0;
+  margin-left: 10px;
+  max-height: 200px;
+  overflow: auto;
+}
+.chat li.type-info[data-v-624067e8] {
+  color: #59da25;
+}
+.controls[data-v-b058fc9e] {
     height: 100%;
     position: absolute;
     width: 100%;
-    z-index: 200;
+    z-index: 50;
 }
-.d-pad[data-v-46297a15] {
+.d-pad[data-v-b058fc9e] {
     width: 70%;
     position: absolute;
     height: 100%;
 }
-.actions[data-v-46297a15] {
+.actions[data-v-b058fc9e] {
     width: 30%;
     position: absolute;
     right: 0;
     height: 100%;
 }
-.action[data-v-46297a15] {
+.action[data-v-b058fc9e] {
     background-image: url('/assets/flatDark35-21ea2311.png');
     width: 80px;
     height: 80px;
@@ -25,7 +47,7 @@
     position: absolute;
     right: 10px;
 }
-.menu-access[data-v-46297a15] {
+.menu-access[data-v-b058fc9e] {
     background-image: url('/assets/flatDark32-85cd8cee.png');
     width: 48px;
     height: 48px;

@@ -4,13 +4,13 @@ function random(min, max) {
 function isBrowser() {
   return typeof window !== "undefined";
 }
-function isFunction$5(val) {
+function isFunction$7(val) {
   return {}.toString.call(val) === "[object Function]";
 }
 function isClass(func) {
   return typeof func === "function";
 }
-function isPromise$2(val) {
+function isPromise$3(val) {
   return isInstanceOf(val, Promise);
 }
 function isArray$8(val) {
@@ -34,12 +34,15 @@ function arrayFlat(array2) {
 function intersection$1([start1, end1], [start2, end2]) {
   return start1 >= start2 && start1 <= end2 || start2 >= start1 && start2 < end1;
 }
-function capitalize$2(s2) {
+function capitalize$3(s2) {
   if (typeof s2 !== "string")
     return "";
   return s2.charAt(0).toUpperCase() + s2.slice(1);
 }
-function arrayEquals$1(a8, b3) {
+function camelToKebab(str2) {
+  return str2.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
+function arrayEquals$2(a8, b3) {
   return a8.length === b3.length && a8.every((v2, i2) => v2 === b3[i2]);
 }
 function applyMixins(derivedCtor, baseCtors) {
@@ -97,7 +100,7 @@ function hexaToNumber(hexa) {
   };
 }
 function extractId$1(path2) {
-  const id = path2.match(/([a-zA-Z0-9-_$!]+)\.[a-z]+$/i);
+  const id = path2.match(/([a-zA-Z0-9-_$!]+)\.[a-z0-9]+$/i);
   if (!id)
     return null;
   return id[1];
@@ -110,6 +113,9 @@ function fps2ms(fps) {
 }
 function preciseNow() {
   return typeof performance !== "undefined" ? performance.now() : Date.now();
+}
+function round$1(num, decimals = 100) {
+  return Math.round(num * decimals) / decimals;
 }
 function set$2(obj, path2, value2, onlyPlainObject = false) {
   if (Object(obj) !== obj)
@@ -126,22 +132,31 @@ function set$2(obj, path2, value2, onlyPlainObject = false) {
   )[path2[path2.length - 1]] = value2;
   return obj;
 }
+function elementToPositionAbsolute$1(element) {
+  element.style.position = "absolute";
+  element.style.top = "0";
+  element.style.left = "0";
+  element.style.right = "0";
+  element.style.bottom = "0";
+  element.style.width = "100%";
+  element.style.height = "100%";
+}
 const Utils = {
   random,
   isBrowser,
-  isPromise: isPromise$2,
+  isPromise: isPromise$3,
   isArray: isArray$8,
   isObject: isObject$4,
   isString: isString$3,
-  isFunction: isFunction$5,
+  isFunction: isFunction$7,
   isClass,
   isInstanceOf,
   arrayUniq,
   arrayFlat,
-  arrayEquals: arrayEquals$1,
+  arrayEquals: arrayEquals$2,
   intersection: intersection$1,
   applyMixins,
-  capitalize: capitalize$2,
+  capitalize: capitalize$3,
   sharedArrayBuffer,
   generateUID,
   createConstructor,
@@ -151,18 +166,23 @@ const Utils = {
   fps2ms,
   preciseNow,
   hexaToNumber,
-  set: set$2
+  set: set$2,
+  round: round$1,
+  camelToKebab,
+  elementToPositionAbsolute: elementToPositionAbsolute$1
 };
 const Utils$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   applyMixins,
-  arrayEquals: arrayEquals$1,
+  arrayEquals: arrayEquals$2,
   arrayFlat,
   arrayUniq,
   basename,
-  capitalize: capitalize$2,
+  camelToKebab,
+  capitalize: capitalize$3,
   createConstructor,
   default: Utils,
+  elementToPositionAbsolute: elementToPositionAbsolute$1,
   extractId: extractId$1,
   fps2ms,
   generateUID,
@@ -171,35 +191,36 @@ const Utils$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   isArray: isArray$8,
   isBrowser,
   isClass,
-  isFunction: isFunction$5,
+  isFunction: isFunction$7,
   isInstanceOf,
   isObject: isObject$4,
-  isPromise: isPromise$2,
+  isPromise: isPromise$3,
   isString: isString$3,
   preciseNow,
   random,
+  round: round$1,
   set: set$2,
   sharedArrayBuffer,
   toRadians
 }, Symbol.toStringTag, { value: "Module" }));
-var HitType;
+var HitType$2;
 (function(HitType2) {
   HitType2["Box"] = "box";
   HitType2["Circle"] = "circle";
   HitType2["Polygon"] = "polygon";
-})(HitType || (HitType = {}));
-var MoveClientMode;
+})(HitType$2 || (HitType$2 = {}));
+var MoveClientMode$2;
 (function(MoveClientMode2) {
   MoveClientMode2[MoveClientMode2["Disabled"] = 0] = "Disabled";
   MoveClientMode2[MoveClientMode2["ByDirection"] = 1] = "ByDirection";
   MoveClientMode2[MoveClientMode2["Drag"] = 2] = "Drag";
-})(MoveClientMode || (MoveClientMode = {}));
-var Behavior;
+})(MoveClientMode$2 || (MoveClientMode$2 = {}));
+var Behavior$2;
 (function(Behavior2) {
   Behavior2[Behavior2["Direction"] = 0] = "Direction";
   Behavior2[Behavior2["Target"] = 1] = "Target";
-})(Behavior || (Behavior = {}));
-var Direction;
+})(Behavior$2 || (Behavior$2 = {}));
+var Direction$2;
 (function(Direction2) {
   Direction2[Direction2["Up"] = 1] = "Up";
   Direction2[Direction2["Down"] = 3] = "Down";
@@ -209,28 +230,28 @@ var Direction;
   Direction2[Direction2["DownRight"] = 2.5] = "DownRight";
   Direction2[Direction2["DownLeft"] = 3.5] = "DownLeft";
   Direction2[Direction2["UpLeft"] = 2.5] = "UpLeft";
-})(Direction || (Direction = {}));
-var PlayerType;
+})(Direction$2 || (Direction$2 = {}));
+var PlayerType$2;
 (function(PlayerType2) {
   PlayerType2["Player"] = "player";
   PlayerType2["Event"] = "event";
   PlayerType2["Shape"] = "shape";
-})(PlayerType || (PlayerType = {}));
-var SocketMethods;
+})(PlayerType$2 || (PlayerType$2 = {}));
+var SocketMethods$2;
 (function(SocketMethods2) {
   SocketMethods2["CameraFollow"] = "cameraFollow";
   SocketMethods2["ShowAnimation"] = "showAnimation";
   SocketMethods2["PlaySound"] = "playSound";
   SocketMethods2["ModeMove"] = "modeMove";
-})(SocketMethods || (SocketMethods = {}));
-var SocketEvents;
+})(SocketMethods$2 || (SocketMethods$2 = {}));
+var SocketEvents$2;
 (function(SocketEvents2) {
   SocketEvents2["CallMethod"] = "callMethod";
   SocketEvents2["GameReload"] = "gameReload";
   SocketEvents2["ChangeServer"] = "changeServer";
   SocketEvents2["LoadScene"] = "loadScene";
-})(SocketEvents || (SocketEvents = {}));
-var Control;
+})(SocketEvents$2 || (SocketEvents$2 = {}));
+var Control$2;
 (function(Control2) {
   Control2["Action"] = "action";
   Control2["Attack"] = "attack";
@@ -241,8 +262,8 @@ var Control;
   Control2[Control2["Down"] = 3] = "Down";
   Control2[Control2["Right"] = 2] = "Right";
   Control2[Control2["Left"] = 4] = "Left";
-})(Control || (Control = {}));
-var Input;
+})(Control$2 || (Control$2 = {}));
+var Input$2;
 (function(Input2) {
   Input2["Break"] = "break";
   Input2["Backspace"] = "backspace";
@@ -383,7 +404,7 @@ var Input;
   Input2["SingleQuote"] = "single quote / ø";
   Input2["BackQuote"] = "`";
   Input2["Altgr"] = "altgr";
-})(Input || (Input = {}));
+})(Input$2 || (Input$2 = {}));
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x2) {
   return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
@@ -973,15 +994,15 @@ class HitClass {
       };
     const x2 = obj.x + offset.x;
     const y2 = obj.y + offset.y;
-    if ("ellipse" in obj || obj.type == HitType.Circle) {
-      type = HitType.Circle;
+    if ("ellipse" in obj || obj.type == HitType$2.Circle) {
+      type = HitType$2.Circle;
       const radius = obj.width / 2;
       hitbox = new SAT.Circle(new SAT.Vector(x2 + radius, y2 + radius), radius);
     } else if ("polygon" in obj) {
-      type = HitType.Polygon;
+      type = HitType$2.Polygon;
       hitbox = new SAT.Polygon(new SAT.Vector(x2, y2), obj.polygon.map((pos) => new SAT.Vector(+pos.x, +pos.y)));
     } else if (!("polygon" in obj) && "width" in obj && "height" in obj) {
-      type = HitType.Box;
+      type = HitType$2.Box;
       hitbox = new SAT.Box(new SAT.Vector(x2, y2), obj.width, obj.height);
     } else {
       hitbox = new SAT.Vector(x2, y2);
@@ -995,7 +1016,7 @@ class HitClass {
   }
   testPolyCollision(type, hit1, hit2) {
     let collided = false;
-    if (type == HitType.Box) {
+    if (type == HitType$2.Box) {
       if (hit1.pos.x <= hit2.pos.x + hit2.w && hit1.pos.x + hit1.w >= hit2.pos.x && hit1.pos.y <= hit2.pos.y + hit2.h && hit1.h + hit1.pos.y >= hit2.pos.y) {
         return true;
       }
@@ -1006,10 +1027,10 @@ class HitClass {
     if (isInstanceOf(hit2, SAT.Box))
       hit2 = hit2.toPolygon();
     switch (type) {
-      case HitType.Circle:
+      case HitType$2.Circle:
         collided = SAT.testPolygonCircle(hit1, hit2);
         break;
-      case HitType.Polygon:
+      case HitType$2.Polygon:
         collided = SAT.testPolygonPolygon(hit1, hit2);
         break;
     }
@@ -1228,14 +1249,14 @@ function Buffer$2(arg, encodingOrOffset, length2) {
     }
     return allocUnsafe(this, arg);
   }
-  return from$1(this, arg, encodingOrOffset, length2);
+  return from$2(this, arg, encodingOrOffset, length2);
 }
 Buffer$2.poolSize = 8192;
 Buffer$2._augment = function(arr) {
   arr.__proto__ = Buffer$2.prototype;
   return arr;
 };
-function from$1(that, value2, encodingOrOffset, length2) {
+function from$2(that, value2, encodingOrOffset, length2) {
   if (typeof value2 === "number") {
     throw new TypeError('"value" argument must not be a number');
   }
@@ -1248,7 +1269,7 @@ function from$1(that, value2, encodingOrOffset, length2) {
   return fromObject(that, value2);
 }
 Buffer$2.from = function(value2, encodingOrOffset, length2) {
-  return from$1(null, value2, encodingOrOffset, length2);
+  return from$2(null, value2, encodingOrOffset, length2);
 };
 if (Buffer$2.TYPED_ARRAY_SUPPORT) {
   Buffer$2.prototype.__proto__ = Uint8Array.prototype;
@@ -1305,7 +1326,7 @@ function fromString(that, string, encoding) {
   }
   return that;
 }
-function fromArrayLike$1(that, array2) {
+function fromArrayLike$2(that, array2) {
   var length2 = array2.length < 0 ? 0 : checked(array2.length) | 0;
   that = createBuffer(that, length2);
   for (var i2 = 0; i2 < length2; i2 += 1) {
@@ -1332,7 +1353,7 @@ function fromArrayBuffer(that, array2, byteOffset, length2) {
     that = array2;
     that.__proto__ = Buffer$2.prototype;
   } else {
-    that = fromArrayLike$1(that, array2);
+    that = fromArrayLike$2(that, array2);
   }
   return that;
 }
@@ -1351,10 +1372,10 @@ function fromObject(that, obj) {
       if (typeof obj.length !== "number" || isnan(obj.length)) {
         return createBuffer(that, 0);
       }
-      return fromArrayLike$1(that, obj);
+      return fromArrayLike$2(that, obj);
     }
     if (obj.type === "Buffer" && isArray$7(obj.data)) {
-      return fromArrayLike$1(that, obj.data);
+      return fromArrayLike$2(that, obj.data);
     }
   }
   throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.");
@@ -3123,16 +3144,16 @@ var argv = [];
 var version$1 = "";
 var versions = {};
 var release = {};
-var config$1 = {};
-function noop$1() {
+var config$2 = {};
+function noop$2() {
 }
-var on$1 = noop$1;
-var addListener2 = noop$1;
-var once2 = noop$1;
-var off = noop$1;
-var removeListener2 = noop$1;
-var removeAllListeners2 = noop$1;
-var emit$1 = noop$1;
+var on$1 = noop$2;
+var addListener2 = noop$2;
+var once2 = noop$2;
+var off = noop$2;
+var removeListener2 = noop$2;
+var removeAllListeners2 = noop$2;
+var emit$1 = noop$2;
 function binding(name) {
   throw new Error("process.binding is not supported");
 }
@@ -3191,7 +3212,7 @@ var browser$1$1 = {
   hrtime,
   platform,
   release,
-  config: config$1,
+  config: config$2,
   uptime
 };
 var inherits;
@@ -3375,7 +3396,7 @@ function arrayToHash(array2) {
   return hash;
 }
 function formatValue(ctx, value2, recurseTimes) {
-  if (ctx.customInspect && value2 && isFunction$4(value2.inspect) && // Filter out the util module, it's inspect function is special
+  if (ctx.customInspect && value2 && isFunction$6(value2.inspect) && // Filter out the util module, it's inspect function is special
   value2.inspect !== inspect2 && // Also filter out any prototype objects using the circular check.
   !(value2.constructor && value2.constructor.prototype === value2)) {
     var ret = value2.inspect(recurseTimes, ctx);
@@ -3397,7 +3418,7 @@ function formatValue(ctx, value2, recurseTimes) {
     return formatError(value2);
   }
   if (keys2.length === 0) {
-    if (isFunction$4(value2)) {
+    if (isFunction$6(value2)) {
       var name = value2.name ? ": " + value2.name : "";
       return ctx.stylize("[Function" + name + "]", "special");
     }
@@ -3416,7 +3437,7 @@ function formatValue(ctx, value2, recurseTimes) {
     array2 = true;
     braces = ["[", "]"];
   }
-  if (isFunction$4(value2)) {
+  if (isFunction$6(value2)) {
     var n2 = value2.name ? ": " + value2.name : "";
     base2 = " [Function" + n2 + "]";
   }
@@ -3596,7 +3617,7 @@ function isDate(d2) {
 function isError(e3) {
   return isObject$3(e3) && (objectToString$2(e3) === "[object Error]" || e3 instanceof Error);
 }
-function isFunction$4(arg) {
+function isFunction$6(arg) {
   return typeof arg === "function";
 }
 function objectToString$2(o2) {
@@ -6528,7 +6549,7 @@ class TileGid extends TiledProperties {
     this._gid = val;
   }
 }
-let Tile$1 = class Tile extends TileGid {
+let Tile$2 = class Tile extends TileGid {
   constructor(tile) {
     super(tile);
     this.tile = tile;
@@ -6574,14 +6595,14 @@ class Layer extends TiledProperties {
     }
     const tile = tileset.getTile(realGid - tileset.firstgid);
     if (tile) {
-      return new Tile$1({
+      return new Tile$2({
         ...tile.tile,
         gid,
         index: tileIndex,
         layerIndex
       });
     }
-    return new Tile$1({
+    return new Tile$2({
       gid,
       index: tileIndex,
       layerIndex
@@ -6675,7 +6696,7 @@ class Tileset extends TiledProperties {
     Reflect.deleteProperty(this, "tiles");
   }
   addTile(tileObj) {
-    const tile = new Tile$1(tileObj);
+    const tile = new Tile$2(tileObj);
     this.cacheTileId.set(tile.id, tile);
     return tile;
   }
@@ -7108,7 +7129,7 @@ var ShapePositioning;
 class RpgShape extends TiledObjectClass {
   constructor(obj) {
     super();
-    this.type = HitType.Box;
+    this.type = HitType$2.Box;
     this.class = "";
     this.name = "";
     this.playersIn = {};
@@ -7213,7 +7234,7 @@ class RpgShape extends TiledObjectClass {
   * @memberof Shape
   */
   isEvent() {
-    return this.type == PlayerType.Event;
+    return this.type == PlayerType$2.Event;
   }
   set(obj) {
     const hit = Hit.getHitbox(obj);
@@ -7226,7 +7247,7 @@ class RpgShape extends TiledObjectClass {
     const findPoint = (prop, isMin) => {
       return this.hitbox.points.sort((a8, b3) => isMin ? a8[prop] - b3[prop] : b3[prop] - a8[prop])[0][prop];
     };
-    if (this.type == HitType.Polygon) {
+    if (this.type == HitType$2.Polygon) {
       this.hitbox.minX = findPoint("x", true);
       this.hitbox.maxX = findPoint("x", false);
       this.hitbox.minY = findPoint("y", true);
@@ -7305,7 +7326,7 @@ class RpgShape extends TiledObjectClass {
     return !!this.playersIn[player.id];
   }
   isShapePosition() {
-    return this.type !== HitType.Box && this.type !== HitType.Circle && this.type !== HitType.Polygon;
+    return this.type !== HitType$2.Box && this.type !== HitType$2.Circle && this.type !== HitType$2.Polygon;
   }
   /**
     * Recover the player with the shape. You must have used the `attachShape()` method on the player
@@ -7325,7 +7346,7 @@ class RpgShape extends TiledObjectClass {
    * @returns { minX: number, minY: number, maxX: number, maxY: number }
    */
   getSizeBox(margin = 0) {
-    if (this.type == HitType.Circle) {
+    if (this.type == HitType$2.Circle) {
       const radius = this.hitbox.r;
       return {
         minX: this.x - radius - margin,
@@ -7334,7 +7355,7 @@ class RpgShape extends TiledObjectClass {
         maxY: this.y + radius + margin
       };
     }
-    if (this.type == HitType.Polygon) {
+    if (this.type == HitType$2.Polygon) {
       return {
         minX: this.x + this.hitbox.minX - margin,
         maxX: this.x + this.hitbox.maxX + margin,
@@ -7664,7 +7685,2924 @@ function __asyncValues(o2) {
     }, reject);
   }
 }
-function isFunction$3(value2) {
+function isFunction$5(value2) {
+  return typeof value2 === "function";
+}
+function createErrorClass$1(createImpl) {
+  var _super = function(instance) {
+    Error.call(instance);
+    instance.stack = new Error().stack;
+  };
+  var ctorFunc = createImpl(_super);
+  ctorFunc.prototype = Object.create(Error.prototype);
+  ctorFunc.prototype.constructor = ctorFunc;
+  return ctorFunc;
+}
+var UnsubscriptionError$1 = createErrorClass$1(function(_super) {
+  return function UnsubscriptionErrorImpl(errors2) {
+    _super(this);
+    this.message = errors2 ? errors2.length + " errors occurred during unsubscription:\n" + errors2.map(function(err, i2) {
+      return i2 + 1 + ") " + err.toString();
+    }).join("\n  ") : "";
+    this.name = "UnsubscriptionError";
+    this.errors = errors2;
+  };
+});
+function arrRemove$1(arr, item) {
+  if (arr) {
+    var index2 = arr.indexOf(item);
+    0 <= index2 && arr.splice(index2, 1);
+  }
+}
+var Subscription$1 = function() {
+  function Subscription2(initialTeardown) {
+    this.initialTeardown = initialTeardown;
+    this.closed = false;
+    this._parentage = null;
+    this._finalizers = null;
+  }
+  Subscription2.prototype.unsubscribe = function() {
+    var e_1, _a, e_2, _b;
+    var errors2;
+    if (!this.closed) {
+      this.closed = true;
+      var _parentage = this._parentage;
+      if (_parentage) {
+        this._parentage = null;
+        if (Array.isArray(_parentage)) {
+          try {
+            for (var _parentage_1 = __values(_parentage), _parentage_1_1 = _parentage_1.next(); !_parentage_1_1.done; _parentage_1_1 = _parentage_1.next()) {
+              var parent_1 = _parentage_1_1.value;
+              parent_1.remove(this);
+            }
+          } catch (e_1_1) {
+            e_1 = { error: e_1_1 };
+          } finally {
+            try {
+              if (_parentage_1_1 && !_parentage_1_1.done && (_a = _parentage_1.return))
+                _a.call(_parentage_1);
+            } finally {
+              if (e_1)
+                throw e_1.error;
+            }
+          }
+        } else {
+          _parentage.remove(this);
+        }
+      }
+      var initialFinalizer = this.initialTeardown;
+      if (isFunction$5(initialFinalizer)) {
+        try {
+          initialFinalizer();
+        } catch (e3) {
+          errors2 = e3 instanceof UnsubscriptionError$1 ? e3.errors : [e3];
+        }
+      }
+      var _finalizers = this._finalizers;
+      if (_finalizers) {
+        this._finalizers = null;
+        try {
+          for (var _finalizers_1 = __values(_finalizers), _finalizers_1_1 = _finalizers_1.next(); !_finalizers_1_1.done; _finalizers_1_1 = _finalizers_1.next()) {
+            var finalizer = _finalizers_1_1.value;
+            try {
+              execFinalizer$1(finalizer);
+            } catch (err) {
+              errors2 = errors2 !== null && errors2 !== void 0 ? errors2 : [];
+              if (err instanceof UnsubscriptionError$1) {
+                errors2 = __spreadArray(__spreadArray([], __read(errors2)), __read(err.errors));
+              } else {
+                errors2.push(err);
+              }
+            }
+          }
+        } catch (e_2_1) {
+          e_2 = { error: e_2_1 };
+        } finally {
+          try {
+            if (_finalizers_1_1 && !_finalizers_1_1.done && (_b = _finalizers_1.return))
+              _b.call(_finalizers_1);
+          } finally {
+            if (e_2)
+              throw e_2.error;
+          }
+        }
+      }
+      if (errors2) {
+        throw new UnsubscriptionError$1(errors2);
+      }
+    }
+  };
+  Subscription2.prototype.add = function(teardown) {
+    var _a;
+    if (teardown && teardown !== this) {
+      if (this.closed) {
+        execFinalizer$1(teardown);
+      } else {
+        if (teardown instanceof Subscription2) {
+          if (teardown.closed || teardown._hasParent(this)) {
+            return;
+          }
+          teardown._addParent(this);
+        }
+        (this._finalizers = (_a = this._finalizers) !== null && _a !== void 0 ? _a : []).push(teardown);
+      }
+    }
+  };
+  Subscription2.prototype._hasParent = function(parent) {
+    var _parentage = this._parentage;
+    return _parentage === parent || Array.isArray(_parentage) && _parentage.includes(parent);
+  };
+  Subscription2.prototype._addParent = function(parent) {
+    var _parentage = this._parentage;
+    this._parentage = Array.isArray(_parentage) ? (_parentage.push(parent), _parentage) : _parentage ? [_parentage, parent] : parent;
+  };
+  Subscription2.prototype._removeParent = function(parent) {
+    var _parentage = this._parentage;
+    if (_parentage === parent) {
+      this._parentage = null;
+    } else if (Array.isArray(_parentage)) {
+      arrRemove$1(_parentage, parent);
+    }
+  };
+  Subscription2.prototype.remove = function(teardown) {
+    var _finalizers = this._finalizers;
+    _finalizers && arrRemove$1(_finalizers, teardown);
+    if (teardown instanceof Subscription2) {
+      teardown._removeParent(this);
+    }
+  };
+  Subscription2.EMPTY = function() {
+    var empty2 = new Subscription2();
+    empty2.closed = true;
+    return empty2;
+  }();
+  return Subscription2;
+}();
+var EMPTY_SUBSCRIPTION$1 = Subscription$1.EMPTY;
+function isSubscription$1(value2) {
+  return value2 instanceof Subscription$1 || value2 && "closed" in value2 && isFunction$5(value2.remove) && isFunction$5(value2.add) && isFunction$5(value2.unsubscribe);
+}
+function execFinalizer$1(finalizer) {
+  if (isFunction$5(finalizer)) {
+    finalizer();
+  } else {
+    finalizer.unsubscribe();
+  }
+}
+var config$1 = {
+  onUnhandledError: null,
+  onStoppedNotification: null,
+  Promise: void 0,
+  useDeprecatedSynchronousErrorHandling: false,
+  useDeprecatedNextContext: false
+};
+var timeoutProvider$1 = {
+  setTimeout: function(handler, timeout) {
+    var args = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+      args[_i - 2] = arguments[_i];
+    }
+    var delegate = timeoutProvider$1.delegate;
+    if (delegate === null || delegate === void 0 ? void 0 : delegate.setTimeout) {
+      return delegate.setTimeout.apply(delegate, __spreadArray([handler, timeout], __read(args)));
+    }
+    return setTimeout.apply(void 0, __spreadArray([handler, timeout], __read(args)));
+  },
+  clearTimeout: function(handle) {
+    var delegate = timeoutProvider$1.delegate;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.clearTimeout) || clearTimeout)(handle);
+  },
+  delegate: void 0
+};
+function reportUnhandledError$1(err) {
+  timeoutProvider$1.setTimeout(function() {
+    {
+      throw err;
+    }
+  });
+}
+function noop$1() {
+}
+function errorContext$1(cb) {
+  {
+    cb();
+  }
+}
+var Subscriber$1 = function(_super) {
+  __extends(Subscriber2, _super);
+  function Subscriber2(destination) {
+    var _this = _super.call(this) || this;
+    _this.isStopped = false;
+    if (destination) {
+      _this.destination = destination;
+      if (isSubscription$1(destination)) {
+        destination.add(_this);
+      }
+    } else {
+      _this.destination = EMPTY_OBSERVER$1;
+    }
+    return _this;
+  }
+  Subscriber2.create = function(next, error2, complete) {
+    return new SafeSubscriber$1(next, error2, complete);
+  };
+  Subscriber2.prototype.next = function(value2) {
+    if (this.isStopped)
+      ;
+    else {
+      this._next(value2);
+    }
+  };
+  Subscriber2.prototype.error = function(err) {
+    if (this.isStopped)
+      ;
+    else {
+      this.isStopped = true;
+      this._error(err);
+    }
+  };
+  Subscriber2.prototype.complete = function() {
+    if (this.isStopped)
+      ;
+    else {
+      this.isStopped = true;
+      this._complete();
+    }
+  };
+  Subscriber2.prototype.unsubscribe = function() {
+    if (!this.closed) {
+      this.isStopped = true;
+      _super.prototype.unsubscribe.call(this);
+      this.destination = null;
+    }
+  };
+  Subscriber2.prototype._next = function(value2) {
+    this.destination.next(value2);
+  };
+  Subscriber2.prototype._error = function(err) {
+    try {
+      this.destination.error(err);
+    } finally {
+      this.unsubscribe();
+    }
+  };
+  Subscriber2.prototype._complete = function() {
+    try {
+      this.destination.complete();
+    } finally {
+      this.unsubscribe();
+    }
+  };
+  return Subscriber2;
+}(Subscription$1);
+var _bind$1 = Function.prototype.bind;
+function bind$1(fn, thisArg) {
+  return _bind$1.call(fn, thisArg);
+}
+var ConsumerObserver$1 = function() {
+  function ConsumerObserver2(partialObserver) {
+    this.partialObserver = partialObserver;
+  }
+  ConsumerObserver2.prototype.next = function(value2) {
+    var partialObserver = this.partialObserver;
+    if (partialObserver.next) {
+      try {
+        partialObserver.next(value2);
+      } catch (error2) {
+        handleUnhandledError$1(error2);
+      }
+    }
+  };
+  ConsumerObserver2.prototype.error = function(err) {
+    var partialObserver = this.partialObserver;
+    if (partialObserver.error) {
+      try {
+        partialObserver.error(err);
+      } catch (error2) {
+        handleUnhandledError$1(error2);
+      }
+    } else {
+      handleUnhandledError$1(err);
+    }
+  };
+  ConsumerObserver2.prototype.complete = function() {
+    var partialObserver = this.partialObserver;
+    if (partialObserver.complete) {
+      try {
+        partialObserver.complete();
+      } catch (error2) {
+        handleUnhandledError$1(error2);
+      }
+    }
+  };
+  return ConsumerObserver2;
+}();
+var SafeSubscriber$1 = function(_super) {
+  __extends(SafeSubscriber2, _super);
+  function SafeSubscriber2(observerOrNext, error2, complete) {
+    var _this = _super.call(this) || this;
+    var partialObserver;
+    if (isFunction$5(observerOrNext) || !observerOrNext) {
+      partialObserver = {
+        next: observerOrNext !== null && observerOrNext !== void 0 ? observerOrNext : void 0,
+        error: error2 !== null && error2 !== void 0 ? error2 : void 0,
+        complete: complete !== null && complete !== void 0 ? complete : void 0
+      };
+    } else {
+      var context_1;
+      if (_this && config$1.useDeprecatedNextContext) {
+        context_1 = Object.create(observerOrNext);
+        context_1.unsubscribe = function() {
+          return _this.unsubscribe();
+        };
+        partialObserver = {
+          next: observerOrNext.next && bind$1(observerOrNext.next, context_1),
+          error: observerOrNext.error && bind$1(observerOrNext.error, context_1),
+          complete: observerOrNext.complete && bind$1(observerOrNext.complete, context_1)
+        };
+      } else {
+        partialObserver = observerOrNext;
+      }
+    }
+    _this.destination = new ConsumerObserver$1(partialObserver);
+    return _this;
+  }
+  return SafeSubscriber2;
+}(Subscriber$1);
+function handleUnhandledError$1(error2) {
+  {
+    reportUnhandledError$1(error2);
+  }
+}
+function defaultErrorHandler$1(err) {
+  throw err;
+}
+var EMPTY_OBSERVER$1 = {
+  closed: true,
+  next: noop$1,
+  error: defaultErrorHandler$1,
+  complete: noop$1
+};
+var observable$1 = function() {
+  return typeof Symbol === "function" && Symbol.observable || "@@observable";
+}();
+function identity$1(x2) {
+  return x2;
+}
+function pipeFromArray$1(fns) {
+  if (fns.length === 0) {
+    return identity$1;
+  }
+  if (fns.length === 1) {
+    return fns[0];
+  }
+  return function piped(input) {
+    return fns.reduce(function(prev2, fn) {
+      return fn(prev2);
+    }, input);
+  };
+}
+var Observable$1 = function() {
+  function Observable2(subscribe) {
+    if (subscribe) {
+      this._subscribe = subscribe;
+    }
+  }
+  Observable2.prototype.lift = function(operator) {
+    var observable2 = new Observable2();
+    observable2.source = this;
+    observable2.operator = operator;
+    return observable2;
+  };
+  Observable2.prototype.subscribe = function(observerOrNext, error2, complete) {
+    var _this = this;
+    var subscriber = isSubscriber$1(observerOrNext) ? observerOrNext : new SafeSubscriber$1(observerOrNext, error2, complete);
+    errorContext$1(function() {
+      var _a = _this, operator = _a.operator, source = _a.source;
+      subscriber.add(operator ? operator.call(subscriber, source) : source ? _this._subscribe(subscriber) : _this._trySubscribe(subscriber));
+    });
+    return subscriber;
+  };
+  Observable2.prototype._trySubscribe = function(sink) {
+    try {
+      return this._subscribe(sink);
+    } catch (err) {
+      sink.error(err);
+    }
+  };
+  Observable2.prototype.forEach = function(next, promiseCtor) {
+    var _this = this;
+    promiseCtor = getPromiseCtor$1(promiseCtor);
+    return new promiseCtor(function(resolve2, reject) {
+      var subscriber = new SafeSubscriber$1({
+        next: function(value2) {
+          try {
+            next(value2);
+          } catch (err) {
+            reject(err);
+            subscriber.unsubscribe();
+          }
+        },
+        error: reject,
+        complete: resolve2
+      });
+      _this.subscribe(subscriber);
+    });
+  };
+  Observable2.prototype._subscribe = function(subscriber) {
+    var _a;
+    return (_a = this.source) === null || _a === void 0 ? void 0 : _a.subscribe(subscriber);
+  };
+  Observable2.prototype[observable$1] = function() {
+    return this;
+  };
+  Observable2.prototype.pipe = function() {
+    var operations = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      operations[_i] = arguments[_i];
+    }
+    return pipeFromArray$1(operations)(this);
+  };
+  Observable2.prototype.toPromise = function(promiseCtor) {
+    var _this = this;
+    promiseCtor = getPromiseCtor$1(promiseCtor);
+    return new promiseCtor(function(resolve2, reject) {
+      var value2;
+      _this.subscribe(function(x2) {
+        return value2 = x2;
+      }, function(err) {
+        return reject(err);
+      }, function() {
+        return resolve2(value2);
+      });
+    });
+  };
+  Observable2.create = function(subscribe) {
+    return new Observable2(subscribe);
+  };
+  return Observable2;
+}();
+function getPromiseCtor$1(promiseCtor) {
+  var _a;
+  return (_a = promiseCtor !== null && promiseCtor !== void 0 ? promiseCtor : config$1.Promise) !== null && _a !== void 0 ? _a : Promise;
+}
+function isObserver$1(value2) {
+  return value2 && isFunction$5(value2.next) && isFunction$5(value2.error) && isFunction$5(value2.complete);
+}
+function isSubscriber$1(value2) {
+  return value2 && value2 instanceof Subscriber$1 || isObserver$1(value2) && isSubscription$1(value2);
+}
+function hasLift$1(source) {
+  return isFunction$5(source === null || source === void 0 ? void 0 : source.lift);
+}
+function operate$1(init2) {
+  return function(source) {
+    if (hasLift$1(source)) {
+      return source.lift(function(liftedSource) {
+        try {
+          return init2(liftedSource, this);
+        } catch (err) {
+          this.error(err);
+        }
+      });
+    }
+    throw new TypeError("Unable to lift unknown Observable type");
+  };
+}
+function createOperatorSubscriber$1(destination, onNext, onComplete, onError, onFinalize) {
+  return new OperatorSubscriber$1(destination, onNext, onComplete, onError, onFinalize);
+}
+var OperatorSubscriber$1 = function(_super) {
+  __extends(OperatorSubscriber2, _super);
+  function OperatorSubscriber2(destination, onNext, onComplete, onError, onFinalize, shouldUnsubscribe) {
+    var _this = _super.call(this, destination) || this;
+    _this.onFinalize = onFinalize;
+    _this.shouldUnsubscribe = shouldUnsubscribe;
+    _this._next = onNext ? function(value2) {
+      try {
+        onNext(value2);
+      } catch (err) {
+        destination.error(err);
+      }
+    } : _super.prototype._next;
+    _this._error = onError ? function(err) {
+      try {
+        onError(err);
+      } catch (err2) {
+        destination.error(err2);
+      } finally {
+        this.unsubscribe();
+      }
+    } : _super.prototype._error;
+    _this._complete = onComplete ? function() {
+      try {
+        onComplete();
+      } catch (err) {
+        destination.error(err);
+      } finally {
+        this.unsubscribe();
+      }
+    } : _super.prototype._complete;
+    return _this;
+  }
+  OperatorSubscriber2.prototype.unsubscribe = function() {
+    var _a;
+    if (!this.shouldUnsubscribe || this.shouldUnsubscribe()) {
+      var closed_1 = this.closed;
+      _super.prototype.unsubscribe.call(this);
+      !closed_1 && ((_a = this.onFinalize) === null || _a === void 0 ? void 0 : _a.call(this));
+    }
+  };
+  return OperatorSubscriber2;
+}(Subscriber$1);
+var ObjectUnsubscribedError$1 = createErrorClass$1(function(_super) {
+  return function ObjectUnsubscribedErrorImpl() {
+    _super(this);
+    this.name = "ObjectUnsubscribedError";
+    this.message = "object unsubscribed";
+  };
+});
+var Subject$1 = function(_super) {
+  __extends(Subject2, _super);
+  function Subject2() {
+    var _this = _super.call(this) || this;
+    _this.closed = false;
+    _this.currentObservers = null;
+    _this.observers = [];
+    _this.isStopped = false;
+    _this.hasError = false;
+    _this.thrownError = null;
+    return _this;
+  }
+  Subject2.prototype.lift = function(operator) {
+    var subject = new AnonymousSubject$1(this, this);
+    subject.operator = operator;
+    return subject;
+  };
+  Subject2.prototype._throwIfClosed = function() {
+    if (this.closed) {
+      throw new ObjectUnsubscribedError$1();
+    }
+  };
+  Subject2.prototype.next = function(value2) {
+    var _this = this;
+    errorContext$1(function() {
+      var e_1, _a;
+      _this._throwIfClosed();
+      if (!_this.isStopped) {
+        if (!_this.currentObservers) {
+          _this.currentObservers = Array.from(_this.observers);
+        }
+        try {
+          for (var _b = __values(_this.currentObservers), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var observer = _c.value;
+            observer.next(value2);
+          }
+        } catch (e_1_1) {
+          e_1 = { error: e_1_1 };
+        } finally {
+          try {
+            if (_c && !_c.done && (_a = _b.return))
+              _a.call(_b);
+          } finally {
+            if (e_1)
+              throw e_1.error;
+          }
+        }
+      }
+    });
+  };
+  Subject2.prototype.error = function(err) {
+    var _this = this;
+    errorContext$1(function() {
+      _this._throwIfClosed();
+      if (!_this.isStopped) {
+        _this.hasError = _this.isStopped = true;
+        _this.thrownError = err;
+        var observers = _this.observers;
+        while (observers.length) {
+          observers.shift().error(err);
+        }
+      }
+    });
+  };
+  Subject2.prototype.complete = function() {
+    var _this = this;
+    errorContext$1(function() {
+      _this._throwIfClosed();
+      if (!_this.isStopped) {
+        _this.isStopped = true;
+        var observers = _this.observers;
+        while (observers.length) {
+          observers.shift().complete();
+        }
+      }
+    });
+  };
+  Subject2.prototype.unsubscribe = function() {
+    this.isStopped = this.closed = true;
+    this.observers = this.currentObservers = null;
+  };
+  Object.defineProperty(Subject2.prototype, "observed", {
+    get: function() {
+      var _a;
+      return ((_a = this.observers) === null || _a === void 0 ? void 0 : _a.length) > 0;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Subject2.prototype._trySubscribe = function(subscriber) {
+    this._throwIfClosed();
+    return _super.prototype._trySubscribe.call(this, subscriber);
+  };
+  Subject2.prototype._subscribe = function(subscriber) {
+    this._throwIfClosed();
+    this._checkFinalizedStatuses(subscriber);
+    return this._innerSubscribe(subscriber);
+  };
+  Subject2.prototype._innerSubscribe = function(subscriber) {
+    var _this = this;
+    var _a = this, hasError = _a.hasError, isStopped = _a.isStopped, observers = _a.observers;
+    if (hasError || isStopped) {
+      return EMPTY_SUBSCRIPTION$1;
+    }
+    this.currentObservers = null;
+    observers.push(subscriber);
+    return new Subscription$1(function() {
+      _this.currentObservers = null;
+      arrRemove$1(observers, subscriber);
+    });
+  };
+  Subject2.prototype._checkFinalizedStatuses = function(subscriber) {
+    var _a = this, hasError = _a.hasError, thrownError = _a.thrownError, isStopped = _a.isStopped;
+    if (hasError) {
+      subscriber.error(thrownError);
+    } else if (isStopped) {
+      subscriber.complete();
+    }
+  };
+  Subject2.prototype.asObservable = function() {
+    var observable2 = new Observable$1();
+    observable2.source = this;
+    return observable2;
+  };
+  Subject2.create = function(destination, source) {
+    return new AnonymousSubject$1(destination, source);
+  };
+  return Subject2;
+}(Observable$1);
+var AnonymousSubject$1 = function(_super) {
+  __extends(AnonymousSubject2, _super);
+  function AnonymousSubject2(destination, source) {
+    var _this = _super.call(this) || this;
+    _this.destination = destination;
+    _this.source = source;
+    return _this;
+  }
+  AnonymousSubject2.prototype.next = function(value2) {
+    var _a, _b;
+    (_b = (_a = this.destination) === null || _a === void 0 ? void 0 : _a.next) === null || _b === void 0 ? void 0 : _b.call(_a, value2);
+  };
+  AnonymousSubject2.prototype.error = function(err) {
+    var _a, _b;
+    (_b = (_a = this.destination) === null || _a === void 0 ? void 0 : _a.error) === null || _b === void 0 ? void 0 : _b.call(_a, err);
+  };
+  AnonymousSubject2.prototype.complete = function() {
+    var _a, _b;
+    (_b = (_a = this.destination) === null || _a === void 0 ? void 0 : _a.complete) === null || _b === void 0 ? void 0 : _b.call(_a);
+  };
+  AnonymousSubject2.prototype._subscribe = function(subscriber) {
+    var _a, _b;
+    return (_b = (_a = this.source) === null || _a === void 0 ? void 0 : _a.subscribe(subscriber)) !== null && _b !== void 0 ? _b : EMPTY_SUBSCRIPTION$1;
+  };
+  return AnonymousSubject2;
+}(Subject$1);
+var BehaviorSubject$1 = function(_super) {
+  __extends(BehaviorSubject2, _super);
+  function BehaviorSubject2(_value) {
+    var _this = _super.call(this) || this;
+    _this._value = _value;
+    return _this;
+  }
+  Object.defineProperty(BehaviorSubject2.prototype, "value", {
+    get: function() {
+      return this.getValue();
+    },
+    enumerable: false,
+    configurable: true
+  });
+  BehaviorSubject2.prototype._subscribe = function(subscriber) {
+    var subscription = _super.prototype._subscribe.call(this, subscriber);
+    !subscription.closed && subscriber.next(this._value);
+    return subscription;
+  };
+  BehaviorSubject2.prototype.getValue = function() {
+    var _a = this, hasError = _a.hasError, thrownError = _a.thrownError, _value = _a._value;
+    if (hasError) {
+      throw thrownError;
+    }
+    this._throwIfClosed();
+    return _value;
+  };
+  BehaviorSubject2.prototype.next = function(value2) {
+    _super.prototype.next.call(this, this._value = value2);
+  };
+  return BehaviorSubject2;
+}(Subject$1);
+var isArrayLike$1 = function(x2) {
+  return x2 && typeof x2.length === "number" && typeof x2 !== "function";
+};
+function isPromise$2(value2) {
+  return isFunction$5(value2 === null || value2 === void 0 ? void 0 : value2.then);
+}
+function isInteropObservable$1(input) {
+  return isFunction$5(input[observable$1]);
+}
+function isAsyncIterable$1(obj) {
+  return Symbol.asyncIterator && isFunction$5(obj === null || obj === void 0 ? void 0 : obj[Symbol.asyncIterator]);
+}
+function createInvalidObservableTypeError$1(input) {
+  return new TypeError("You provided " + (input !== null && typeof input === "object" ? "an invalid object" : "'" + input + "'") + " where a stream was expected. You can provide an Observable, Promise, ReadableStream, Array, AsyncIterable, or Iterable.");
+}
+function getSymbolIterator$1() {
+  if (typeof Symbol !== "function" || !Symbol.iterator) {
+    return "@@iterator";
+  }
+  return Symbol.iterator;
+}
+var iterator$1 = getSymbolIterator$1();
+function isIterable$1(input) {
+  return isFunction$5(input === null || input === void 0 ? void 0 : input[iterator$1]);
+}
+function readableStreamLikeToAsyncGenerator$1(readableStream) {
+  return __asyncGenerator(this, arguments, function readableStreamLikeToAsyncGenerator_1() {
+    var reader, _a, value2, done2;
+    return __generator(this, function(_b) {
+      switch (_b.label) {
+        case 0:
+          reader = readableStream.getReader();
+          _b.label = 1;
+        case 1:
+          _b.trys.push([1, , 9, 10]);
+          _b.label = 2;
+        case 2:
+          return [4, __await(reader.read())];
+        case 3:
+          _a = _b.sent(), value2 = _a.value, done2 = _a.done;
+          if (!done2)
+            return [3, 5];
+          return [4, __await(void 0)];
+        case 4:
+          return [2, _b.sent()];
+        case 5:
+          return [4, __await(value2)];
+        case 6:
+          return [4, _b.sent()];
+        case 7:
+          _b.sent();
+          return [3, 2];
+        case 8:
+          return [3, 10];
+        case 9:
+          reader.releaseLock();
+          return [7];
+        case 10:
+          return [2];
+      }
+    });
+  });
+}
+function isReadableStreamLike$1(obj) {
+  return isFunction$5(obj === null || obj === void 0 ? void 0 : obj.getReader);
+}
+function innerFrom$1(input) {
+  if (input instanceof Observable$1) {
+    return input;
+  }
+  if (input != null) {
+    if (isInteropObservable$1(input)) {
+      return fromInteropObservable$1(input);
+    }
+    if (isArrayLike$1(input)) {
+      return fromArrayLike$1(input);
+    }
+    if (isPromise$2(input)) {
+      return fromPromise$1(input);
+    }
+    if (isAsyncIterable$1(input)) {
+      return fromAsyncIterable$1(input);
+    }
+    if (isIterable$1(input)) {
+      return fromIterable$1(input);
+    }
+    if (isReadableStreamLike$1(input)) {
+      return fromReadableStreamLike$1(input);
+    }
+  }
+  throw createInvalidObservableTypeError$1(input);
+}
+function fromInteropObservable$1(obj) {
+  return new Observable$1(function(subscriber) {
+    var obs = obj[observable$1]();
+    if (isFunction$5(obs.subscribe)) {
+      return obs.subscribe(subscriber);
+    }
+    throw new TypeError("Provided object does not correctly implement Symbol.observable");
+  });
+}
+function fromArrayLike$1(array2) {
+  return new Observable$1(function(subscriber) {
+    for (var i2 = 0; i2 < array2.length && !subscriber.closed; i2++) {
+      subscriber.next(array2[i2]);
+    }
+    subscriber.complete();
+  });
+}
+function fromPromise$1(promise) {
+  return new Observable$1(function(subscriber) {
+    promise.then(function(value2) {
+      if (!subscriber.closed) {
+        subscriber.next(value2);
+        subscriber.complete();
+      }
+    }, function(err) {
+      return subscriber.error(err);
+    }).then(null, reportUnhandledError$1);
+  });
+}
+function fromIterable$1(iterable) {
+  return new Observable$1(function(subscriber) {
+    var e_1, _a;
+    try {
+      for (var iterable_1 = __values(iterable), iterable_1_1 = iterable_1.next(); !iterable_1_1.done; iterable_1_1 = iterable_1.next()) {
+        var value2 = iterable_1_1.value;
+        subscriber.next(value2);
+        if (subscriber.closed) {
+          return;
+        }
+      }
+    } catch (e_1_1) {
+      e_1 = { error: e_1_1 };
+    } finally {
+      try {
+        if (iterable_1_1 && !iterable_1_1.done && (_a = iterable_1.return))
+          _a.call(iterable_1);
+      } finally {
+        if (e_1)
+          throw e_1.error;
+      }
+    }
+    subscriber.complete();
+  });
+}
+function fromAsyncIterable$1(asyncIterable) {
+  return new Observable$1(function(subscriber) {
+    process$1(asyncIterable, subscriber).catch(function(err) {
+      return subscriber.error(err);
+    });
+  });
+}
+function fromReadableStreamLike$1(readableStream) {
+  return fromAsyncIterable$1(readableStreamLikeToAsyncGenerator$1(readableStream));
+}
+function process$1(asyncIterable, subscriber) {
+  var asyncIterable_1, asyncIterable_1_1;
+  var e_2, _a;
+  return __awaiter(this, void 0, void 0, function() {
+    var value2, e_2_1;
+    return __generator(this, function(_b) {
+      switch (_b.label) {
+        case 0:
+          _b.trys.push([0, 5, 6, 11]);
+          asyncIterable_1 = __asyncValues(asyncIterable);
+          _b.label = 1;
+        case 1:
+          return [4, asyncIterable_1.next()];
+        case 2:
+          if (!(asyncIterable_1_1 = _b.sent(), !asyncIterable_1_1.done))
+            return [3, 4];
+          value2 = asyncIterable_1_1.value;
+          subscriber.next(value2);
+          if (subscriber.closed) {
+            return [2];
+          }
+          _b.label = 3;
+        case 3:
+          return [3, 1];
+        case 4:
+          return [3, 11];
+        case 5:
+          e_2_1 = _b.sent();
+          e_2 = { error: e_2_1 };
+          return [3, 11];
+        case 6:
+          _b.trys.push([6, , 9, 10]);
+          if (!(asyncIterable_1_1 && !asyncIterable_1_1.done && (_a = asyncIterable_1.return)))
+            return [3, 8];
+          return [4, _a.call(asyncIterable_1)];
+        case 7:
+          _b.sent();
+          _b.label = 8;
+        case 8:
+          return [3, 10];
+        case 9:
+          if (e_2)
+            throw e_2.error;
+          return [7];
+        case 10:
+          return [7];
+        case 11:
+          subscriber.complete();
+          return [2];
+      }
+    });
+  });
+}
+function executeSchedule$1(parentSubscription, scheduler, work, delay, repeat) {
+  if (delay === void 0) {
+    delay = 0;
+  }
+  if (repeat === void 0) {
+    repeat = false;
+  }
+  var scheduleSubscription = scheduler.schedule(function() {
+    work();
+    if (repeat) {
+      parentSubscription.add(this.schedule(null, delay));
+    } else {
+      this.unsubscribe();
+    }
+  }, delay);
+  parentSubscription.add(scheduleSubscription);
+  if (!repeat) {
+    return scheduleSubscription;
+  }
+}
+function observeOn$1(scheduler, delay) {
+  if (delay === void 0) {
+    delay = 0;
+  }
+  return operate$1(function(source, subscriber) {
+    source.subscribe(createOperatorSubscriber$1(subscriber, function(value2) {
+      return executeSchedule$1(subscriber, scheduler, function() {
+        return subscriber.next(value2);
+      }, delay);
+    }, function() {
+      return executeSchedule$1(subscriber, scheduler, function() {
+        return subscriber.complete();
+      }, delay);
+    }, function(err) {
+      return executeSchedule$1(subscriber, scheduler, function() {
+        return subscriber.error(err);
+      }, delay);
+    }));
+  });
+}
+function subscribeOn$1(scheduler, delay) {
+  if (delay === void 0) {
+    delay = 0;
+  }
+  return operate$1(function(source, subscriber) {
+    subscriber.add(scheduler.schedule(function() {
+      return source.subscribe(subscriber);
+    }, delay));
+  });
+}
+function scheduleObservable$1(input, scheduler) {
+  return innerFrom$1(input).pipe(subscribeOn$1(scheduler), observeOn$1(scheduler));
+}
+function schedulePromise$1(input, scheduler) {
+  return innerFrom$1(input).pipe(subscribeOn$1(scheduler), observeOn$1(scheduler));
+}
+function scheduleArray$1(input, scheduler) {
+  return new Observable$1(function(subscriber) {
+    var i2 = 0;
+    return scheduler.schedule(function() {
+      if (i2 === input.length) {
+        subscriber.complete();
+      } else {
+        subscriber.next(input[i2++]);
+        if (!subscriber.closed) {
+          this.schedule();
+        }
+      }
+    });
+  });
+}
+function scheduleIterable$1(input, scheduler) {
+  return new Observable$1(function(subscriber) {
+    var iterator2;
+    executeSchedule$1(subscriber, scheduler, function() {
+      iterator2 = input[iterator$1]();
+      executeSchedule$1(subscriber, scheduler, function() {
+        var _a;
+        var value2;
+        var done2;
+        try {
+          _a = iterator2.next(), value2 = _a.value, done2 = _a.done;
+        } catch (err) {
+          subscriber.error(err);
+          return;
+        }
+        if (done2) {
+          subscriber.complete();
+        } else {
+          subscriber.next(value2);
+        }
+      }, 0, true);
+    });
+    return function() {
+      return isFunction$5(iterator2 === null || iterator2 === void 0 ? void 0 : iterator2.return) && iterator2.return();
+    };
+  });
+}
+function scheduleAsyncIterable$1(input, scheduler) {
+  if (!input) {
+    throw new Error("Iterable cannot be null");
+  }
+  return new Observable$1(function(subscriber) {
+    executeSchedule$1(subscriber, scheduler, function() {
+      var iterator2 = input[Symbol.asyncIterator]();
+      executeSchedule$1(subscriber, scheduler, function() {
+        iterator2.next().then(function(result) {
+          if (result.done) {
+            subscriber.complete();
+          } else {
+            subscriber.next(result.value);
+          }
+        });
+      }, 0, true);
+    });
+  });
+}
+function scheduleReadableStreamLike$1(input, scheduler) {
+  return scheduleAsyncIterable$1(readableStreamLikeToAsyncGenerator$1(input), scheduler);
+}
+function scheduled$1(input, scheduler) {
+  if (input != null) {
+    if (isInteropObservable$1(input)) {
+      return scheduleObservable$1(input, scheduler);
+    }
+    if (isArrayLike$1(input)) {
+      return scheduleArray$1(input, scheduler);
+    }
+    if (isPromise$2(input)) {
+      return schedulePromise$1(input, scheduler);
+    }
+    if (isAsyncIterable$1(input)) {
+      return scheduleAsyncIterable$1(input, scheduler);
+    }
+    if (isIterable$1(input)) {
+      return scheduleIterable$1(input, scheduler);
+    }
+    if (isReadableStreamLike$1(input)) {
+      return scheduleReadableStreamLike$1(input, scheduler);
+    }
+  }
+  throw createInvalidObservableTypeError$1(input);
+}
+function from$1(input, scheduler) {
+  return scheduler ? scheduled$1(input, scheduler) : innerFrom$1(input);
+}
+function map$8(project, thisArg) {
+  return operate$1(function(source, subscriber) {
+    var index2 = 0;
+    source.subscribe(createOperatorSubscriber$1(subscriber, function(value2) {
+      subscriber.next(project.call(thisArg, value2, index2++));
+    }));
+  });
+}
+function mergeInternals(source, subscriber, project, concurrent, onBeforeNext, expand, innerSubScheduler, additionalFinalizer) {
+  var buffer2 = [];
+  var active = 0;
+  var index2 = 0;
+  var isComplete = false;
+  var checkComplete = function() {
+    if (isComplete && !buffer2.length && !active) {
+      subscriber.complete();
+    }
+  };
+  var outerNext = function(value2) {
+    return active < concurrent ? doInnerSub(value2) : buffer2.push(value2);
+  };
+  var doInnerSub = function(value2) {
+    expand && subscriber.next(value2);
+    active++;
+    var innerComplete = false;
+    innerFrom$1(project(value2, index2++)).subscribe(createOperatorSubscriber$1(subscriber, function(innerValue) {
+      onBeforeNext === null || onBeforeNext === void 0 ? void 0 : onBeforeNext(innerValue);
+      if (expand) {
+        outerNext(innerValue);
+      } else {
+        subscriber.next(innerValue);
+      }
+    }, function() {
+      innerComplete = true;
+    }, void 0, function() {
+      if (innerComplete) {
+        try {
+          active--;
+          var _loop_1 = function() {
+            var bufferedValue = buffer2.shift();
+            if (innerSubScheduler) {
+              executeSchedule$1(subscriber, innerSubScheduler, function() {
+                return doInnerSub(bufferedValue);
+              });
+            } else {
+              doInnerSub(bufferedValue);
+            }
+          };
+          while (buffer2.length && active < concurrent) {
+            _loop_1();
+          }
+          checkComplete();
+        } catch (err) {
+          subscriber.error(err);
+        }
+      }
+    }));
+  };
+  source.subscribe(createOperatorSubscriber$1(subscriber, outerNext, function() {
+    isComplete = true;
+    checkComplete();
+  }));
+  return function() {
+    additionalFinalizer === null || additionalFinalizer === void 0 ? void 0 : additionalFinalizer();
+  };
+}
+function mergeMap(project, resultSelector, concurrent) {
+  if (concurrent === void 0) {
+    concurrent = Infinity;
+  }
+  if (isFunction$5(resultSelector)) {
+    return mergeMap(function(a8, i2) {
+      return map$8(function(b3, ii) {
+        return resultSelector(a8, b3, i2, ii);
+      })(innerFrom$1(project(a8, i2)));
+    }, concurrent);
+  } else if (typeof resultSelector === "number") {
+    concurrent = resultSelector;
+  }
+  return operate$1(function(source, subscriber) {
+    return mergeInternals(source, subscriber, project, concurrent);
+  });
+}
+function filter$2(predicate, thisArg) {
+  return operate$1(function(source, subscriber) {
+    var index2 = 0;
+    source.subscribe(createOperatorSubscriber$1(subscriber, function(value2) {
+      return predicate.call(thisArg, value2, index2++) && subscriber.next(value2);
+    }));
+  });
+}
+function takeUntil$1(notifier) {
+  return operate$1(function(source, subscriber) {
+    innerFrom$1(notifier).subscribe(createOperatorSubscriber$1(subscriber, function() {
+      return subscriber.complete();
+    }, noop$1));
+    !subscriber.closed && source.subscribe(subscriber);
+  });
+}
+function tap$1(observerOrNext, error2, complete) {
+  var tapObserver = isFunction$5(observerOrNext) || error2 || complete ? { next: observerOrNext, error: error2, complete } : observerOrNext;
+  return tapObserver ? operate$1(function(source, subscriber) {
+    var _a;
+    (_a = tapObserver.subscribe) === null || _a === void 0 ? void 0 : _a.call(tapObserver);
+    var isUnsub = true;
+    source.subscribe(createOperatorSubscriber$1(subscriber, function(value2) {
+      var _a2;
+      (_a2 = tapObserver.next) === null || _a2 === void 0 ? void 0 : _a2.call(tapObserver, value2);
+      subscriber.next(value2);
+    }, function() {
+      var _a2;
+      isUnsub = false;
+      (_a2 = tapObserver.complete) === null || _a2 === void 0 ? void 0 : _a2.call(tapObserver);
+      subscriber.complete();
+    }, function(err) {
+      var _a2;
+      isUnsub = false;
+      (_a2 = tapObserver.error) === null || _a2 === void 0 ? void 0 : _a2.call(tapObserver, err);
+      subscriber.error(err);
+    }, function() {
+      var _a2, _b;
+      if (isUnsub) {
+        (_a2 = tapObserver.unsubscribe) === null || _a2 === void 0 ? void 0 : _a2.call(tapObserver);
+      }
+      (_b = tapObserver.finalize) === null || _b === void 0 ? void 0 : _b.call(tapObserver);
+    }));
+  }) : identity$1;
+}
+const buffer = /* @__PURE__ */ new Map();
+const bufferClient = /* @__PURE__ */ new Map();
+class RpgCommonMap extends MapClass {
+  constructor() {
+    super(...arguments);
+    this.shapes = {};
+  }
+  get tileWidth() {
+    return this.tilewidth;
+  }
+  get tileHeight() {
+    return this.tileheight;
+  }
+  /**
+   * Retrieves the X position of the map in the world (0 if no world assigned)
+   *
+   * @title World X Position
+   * @prop {number} [worldX]
+   * @readonly
+   * @since 3.0.0-beta.8
+   * @memberof Map
+   * */
+  get worldX() {
+    var _a, _b;
+    return ((_b = (_a = this.getInWorldMaps()) == null ? void 0 : _a.getMapInfo(this.id)) == null ? void 0 : _b.x) || 0;
+  }
+  /**
+   * Retrieves the Y position of the map in the world (0 if no world assigned)
+   *
+   * @title World Y Position
+   * @prop {number} [worldY]
+   * @readonly
+   * @since 3.0.0-beta.8
+   * @memberof Map
+   * */
+  get worldY() {
+    var _a, _b;
+    return ((_b = (_a = this.getInWorldMaps()) == null ? void 0 : _a.getMapInfo(this.id)) == null ? void 0 : _b.y) || 0;
+  }
+  /**
+   * Memorize the maps so you don't have to make a new request or open a file each time you load a map
+   */
+  static get buffer() {
+    return buffer;
+  }
+  /**
+   * In RPG mode, to avoid confusion with buffer, we have a new variable to memorize the maps
+   */
+  static get bufferClient() {
+    return bufferClient;
+  }
+  load(data) {
+    super.load(data);
+    this.gridTiles = new VirtualGrid(this.width, this.tileWidth, this.tileHeight);
+    this.grid = new VirtualGrid(this.width, this.tileWidth, this.tileHeight).zoom(10);
+    this.gridShapes = new VirtualGrid(this.width, this.tileWidth, this.tileHeight).zoom(20);
+  }
+  /**
+   * Create a shape dynamically on the map
+   *
+   * Object:
+   *  - (number) x: Position X
+   *  - (number) y: Position Y
+   *  - (number) width: Width
+   *  - (number) height: Height
+   *  - (object) properties (optionnal):
+   *      - (number) z: Position Z
+   *      - (hexadecimal) color: Color (shared with client)
+   *      - (boolean) collision
+   *      - You can your own properties
+   *
+   * @title Create Shape
+   * @since 3.0.0-beta.3
+   * @method map.createShape(obj)
+   * @param {object} obj
+   * @returns {RpgShape}
+   * @memberof Map
+   */
+  createShape(obj) {
+    const id = obj.name = obj.name || generateUID();
+    const shape = new RpgShape(obj);
+    this.shapes[id] = shape;
+    if (!shape.isShapePosition()) {
+      this.gridShapes.insertInCells(id, shape.getSizeBox(this.tileWidth));
+    }
+    return this.shapes[id];
+  }
+  /**
+   * Delete a shape
+   *
+   * @title Delete Shape
+   * @method map.removeShape(name)
+   * @param {string} name Name of shape
+   * @returns {void}
+   * @memberof Map
+   */
+  removeShape(name) {
+    delete this.shapes[name];
+  }
+  clearShapes() {
+    this.shapes = {};
+  }
+  /**
+   * Return all shapes on the map
+   *
+   * @title Get Shapes
+   * @method map.getShapes()
+   * @returns {RpgShape[]}
+   * @memberof Map
+   * @memberof RpgSceneMap
+   */
+  getShapes() {
+    return Object.values(this.shapes);
+  }
+  /**
+   * Returns a shape by its name. Returns undefined is nothing is found
+   *
+   * @title Get Shape by name
+   * @method map.getShape(name)
+   * @param {string} name Name of shape
+   * @returns {RpgShape[] | undefined}
+   * @memberof Map
+   * @memberof RpgSceneMap
+   */
+  getShape(name) {
+    return this.getShapes().find((shape) => shape.name == name);
+  }
+  getPositionByShape(filter2) {
+    const startsFind = this.getShapes().filter(filter2);
+    if (startsFind.length) {
+      const start = startsFind[random(0, startsFind.length - 1)];
+      return {
+        x: start.hitbox.x,
+        y: start.hitbox.y,
+        z: start.properties.z * this.zTileHeight || 0
+      };
+    }
+    return null;
+  }
+  /**
+   * Get tile and verify collision with hitbox
+   * @param hitbox
+   * @param x
+   * @param y
+   * @param z
+   * @returns TileInfo
+   */
+  getTile(hitbox, x2, y2, z2 = [0, 0]) {
+    const tile = {
+      ...this.getTileByPosition(x2, y2, z2)
+    };
+    const tilePos = this.getTileOriginPosition(x2, y2);
+    if (tile.objectGroups) {
+      for (let object of tile.objectGroups) {
+        const hit = Hit.getHitbox(object, {
+          x: tilePos.x,
+          y: tilePos.y
+        });
+        if (hit.type) {
+          const collided = Hit.testPolyCollision(hit.type, hit.hitbox, hitbox);
+          if (collided) {
+            tile.hasCollision = true;
+          }
+        }
+      }
+    }
+    return tile;
+  }
+  /**
+   * Assign the map to a world
+    * @title Assign the map to a world
+   * @method map.setInWorldMaps(name)
+   * @param {RpgWorldMaps} worldMap world maps
+   * @since 3.0.0-beta.8
+   * @memberof Map
+   */
+  setInWorldMaps(worldMap) {
+    this.worldMapParent = worldMap;
+  }
+  /**
+   * Remove this map from the world
+   * @title Remove this map from the world
+   * @method map.removeFromWorldMaps()
+   * @returns {boolean | undefined}
+   * @since 3.0.0-beta.8
+   * @memberof Map
+   */
+  removeFromWorldMaps() {
+    var _a;
+    return (_a = this.worldMapParent) == null ? void 0 : _a.removeMap(this.id);
+  }
+  /**
+  * Recover the world attached to this map (`undefined` if no world attached)
+   * @title Get attached World
+  * @method map.getInWorldMaps()
+  * @return {RpgCommonWorldMaps | undefined}
+  * @since 3.0.0-beta.8
+  * @memberof Map
+  */
+  getInWorldMaps() {
+    return this.worldMapParent;
+  }
+  boundingMap(nextPosition, hitbox) {
+    let bounding = false;
+    if (nextPosition.x < 0) {
+      nextPosition.x = 0;
+      bounding = true;
+    } else if (nextPosition.y < 0) {
+      nextPosition.y = 0;
+      bounding = true;
+    } else if (nextPosition.x > this.widthPx - hitbox.w) {
+      nextPosition.x = this.widthPx - hitbox.w;
+      bounding = true;
+    } else if (nextPosition.y > this.heightPx - hitbox.h) {
+      nextPosition.y = this.heightPx - hitbox.h;
+      bounding = true;
+    }
+    return {
+      bounding,
+      nextPosition
+    };
+  }
+  _createMovingHitbox(gameEngine, tick$, mapId, hitboxes, options = {}) {
+    const object = new AbstractObject(gameEngine, Utils.generateUID());
+    object.disableVirtualGrid = true;
+    object.map = mapId;
+    object.speed = options.speed ?? 1;
+    let i2 = 0;
+    let frame = 0;
+    const destroyHitbox$ = new Subject$1();
+    return tick$.pipe(takeUntil$1(destroyHitbox$), filter$2(() => {
+      frame++;
+      return frame % object.speed == 0;
+    }), map$8(() => {
+      const hitbox = hitboxes[i2];
+      if (!hitbox) {
+        destroyHitbox$.next(object);
+        destroyHitbox$.complete();
+        return object;
+      }
+      object.position.x = hitbox.x;
+      object.position.y = hitbox.y;
+      object.setHitbox(hitbox.width, hitbox.height);
+      i2++;
+      return object;
+    }), mergeMap((object2) => from$1(object2.isCollided(object2.position, {
+      allSearch: true
+    }))), map$8(() => object));
+  }
+}
+let EventEmitter$1 = class EventEmitter {
+  constructor() {
+    this.listeners = {};
+    this.listenersOnce = {};
+  }
+  has(name) {
+    return !!this.listeners[name] || !!this.listenersOnce[name];
+  }
+  once(name, cb) {
+    this.listenersOnce[name] = cb;
+    return this;
+  }
+  on(name, cb) {
+    if (!this.listeners[name])
+      this.listeners[name] = [];
+    this.listeners[name].push(cb);
+    return this;
+  }
+  emit(name, data, rest = false) {
+    const ret = [];
+    if (this.listeners[name]) {
+      for (let listener of this.listeners[name]) {
+        if (rest)
+          ret.push(listener(...data));
+        else
+          ret.push(listener(data));
+      }
+    } else if (this.listenersOnce[name]) {
+      if (rest)
+        ret.push(this.listenersOnce[name](...data));
+      else
+        ret.push(this.listenersOnce[name](data));
+    }
+    return Promise.all(ret.map((val) => {
+      if (!isPromise$3(val)) {
+        return Promise.resolve(val);
+      }
+      return val;
+    }));
+  }
+  off(name) {
+    delete this.listeners[name];
+    delete this.listenersOnce[name];
+  }
+  clear() {
+    this.listeners = {};
+    this.listenersOnce = {};
+  }
+};
+var HookServer;
+(function(HookServer2) {
+  HookServer2["Start"] = "Server.Start";
+  HookServer2["Step"] = "Server.Step";
+  HookServer2["PlayerConnected"] = "Server.onConnected";
+  HookServer2["PlayerDisconnected"] = "Server.onDisconnected";
+  HookServer2["AddMap"] = "Server.AddMap";
+  HookServer2["AddEvent"] = "Server.AddEvent";
+  HookServer2["AddWorldMaps"] = "Server.AddWorldMaps";
+  HookServer2["AddDatabase"] = "Server.AddDatabase";
+  HookServer2["PlayerInput"] = "Server.onInput";
+  HookServer2["PlayerJoinMap"] = "Server.onJoinMap";
+  HookServer2["PlayerLeaveMap"] = "Server.onLeaveMap";
+  HookServer2["PlayerLevelUp"] = "Server.onLevelUp";
+  HookServer2["PlayerDead"] = "Server.onDead";
+  HookServer2["PlayerInShape"] = "Server.onInShape";
+  HookServer2["PlayerOutShape"] = "Server.onOutShape";
+  HookServer2["PlayerMove"] = "Server.PlayerMove";
+  HookServer2["PlayerCanChangeMap"] = "Server.PlayerCanChangeMap";
+  HookServer2["ScalabilityPlayerConnected"] = "Server.ScalabilityPlayerConnected";
+  HookServer2["ScalabilityChangeServer"] = "Server.ScalabilityChangeServer";
+})(HookServer || (HookServer = {}));
+var HookClient;
+(function(HookClient2) {
+  HookClient2["Start"] = "Client.Start";
+  HookClient2["Step"] = "Client.Step";
+  HookClient2["Connected"] = "Client.Connected";
+  HookClient2["Disconnect"] = "Client.Disconnect";
+  HookClient2["ConnectedError"] = "Client.ConnectedError";
+  HookClient2["AddSpriteSheet"] = "Client.AddSpriteSheet";
+  HookClient2["AddGui"] = "Client.AddGui";
+  HookClient2["AddSound"] = "Client.AddSound";
+  HookClient2["SendInput"] = "Client.SendInput";
+  HookClient2["BeforeSceneLoading"] = "Client.BeforeSceneLoading";
+  HookClient2["AfterSceneLoading"] = "Client.AfterSceneLoading";
+  HookClient2["SceneMapLoading"] = "Client.SceneMapLoading";
+  HookClient2["SceneAddSprite"] = "Client.SceneAddSprite";
+  HookClient2["SceneOnChanges"] = "Client.SceneOnChanges";
+  HookClient2["SceneDraw"] = "Client.SceneDraw";
+  HookClient2["SceneRemoveSprite"] = "Client.SceneRemoveSprite";
+  HookClient2["AddSprite"] = "Client.AddSprite";
+  HookClient2["RemoveSprite"] = "Client.RemoveSprite";
+  HookClient2["UpdateSprite"] = "Client.UpdateSprite";
+  HookClient2["ChangesSprite"] = "Client.ChangesSprite";
+  HookClient2["WindowResize"] = "Client.WindowResize";
+  HookClient2["SpriteMove"] = "Client.SpriteMove";
+})(HookClient || (HookClient = {}));
+let PluginSystem$1 = class PluginSystem extends EventEmitter$1 {
+  constructor() {
+    super(...arguments);
+    this.customHooks = {};
+  }
+  customHookExists(name) {
+    return this.customHooks[name];
+  }
+  loadPlugins(plugins, shared, type) {
+    if (!plugins)
+      return;
+    for (let plugin of plugins) {
+      if (!plugin)
+        continue;
+      let plug = [];
+      if (!isArray$8(plugin)) {
+        plug = [plugin];
+      } else {
+        plug = plugin;
+      }
+      const [side, options] = plug;
+      if (!side[type])
+        continue;
+      side[type]({
+        RpgPlugin,
+        ...shared
+      }, options);
+    }
+  }
+  loadServerPlugins(plugins, shared) {
+    this.loadPlugins(plugins, shared, "server");
+  }
+  loadClientPlugins(plugins, shared) {
+    this.loadPlugins(plugins, shared, "client");
+  }
+};
+const RpgPlugin = new PluginSystem$1();
+class GameWorker {
+  constructor(options = {}) {
+    this.options = options;
+  }
+  load() {
+    return this;
+  }
+  call(methodName, data) {
+    return this.pool.exec(methodName, [data]);
+  }
+}
+var GameSide;
+(function(GameSide2) {
+  GameSide2["Server"] = "server";
+  GameSide2["Client"] = "client";
+  GameSide2["Worker"] = "worker";
+})(GameSide || (GameSide = {}));
+class RpgCommonGame extends EventEmitter$1 {
+  constructor(side) {
+    super();
+    this.side = side;
+    this.events = {};
+  }
+  get isWorker() {
+    return this.side == "worker";
+  }
+  start(world) {
+    this.world = world;
+  }
+  createWorkers(options) {
+    return new GameWorker(options);
+  }
+  addObject(_class, playerId) {
+    let event;
+    if (!playerId)
+      playerId = generateUID();
+    if (isClass(_class)) {
+      event = new _class(this, playerId);
+    } else {
+      event = _class;
+    }
+    return event;
+  }
+  addPlayer(playerClass, playerId) {
+    const player = this.addObject(playerClass, playerId);
+    return player;
+  }
+  addEvent(eventClass, eventId) {
+    const event = this.addObject(eventClass, eventId);
+    return event;
+  }
+  addShape(obj) {
+    const id = obj.name = obj.name || generateUID();
+    const shape = new RpgShape(obj);
+    shape.name = id;
+    return shape;
+  }
+  async processInput(playerId, controls) {
+    const player = this.world.getObject(playerId);
+    const inputs = [];
+    if (!player)
+      return {
+        player,
+        inputs
+      };
+    while (player.pendingMove.length > 0) {
+      const inputData = player.pendingMove.shift();
+      let {
+        input,
+        deltaTimeInt
+      } = inputData;
+      let moving2 = false;
+      if (controls && controls[input]) {
+        const control = controls[input];
+        const now = Date.now();
+        const inputTime = player.inputsTimestamp[input] || 0;
+        if (inputTime >= now) {
+          continue;
+        }
+        if (control.delay) {
+          let duration;
+          let otherControls = [];
+          if (typeof control.delay == "number") {
+            duration = control.delay;
+          } else {
+            duration = control.delay.duration;
+            if (control.delay.otherControls) {
+              otherControls = control.delay.otherControls;
+            }
+          }
+          player.inputsTimestamp[input] = now + duration;
+          for (let control2 of otherControls) {
+            player.inputsTimestamp[control2] = now + duration;
+          }
+        }
+      }
+      if (input == Control$2.Action) {
+        await player.triggerCollisionWith(RpgCommonPlayer.ACTIONS.ACTION);
+      } else if (input == Direction$2.Left || input == Direction$2.Right || input == Direction$2.Up || input == Direction$2.Down) {
+        moving2 = true;
+        await player.moveByDirection(+input, deltaTimeInt || 1);
+      }
+      if (this.side == GameSide.Server) {
+        await RpgPlugin.emit("Server.onInput", [player, {
+          ...inputData,
+          moving: moving2
+        }], true);
+      }
+      inputs.push(input);
+    }
+    return {
+      player,
+      inputs
+    };
+  }
+}
+const ACTIONS = {
+  IDLE: 0,
+  RUN: 1,
+  ACTION: 2
+};
+class AbstractObject {
+  static get ACTIONS() {
+    return ACTIONS;
+  }
+  constructor(gameEngine, playerId) {
+    this.gameEngine = gameEngine;
+    this.playerId = playerId;
+    this.map = "";
+    this.height = 0;
+    this.width = 0;
+    this.direction = 3;
+    this.checkCollision = true;
+    this.clientModeMove = MoveClientMode$2.ByDirection;
+    this.behavior = Behavior$2.Direction;
+    this.inShapes = {};
+    this.disableVirtualGrid = false;
+    this.shapes = [];
+    this.collisionWith = [];
+    this._collisionWithTiles = [];
+    this._collisionWithShapes = [];
+    this.destroyMove$ = new Subject$1();
+    this._destroy$ = new Subject$1();
+    this._hitboxPos = new SAT.Vector(0, 0);
+    this.setHitbox(this.width, this.height);
+    this.position = {
+      x: 0,
+      y: 0,
+      z: 0
+    };
+  }
+  get id() {
+    return this.playerId;
+  }
+  set id(str2) {
+    this.playerId = str2;
+  }
+  updateInVirtualGrid() {
+    const map2 = this.mapInstance;
+    if (map2 && !this.disableVirtualGrid) {
+      map2.grid.insertInCells(this.id, this.getSizeMaxShape());
+    }
+  }
+  get canMove() {
+    return this.clientModeMove == MoveClientMode$2.ByDirection;
+  }
+  set canMove(val) {
+    this.clientModeMove = val ? MoveClientMode$2.ByDirection : MoveClientMode$2.Disabled;
+  }
+  /**
+   * Get/Set position x, y and z of player
+   *
+   * z is the depth layer. By default, its value is 0. Collisions and overlays will be performed with other objects on the same z-position.
+   *
+   * @title Get/Set position
+   * @prop { { x: number, y: number, z: number } } position
+   * @memberof Player
+   */
+  set position(val) {
+    if (this.isDestroyed)
+      return;
+    const {
+      x: x2,
+      y: y2,
+      z: z2
+    } = val;
+    if (!isInstanceOf(val, Vector2d)) {
+      val = new Vector2d(x2, y2, z2);
+    }
+    this._hitboxPos.x = x2;
+    this._hitboxPos.y = y2;
+    this._hitboxPos.z = z2;
+    this.updateInVirtualGrid();
+    this._position = new Proxy(val, {
+      get: (target, prop) => target[prop],
+      set: (target, prop, value2) => {
+        this._hitboxPos[prop] = value2;
+        target[prop] = value2;
+        this.updateInVirtualGrid();
+        return true;
+      }
+    });
+  }
+  get position() {
+    return this._position;
+  }
+  get worldPositionX() {
+    let x2 = this.position.x;
+    if (this.mapInstance) {
+      x2 += this.mapInstance.worldX;
+    }
+    return x2;
+  }
+  get worldPositionY() {
+    let y2 = this.position.y;
+    if (this.mapInstance) {
+      y2 += this.mapInstance.worldY;
+    }
+    return y2;
+  }
+  set posX(val) {
+    this.position.x = val;
+  }
+  set posY(val) {
+    this.position.y = val;
+  }
+  set posZ(val) {
+    this.position.z = val;
+  }
+  /** @internal */
+  get mapInstance() {
+    if (this.gameEngine.side == GameSide.Client) {
+      return RpgCommonMap.bufferClient.get(this.map);
+    }
+    return RpgCommonMap.buffer.get(this.map);
+  }
+  /**
+  *
+  * Recovers all the colliding shapes of the current player
+  *
+  * @title Get Collision of shapes
+  * @since 3.2.0
+  * @readonly
+  * @prop { RpgShape[] } shapes
+  * @memberof Player
+  * @memberof RpgSpriteLogic
+  */
+  get shapesCollision() {
+    return this._collisionWithShapes;
+  }
+  /**
+  *
+  * Recovers all the colliding tiles of the current player
+  *
+  * @title Get Collision of tiles
+  * @since 3.0.0-beta.4
+  * @readonly
+  * @prop { TileInfo[] } tiles
+  * @memberof Player
+  * @memberof RpgSpriteLogic
+  */
+  get tilesCollision() {
+    return this._collisionWithTiles;
+  }
+  /**
+   *
+   * Recovers all other players and events colliding with the current player's hitbox
+   *
+   * @title Get Collision of other players/events
+   * @since 3.0.0-beta.4
+   * @readonly
+   * @prop { (RpgPlayer | RpgEvent)[] } otherPlayersCollision
+   * @memberof Player
+   * @memberof RpgSpriteLogic
+   */
+  get otherPlayersCollision() {
+    return this.collisionWith;
+  }
+  /**
+   * Define the size of the player. You can set the hitbox for collisions
+   *
+   * ```ts
+   * player.setSizes({
+   *      width: 32,
+   *      height: 32
+   * })
+   * ```
+   *
+   * and with hitbox:
+   *
+   *  ```ts
+   * player.setSizes({
+   *      width: 32,
+   *      height: 32,
+   *      hitbox: {
+   *          width: 20,
+   *          height: 20
+   *      }
+   * })
+   * ```
+   *
+   * @title Set Sizes
+   * @method player.setSizes(key,value)
+   * @param { { width: number, height: number, hitbox?: { width: number, height: number } } } obj
+   * @deprecated
+   * @returns {void}
+   * @memberof Player
+   */
+  setSizes(obj) {
+    this.width = obj.width;
+    this.height = obj.height;
+    if (obj.hitbox) {
+      this.hitbox = new SAT.Box(this._hitboxPos, obj.hitbox.width, obj.hitbox.height);
+    }
+  }
+  /**
+   * Define the hitbox of the player.
+   *
+   * ```ts
+   * player.setHitbox(20, 20)
+   * ```
+   *
+   * @title Set Hitbox
+   * @method player.setHitbox(width,height)
+   * @param {number} width
+   * @param {number} height
+   * @returns {void}
+   * @memberof Player
+   */
+  setHitbox(width, height) {
+    const map2 = this.mapInstance;
+    if (map2) {
+      this.width = map2.tileWidth;
+      this.height = map2.tileHeight;
+    }
+    this.hitbox = new SAT.Box(this._hitboxPos, width, height);
+    this.wHitbox = width;
+    this.hHitbox = height;
+    this.updateInVirtualGrid();
+  }
+  set wHitbox(val) {
+    this.hitbox.w = val;
+  }
+  set hHitbox(val) {
+    this.hitbox.h = val;
+  }
+  get wHitbox() {
+    return this.hitbox.w;
+  }
+  get hHitbox() {
+    return this.hitbox.h;
+  }
+  directionToAngle(direction) {
+    const angle2 = (direction < 2 ? +direction + 2 : direction - 2) * 90;
+    return toRadians(angle2);
+  }
+  /** @internal */
+  defineNextPosition(direction, deltaTimeInt) {
+    const angle2 = this.directionToAngle(direction);
+    const computePosition = (prop) => {
+      return this.position[prop] + this.speed * deltaTimeInt * (Math.round(Math[prop == "x" ? "cos" : "sin"](angle2) * 100) / 100);
+    };
+    const x2 = this.speed < 1 ? computePosition("x") : round$1(computePosition("x"));
+    const y2 = this.speed < 1 ? computePosition("y") : round$1(computePosition("y"));
+    return new Vector2d(x2, y2, ~~this.position.z);
+  }
+  /** @internal */
+  setPosition({
+    x: x2,
+    y: y2,
+    tileX,
+    tileY
+  }, move = true) {
+    const {
+      tileWidth,
+      tileHeight
+    } = this.mapInstance;
+    if (x2 !== void 0)
+      this.posX = x2;
+    if (y2 !== void 0)
+      this.posY = y2;
+    if (tileX !== void 0)
+      this.posX = tileX * tileWidth;
+    if (tileY !== void 0)
+      this.posY = tileY * tileHeight;
+  }
+  /** @internal */
+  async triggerCollisionWith(type) {
+    let doChanges = false;
+    for (let collisionWith of this.collisionWith) {
+      if (collisionWith.isDestroyed)
+        continue;
+      if (collisionWith instanceof RpgShape) {
+        const goMap = collisionWith.getProperty("go-map");
+        if (goMap && "changeMap" in this)
+          await this.changeMap(goMap);
+      } else {
+        if (type == AbstractObject.ACTIONS.ACTION) {
+          if ("onAction" in collisionWith) {
+            await collisionWith.execMethod("onAction", [this]);
+            doChanges = true;
+          }
+        } else if ("onPlayerTouch" in collisionWith) {
+          await collisionWith.execMethod("onPlayerTouch", [this]);
+          doChanges = true;
+        }
+      }
+    }
+    if (this.syncChanges && doChanges)
+      this.syncChanges();
+  }
+  /** @internal */
+  zCollision(other) {
+    const z2 = this.position.z;
+    const otherZ = other.position.z;
+    return intersection$1([z2, z2 + this.height], [otherZ, otherZ + other.height]);
+  }
+  /** @internal */
+  moveByDirection(direction, deltaTimeInt) {
+    const nextPosition = this.defineNextPosition(direction, deltaTimeInt);
+    return this.move(nextPosition);
+  }
+  /**
+   * Retrieves a tile and checks if the player has a collision
+   *
+   * ```ts
+   * const tileInfo = player.getTile(20, 30)
+   * console.log(tileInfo)
+   * ```
+   *
+   * Example of returns:
+   *
+   * ```ts
+   *   {
+   *       tiles: [
+   *           {
+   *               id: 0,
+   *               terrain: [],
+   *               probability: null,
+   *               properties: [Object],
+   *               animations: [],
+   *               objectGroups: [],
+   *               image: null,
+   *               gid: 1
+   *           }
+   *       ],
+   *       hasCollision: false,
+   *       isOverlay: undefined,
+   *       objectGroups: [],
+   *       isClimbable: undefined,
+   *       tileIndex: 93
+   *   }
+   * ```
+   *
+   * @title Get Tile
+   * @since 3.0.0-beta.4
+   * @method player.getTile(x,y,z?)
+   * @param {number} x
+   * @param {number} y
+   * @param {number} [z]
+   * @returns {object}
+   * @memberof Player
+   * @memberof RpgSpriteLogic
+   */
+  getTile(x2, y2, z2 = 0, hitbox) {
+    const map2 = this.mapInstance;
+    return map2.getTile(hitbox || this.hitbox, x2, y2, [z2, this.height]);
+  }
+  async collisionObjects(playerSizeBox, hitbox, triggers) {
+    const map2 = this.mapInstance;
+    if (!map2)
+      return true;
+    const events2 = this.gameEngine.world.getObjectsOfGroup(this.map, this);
+    const objects = map2.grid.getObjectsByBox(playerSizeBox);
+    let boolFound = false;
+    for (let objectId of objects) {
+      if (!events2[objectId])
+        continue;
+      const event = events2[objectId]["object"] || events2[objectId];
+      if (event.id == this.id)
+        continue;
+      if (!this.zCollision(event))
+        continue;
+      const collided = Hit.testPolyCollision(HitType$2.Box, hitbox, event.hitbox);
+      for (let shape of this.shapes) {
+        await this.collisionWithShape(shape, event);
+      }
+      for (let shape of event.shapes) {
+        await event.collisionWithShape(shape, this);
+      }
+      if (triggers == null ? void 0 : triggers.near)
+        triggers.near(event);
+      if (collided) {
+        this.collisionWith.push(event);
+        this.triggerCollisionWith();
+        let throughOtherPlayer = false;
+        if (event.type == PlayerType$2.Player && this.type == PlayerType$2.Player) {
+          if (!(event.throughOtherPlayer || this.throughOtherPlayer)) {
+            boolFound = true;
+            if (!(triggers == null ? void 0 : triggers.allSearch))
+              return true;
+          } else {
+            throughOtherPlayer = true;
+          }
+        }
+        if (!throughOtherPlayer && !(event.through || this.through)) {
+          boolFound = true;
+          if (!(triggers == null ? void 0 : triggers.allSearch))
+            return true;
+        }
+      }
+      if (boolFound) {
+        if (triggers == null ? void 0 : triggers.collision)
+          triggers.collision(event);
+      }
+    }
+    return boolFound;
+  }
+  /** @internal */
+  async collisionWithShape(shape, player, nextPosition) {
+    const collision = shape.hasCollision;
+    const z2 = shape.z;
+    if (shape.isShapePosition())
+      return false;
+    if (z2 !== void 0 && !this.zCollision({
+      position: {
+        z: z2
+      },
+      height: this.mapInstance.zTileHeight
+    })) {
+      return false;
+    }
+    let position;
+    let {
+      hitbox
+    } = player;
+    if (nextPosition) {
+      position = nextPosition.copy();
+    } else {
+      position = player.position.copy();
+    }
+    const hitboxObj = Hit.createObjectHitbox(position.x, position.y, position.z, hitbox.w, hitbox.h);
+    let collided = Hit.testPolyCollision(shape.type, hitboxObj, shape.hitbox);
+    const playerPositionSaved = player.position.copy();
+    const verifyIfPositionChanged = () => {
+      if (this.position.z != playerPositionSaved.z && nextPosition) {
+        nextPosition.z = this.position.z;
+      }
+      if (this.position.x != playerPositionSaved.x || this.position.y != playerPositionSaved.y) {
+        return true;
+      }
+    };
+    if (collided) {
+      this._collisionWithShapes.push(shape);
+      if (!collision)
+        await shape.in(this);
+      if (verifyIfPositionChanged() === true)
+        return true;
+      this.triggerCollisionWith();
+      if (collision)
+        return true;
+    } else {
+      await shape.out(this);
+      if (verifyIfPositionChanged() === true)
+        return true;
+    }
+    return false;
+  }
+  async collisionShapes(playerSizeBox, nextPosition, triggers) {
+    const map2 = this.mapInstance;
+    if (!map2)
+      return false;
+    const shapes = this.gameEngine.world.getShapesOfGroup(this.map);
+    const shapesInGrid = this.gameEngine.side == GameSide.Client ? new Set(Object.keys(shapes)) : map2.gridShapes.getObjectsByBox(playerSizeBox);
+    let boolFound = false;
+    for (let shapeId of shapesInGrid) {
+      const shape = shapes[shapeId]["object"] || shapes[shapeId];
+      if (triggers == null ? void 0 : triggers.near)
+        triggers.near(shape);
+      const bool = await this.collisionWithShape(shape, this, nextPosition);
+      if (bool) {
+        if (triggers == null ? void 0 : triggers.collision)
+          triggers.collision(shape);
+        boolFound = true;
+        if (!(triggers == null ? void 0 : triggers.allSearch))
+          return true;
+      }
+    }
+    return boolFound;
+  }
+  async computeNextPositionByTarget(nextPosition, target) {
+    const pullDistance = target.distanceWith(nextPosition);
+    if (pullDistance <= this.speed) {
+      return nextPosition.set(target);
+    }
+    const pull2 = target.copy().subtract(nextPosition).multiply(1 / pullDistance);
+    const totalPush = new Vector2dZero();
+    let contenders = 0;
+    const hitbox = Hit.createObjectHitbox(nextPosition.x, nextPosition.y, nextPosition.z, this.hitbox.w, this.hitbox.h);
+    const createObstacle = function(x2, y2, radius) {
+      const obstacle = new Vector2d(x2, y2);
+      let push2 = nextPosition.copy().subtract(obstacle);
+      let distance2 = nextPosition.distanceWith(obstacle) - radius - radius;
+      if (distance2 < radius * 2 * 10) {
+        ++contenders;
+        if (distance2 < 1e-4)
+          distance2 = 1e-4;
+        let weight = 1 / distance2;
+        totalPush.add(push2.multiply(weight));
+      }
+      return obstacle;
+    };
+    const area2 = this.mapInstance.tileheight * 2;
+    this.mapInstance.gridTiles.getCells({
+      minX: nextPosition.x - area2,
+      maxX: nextPosition.x + area2,
+      minY: nextPosition.y - area2,
+      maxY: nextPosition.y + area2
+    }, (index2) => {
+      if (index2 < 0)
+        return;
+      const pos = this.mapInstance.getTilePosition(index2);
+      const hitbox2 = Hit.createObjectHitbox(pos.x, pos.y, nextPosition.z, this.hitbox.w, this.hitbox.h);
+      const radius = this.mapInstance.tilewidth / 2;
+      const tile = this.getTile(pos.x, pos.y, nextPosition.z, hitbox2);
+      if (tile.hasCollision) {
+        createObstacle(pos.x, pos.y, radius);
+      }
+    });
+    const playerSizeBox = this.getSizeMaxShape(nextPosition.x, nextPosition.y);
+    await this.collisionObjects(playerSizeBox, hitbox, {
+      collision: (event) => {
+        const {
+          x: x2,
+          y: y2
+        } = event.position;
+        createObstacle(x2, y2, event.hitbox.w);
+      },
+      allSearch: true
+    });
+    await this.collisionShapes(playerSizeBox, nextPosition, {
+      collision: (shape) => {
+        const {
+          x: x2,
+          y: y2
+        } = shape.position;
+        createObstacle(x2, y2, shape.hitbox.w);
+      },
+      allSearch: true
+    });
+    pull2.multiply(Math.max(1, 4 * contenders)).add(totalPush).normalize();
+    return nextPosition.add(pull2.multiply(this.speed));
+  }
+  async isCollided(nextPosition, options = {}) {
+    var _a;
+    this.collisionWith = [];
+    this._collisionWithTiles = [];
+    const prevMapId = this.map;
+    const hitbox = Hit.createObjectHitbox(nextPosition.x, nextPosition.y, 0, this.hitbox.w, this.hitbox.h);
+    const boundingMap = (_a = this.mapInstance) == null ? void 0 : _a.boundingMap(nextPosition, this.hitbox);
+    let collided = false;
+    if (boundingMap == null ? void 0 : boundingMap.bounding) {
+      this.position.set(nextPosition);
+      if (!options.allSearch)
+        return true;
+      else
+        collided = true;
+    }
+    const tileCollision = (x2, y2) => {
+      const tile = this.getTile(x2, y2, nextPosition.z, hitbox);
+      if (tile.hasCollision) {
+        this._collisionWithTiles.push(tile);
+        return true;
+      }
+      return false;
+    };
+    if (tileCollision(nextPosition.x, nextPosition.y) || tileCollision(nextPosition.x + this.hitbox.w, nextPosition.y) || tileCollision(nextPosition.x, nextPosition.y + this.hitbox.h) || tileCollision(nextPosition.x + this.hitbox.w, nextPosition.y + this.hitbox.h)) {
+      if (!options.allSearch)
+        return true;
+      else
+        collided = true;
+    }
+    if (this.autoChangeMap && this.type == PlayerType$2.Player) {
+      const changeMap = await this.autoChangeMap(nextPosition);
+      if (changeMap) {
+        return true;
+      }
+    }
+    const playerSizeBox = this.getSizeMaxShape(nextPosition.x, nextPosition.y);
+    if (await this.collisionObjects(playerSizeBox, hitbox, options)) {
+      if (!options.allSearch)
+        return true;
+      else
+        collided = true;
+    }
+    if (await this.collisionShapes(playerSizeBox, nextPosition, options)) {
+      if (!options.allSearch)
+        return true;
+      else
+        collided = true;
+    }
+    if (prevMapId != this.map) {
+      return true;
+    }
+    return collided;
+  }
+  /**
+   * Attach a shape to the player (and allow interaction with it)
+   *
+   * ```ts
+   * import { ShapePositioning } from '@rpgjs/server'
+   *
+   * player.attachShape({
+   *      width: 100,
+   *      height: 100,
+   *      positioning: ShapePositioning.Center
+   * })
+   * ```
+   *
+   * @title Attach Shape
+   * @method player.attachShape(parameters)
+   * @param { { width: number, height: number, positioning?, name?, properties?: object } } obj
+   * - positioning: Indicate where the shape is placed.
+   * - properties: An object in order to retrieve information when interacting with the shape
+   * - name: The name of the shape
+   * @since 3.0.0-beta.3
+   * @returns {RpgShape}
+   * @memberof Player
+   */
+  attachShape(obj) {
+    obj.name = obj.name || generateUID();
+    const shape = new RpgShape({
+      ...obj,
+      fixEvent: this
+    });
+    this.shapes.push(shape);
+    return shape;
+  }
+  /**
+   * Returns all shapes assigned to this player
+   *
+   * @title Get Shapes
+   * @method player.getShapes()
+   * @returns {RpgShape[]}
+   * @since 3.0.0-beta.3
+   * @memberof Player
+   * @memberof RpgSpriteLogic
+   */
+  getShapes() {
+    return this.shapes;
+  }
+  autoChangeDirection(nextPosition) {
+    const {
+      x: x2,
+      y: y2
+    } = this.position;
+    const {
+      x: nx,
+      y: ny
+    } = nextPosition;
+    const diff = Math.abs(x2 - nx) > Math.abs(y2 - ny);
+    if (diff) {
+      if (nx > x2) {
+        this.changeDirection(Direction$2.Right);
+      } else {
+        this.changeDirection(Direction$2.Left);
+      }
+    } else {
+      if (ny > y2) {
+        this.changeDirection(Direction$2.Down);
+      } else {
+        this.changeDirection(Direction$2.Up);
+      }
+    }
+  }
+  // @internal
+  /**
+   * We need to know if the event is deleted. Because when the event is deleted, you don't update the positions and you don't send the positions back to the client.
+   */
+  get isDestroyed() {
+    return !!this._destroy$["_closed"];
+  }
+  /**
+  * Stops the movement of the player who moves towards his target
+  *
+  * @title Stop Move To
+  * @method player.stopMoveTo()
+  * @returns {void}
+  * @since 3.2.0
+  * @memberof MoveManager
+  */
+  stopMoveTo() {
+    if (this.destroyMove$.closed)
+      return;
+    this.destroyMove$.next(true);
+    this.destroyMove$.unsubscribe();
+  }
+  _moveTo(tick$, positionTarget, options = {}) {
+    let i2 = 0;
+    let count = 0;
+    const lastPositions = [];
+    this.stopMoveTo();
+    this.destroyMove$ = new Subject$1();
+    const {
+      infinite,
+      onStuck,
+      onComplete
+    } = options;
+    const getPosition = () => {
+      let pos;
+      if ("x" in positionTarget) {
+        pos = new Vector2d(positionTarget.x, positionTarget.y);
+      } else {
+        pos = positionTarget.position;
+      }
+      return pos;
+    };
+    return tick$.pipe(takeUntil$1(this.destroyMove$), takeUntil$1(this._destroy$), mergeMap(() => from$1(this.computeNextPositionByTarget(this.position.copy(), getPosition()))), filter$2(() => {
+      return this.isDestroyed === false;
+    }), map$8((position) => {
+      this.autoChangeDirection(position);
+      return this.position.set(position);
+    }), tap$1((position) => {
+      lastPositions[i2] = position.copy();
+      i2++;
+      count++;
+      if (i2 >= 3) {
+        i2 = 0;
+      }
+      if (lastPositions[2] && lastPositions[0].isEqual(lastPositions[2])) {
+        onStuck == null ? void 0 : onStuck(count);
+      } else if (this.position.isEqual(getPosition())) {
+        onComplete == null ? void 0 : onComplete();
+        if (!infinite) {
+          this.stopMoveTo();
+        }
+      } else {
+        count = 0;
+      }
+    }));
+  }
+  /** @internal */
+  async move(nextPosition) {
+    this.autoChangeDirection(nextPosition);
+    const notCollided = !await this.isCollided(nextPosition);
+    if ((notCollided || !this.checkCollision) && !this.isDestroyed) {
+      this.position = nextPosition.copy();
+      await RpgPlugin.emit(HookServer.PlayerMove, this);
+    }
+    return true;
+  }
+  /**
+   * Retrieves all shapes where the player is located
+   *
+   * @title Get In-Shapes
+   * @method player.getInShapes()
+   * @returns {RpgShape[]}
+   * @since 3.0.0-beta.3
+   * @memberof Player
+   */
+  getInShapes() {
+    return Object.values(this.inShapes);
+  }
+  /**
+  * Get the current direction.
+  *
+  * ```ts
+  * player.getDirection()
+  * ```
+  *
+  * @title Get Direction
+  * @method player.getDirection()
+  * @returns {Direction | number} direction
+  * @memberof Player
+  */
+  getDirection(direction) {
+    return direction || this.direction;
+  }
+  /**
+  * Changes the player's direction
+  *
+  * ```ts
+  * import { Direction } from '@rpgjs/server'
+  *
+  * player.changeDirection(Direction.Left)
+  * ```
+  *
+  * @title Change direction
+  * @method player.changeDirection(direction)
+  * @param {Direction} direction
+  * @enum {string}
+  *
+  * Direction.Left | left
+  * Direction.Right | right
+  * Direction.Up | up
+  * Direction.Down | down
+  * @returns {boolean} the direction has changed
+  * @memberof Player
+  */
+  changeDirection(direction) {
+    const dir = +this.getDirection(direction);
+    if (dir === void 0)
+      return false;
+    this.direction = dir;
+    return true;
+  }
+  /**
+   * Gets the necessary number of pixels to allow the player to cross a tile.
+   * This is the ratio between the height or width of the tile and the speed of the player.
+   */
+  get nbPixelInTile() {
+    const direction = this.getDirection();
+    switch (direction) {
+      case Direction$2.Down:
+      case Direction$2.Up:
+        return Math.floor(this.mapInstance.tileHeight / this.speed);
+      case Direction$2.Left:
+      case Direction$2.Right:
+        return Math.floor(this.mapInstance.tileWidth / this.speed);
+      default:
+        return NaN;
+    }
+  }
+  getSizeMaxShape(x2, y2) {
+    const _x = x2 || this.position.x;
+    const _y = y2 || this.position.y;
+    let minX = _x;
+    let minY = _y;
+    let maxX = _x + this.wHitbox;
+    let maxY = _y + this.hHitbox;
+    const shapes = this.getShapes();
+    for (let shape of shapes) {
+      if (shape.x < minX)
+        minX = shape.x;
+      if (shape.y < minY)
+        minY = shape.y;
+      const shapeMaxX = shape.x + shape.width;
+      const shapeMaxY = shape.y + shape.height;
+      if (shapeMaxX > maxX)
+        maxX = shapeMaxX;
+      if (shapeMaxY > maxY)
+        maxY = shapeMaxY;
+    }
+    return {
+      minX,
+      minY,
+      maxX,
+      maxY
+    };
+  }
+  /** @internal */
+  async execMethod(methodName, methodData, instance) {
+  }
+}
+class RpgCommonPlayer extends AbstractObject {
+  constructor() {
+    super(...arguments);
+    this.events = [];
+    this.layerName = "";
+    this.data = {};
+    this.pendingMove = [];
+    this.inputsTimestamp = {};
+  }
+}
+var PrebuiltGui;
+(function(PrebuiltGui2) {
+  PrebuiltGui2["Dialog"] = "rpg-dialog";
+  PrebuiltGui2["MainMenu"] = "rpg-main-menu";
+  PrebuiltGui2["Shop"] = "rpg-shop";
+  PrebuiltGui2["Disconnect"] = "rpg-disconnect";
+  PrebuiltGui2["Gameover"] = "rpg-gameover";
+  PrebuiltGui2["Save"] = "rpg-save";
+  PrebuiltGui2["Controls"] = "rpg-controls";
+  PrebuiltGui2["Notification"] = "rpg-notification";
+})(PrebuiltGui || (PrebuiltGui = {}));
+class MockIo {
+  constructor() {
+    this.events = /* @__PURE__ */ new Map();
+  }
+  on(name, value2) {
+    this.events.set(name, value2);
+  }
+  off(name) {
+    this.events.delete(name);
+  }
+  once(name, value2) {
+    this.on(name, value2);
+  }
+  _trigger(name, data, client) {
+    const fn = this.events.get(name);
+    if (fn)
+      fn(data, client);
+  }
+}
+class MockSocket {
+  constructor(io, handshake) {
+    this.io = io;
+    this.handshake = handshake;
+    this.id = "" + Math.random();
+  }
+  on(name, value2) {
+    this.io.on(name, value2, this.id);
+    return this;
+  }
+  once(name, value2) {
+    this.io.once(name, value2, this.id);
+    return this;
+  }
+  emit(name, data) {
+    this.io.emit(name, data, this.id);
+  }
+  removeAllListeners(name) {
+    return this.off(name);
+  }
+  off(name) {
+    this.io.off(name, this.id);
+  }
+}
+class MockServerIo extends MockIo {
+  constructor() {
+    super(...arguments);
+    this.clients = /* @__PURE__ */ new Map();
+  }
+  connection(client, handshake) {
+    const socket = new MockSocket(this, handshake);
+    this.clients.set(socket.id, client);
+    client.id = socket.id;
+    this._trigger("connection", socket);
+  }
+  emit(name, data, id) {
+    var _a;
+    (_a = this.clients.get(id)) == null ? void 0 : _a._trigger(name, data);
+  }
+  clear() {
+    this.clients.clear();
+  }
+}
+new MockServerIo();
+let Scheduler$1 = class Scheduler extends EventEmitter$1 {
+  constructor() {
+    super(...arguments);
+    this.fps = 60;
+    this.deltaTime = 0;
+    this.frame = 0;
+    this.timestamp = 0;
+    this.requestedDelay = 0;
+    this.lastTimestamp = 0;
+    this._tick = new BehaviorSubject$1({
+      timestamp: 0,
+      deltaTime: 0,
+      frame: 0,
+      deltaRatio: 0
+    });
+    this._stop = false;
+  }
+  get tick() {
+    return this._tick.asObservable();
+  }
+  nextTick(timestamp) {
+    this.lastTimestamp = this.lastTimestamp || this.timestamp;
+    this.deltaTime = Utils.preciseNow() - this.timestamp;
+    this.timestamp = timestamp;
+    this._tick.next({
+      timestamp: this.timestamp,
+      deltaTime: this.deltaTime,
+      frame: this.frame,
+      deltaRatio: ~~this.deltaTime / ~~Utils.fps2ms(this.fps)
+    });
+    this.lastTimestamp = this.timestamp;
+    this.frame++;
+  }
+  /**
+   * start the schedule
+   * @return {Scheduler} returns this scheduler instance
+   */
+  start(options) {
+    if (options.maxFps)
+      this.maxFps = options.maxFps;
+    if (options.fps)
+      this.fps = options.fps;
+    if (options.delay)
+      this.requestedDelay = options.delay;
+    const requestAnimationFrame2 = (fn) => {
+      if (Utils.isBrowser()) {
+        window.requestAnimationFrame(fn.bind(this));
+      } else {
+        setTimeout(() => {
+          this.requestedDelay = 0;
+          fn(Utils.preciseNow());
+        }, Utils.fps2ms(this.fps) + this.requestedDelay);
+      }
+    };
+    if (!this.maxFps) {
+      const loop = (timestamp) => {
+        requestAnimationFrame2(loop);
+        this.nextTick(timestamp);
+      };
+      requestAnimationFrame2(loop);
+    } else {
+      const msInterval = Utils.fps2ms(this.maxFps);
+      let now = Utils.preciseNow();
+      let then = Utils.preciseNow();
+      const loop = (timestamp) => {
+        if (this._stop)
+          return;
+        requestAnimationFrame2(loop);
+        now = Utils.preciseNow();
+        const elapsed = now - then;
+        if (elapsed > msInterval) {
+          then = now - elapsed % msInterval;
+          this.nextTick(timestamp);
+        }
+      };
+      requestAnimationFrame2(loop);
+    }
+    return this;
+  }
+  stop() {
+    this._stop = true;
+    this._tick.complete();
+  }
+};
+function warning(...message) {
+  console.warn("[RPGJS Warning]", ...message);
+}
+var Side;
+(function(Side2) {
+  Side2["Server"] = "server";
+  Side2["Client"] = "client";
+})(Side || (Side = {}));
+function RpgModule(options) {
+  return (target) => {
+    if (options.hooks) {
+      target.hooks = options.hooks;
+    }
+    for (let key in options) {
+      target.prototype[key] = options[key];
+    }
+  };
+}
+async function loadModules(modules, obj, middleware) {
+  const {
+    side,
+    relations
+  } = obj;
+  let playerProps = {};
+  let hooks = {};
+  const getModuleClass = (module) => {
+    if (!module)
+      return null;
+    let plug = [];
+    if (!isArray$8(module)) {
+      plug = [module];
+    } else {
+      plug = module;
+    }
+    const [moduleClassSides, options] = plug;
+    const moduleClass = moduleClassSides[side];
+    if (!moduleClass)
+      return null;
+    return {
+      moduleClass,
+      options
+    };
+  };
+  for (let module of modules) {
+    const moduleObject = getModuleClass(module);
+    if (!moduleObject)
+      continue;
+    const {
+      moduleClass
+    } = moduleObject;
+    if (moduleClass.hooks) {
+      for (let key in moduleClass.hooks) {
+        if (!hooks[key])
+          hooks[key] = [];
+        hooks[key] = [...hooks[key], ...moduleClass.hooks[key]];
+      }
+    }
+  }
+  for (let module of modules) {
+    const moduleObject = getModuleClass(module);
+    if (!moduleObject)
+      continue;
+    const {
+      moduleClass,
+      options
+    } = moduleObject;
+    let mod;
+    if (options && side == Side.Client && options[Side.Server]) {
+      warning(`Data that may be sensitive (normally visible only on the server side) are made optional and visible on the client side.
+Instead, import the configuration with the server! flag into an import. Example: 
+
+import config from 'server!./config
+
+'`, options[Side.Server]);
+    }
+    if (options && !isClass(moduleClass) && isFunction$7(moduleClass)) {
+      mod = new (moduleClass(options[side]))();
+    } else if (isClass(moduleClass)) {
+      mod = new moduleClass();
+    } else {
+      mod = moduleClass;
+    }
+    if (middleware) {
+      mod = middleware(mod);
+      if (isPromise$3(mod)) {
+        mod = await mod;
+      }
+    }
+    const {
+      imports,
+      maps,
+      spritesheets: spritesheets2,
+      sounds: sounds2,
+      gui,
+      scenes,
+      engine,
+      database,
+      worldMaps,
+      scalability,
+      events: events2
+    } = mod;
+    if (imports) {
+      await loadModules(imports, obj);
+    }
+    if (maps) {
+      RpgPlugin.on(HookServer.AddMap, () => maps);
+    }
+    if (events2) {
+      RpgPlugin.on(HookServer.AddEvent, () => events2);
+    }
+    if (worldMaps) {
+      RpgPlugin.on(HookServer.AddWorldMaps, () => worldMaps);
+    }
+    if (database) {
+      RpgPlugin.on(HookServer.AddDatabase, () => database);
+    }
+    if (spritesheets2) {
+      RpgPlugin.on(HookClient.AddSpriteSheet, () => spritesheets2);
+    }
+    if (sounds2) {
+      RpgPlugin.on(HookClient.AddSound, () => sounds2);
+    }
+    if (gui) {
+      RpgPlugin.on(HookClient.AddGui, () => gui);
+    }
+    const player = side == Side.Server ? mod.player : mod.sprite;
+    const loadRelations = (hook, relationName) => {
+      if (!hook)
+        return;
+      for (let method in relations[relationName]) {
+        const hookName = relations[relationName][method];
+        if (hook[method])
+          RpgPlugin.on(hookName, hook[method]);
+      }
+      if (hooks[relationName]) {
+        for (let methodName of hooks[relationName]) {
+          const hookName = side + "." + relationName + "." + methodName;
+          RpgPlugin.customHooks[hookName] = true;
+          if (hook[methodName])
+            RpgPlugin.on(hookName, hook[methodName]);
+        }
+      }
+    };
+    loadRelations(player, "player");
+    if (player && player.props) {
+      playerProps = Object.assign(playerProps, player.props);
+    }
+    loadRelations(engine, "engine");
+    if (scalability)
+      loadRelations(scalability._hooks, "scalability");
+    if (scenes)
+      loadRelations(scenes.map, "sceneMap");
+  }
+  return {
+    playerProps
+  };
+}
+function hexToRGB(hex) {
+  let r2 = parseInt(hex.substring(0, 2), 16);
+  let g2 = parseInt(hex.substring(2, 4), 16);
+  let b3 = parseInt(hex.substring(4, 6), 16);
+  return [r2, g2, b3];
+}
+function RGBToHex(rgb) {
+  let r2 = rgb[0].toString(16).padStart(2, "0");
+  let g2 = rgb[1].toString(16).padStart(2, "0");
+  let b3 = rgb[2].toString(16).padStart(2, "0");
+  return r2 + g2 + b3;
+}
+function transitionColor(startColor, endColor, steps) {
+  let startRGB = hexToRGB(startColor.replace("#", ""));
+  let endRGB = hexToRGB(endColor.replace("#", ""));
+  let deltaRGB = [(endRGB[0] - startRGB[0]) / steps, (endRGB[1] - startRGB[1]) / steps, (endRGB[2] - startRGB[2]) / steps];
+  let colors = [];
+  for (let i2 = 0; i2 < steps; i2++) {
+    let color = [startRGB[0] + deltaRGB[0] * i2, startRGB[1] + deltaRGB[1] * i2, startRGB[2] + deltaRGB[2] * i2];
+    colors.push(RGBToHex(color));
+  }
+  colors.push(endColor.replace("#", ""));
+  return colors;
+}
+const DefaultInput = {
+  [Control$2.Up]: {
+    repeat: true,
+    bind: Input$2.Up
+  },
+  [Control$2.Down]: {
+    repeat: true,
+    bind: Input$2.Down
+  },
+  [Control$2.Right]: {
+    repeat: true,
+    bind: Input$2.Right
+  },
+  [Control$2.Left]: {
+    repeat: true,
+    bind: Input$2.Left
+  },
+  [Control$2.Action]: {
+    bind: [Input$2.Space, Input$2.Enter]
+  },
+  [Control$2.Back]: {
+    bind: Input$2.Escape
+  }
+};
+function isFunction$4(value2) {
   return typeof value2 === "function";
 }
 function createErrorClass(createImpl) {
@@ -7730,7 +10668,7 @@ var Subscription = function() {
         }
       }
       var initialFinalizer = this.initialTeardown;
-      if (isFunction$3(initialFinalizer)) {
+      if (isFunction$4(initialFinalizer)) {
         try {
           initialFinalizer();
         } catch (e3) {
@@ -7819,10 +10757,10 @@ var Subscription = function() {
 }();
 var EMPTY_SUBSCRIPTION = Subscription.EMPTY;
 function isSubscription(value2) {
-  return value2 instanceof Subscription || value2 && "closed" in value2 && isFunction$3(value2.remove) && isFunction$3(value2.add) && isFunction$3(value2.unsubscribe);
+  return value2 instanceof Subscription || value2 && "closed" in value2 && isFunction$4(value2.remove) && isFunction$4(value2.add) && isFunction$4(value2.unsubscribe);
 }
 function execFinalizer(finalizer) {
-  if (isFunction$3(finalizer)) {
+  if (isFunction$4(finalizer)) {
     finalizer();
   } else {
     finalizer.unsubscribe();
@@ -7981,7 +10919,7 @@ var SafeSubscriber = function(_super) {
   function SafeSubscriber2(observerOrNext, error2, complete) {
     var _this = _super.call(this) || this;
     var partialObserver;
-    if (isFunction$3(observerOrNext) || !observerOrNext) {
+    if (isFunction$4(observerOrNext) || !observerOrNext) {
       partialObserver = {
         next: observerOrNext !== null && observerOrNext !== void 0 ? observerOrNext : void 0,
         error: error2 !== null && error2 !== void 0 ? error2 : void 0,
@@ -8126,13 +11064,13 @@ function getPromiseCtor(promiseCtor) {
   return (_a = promiseCtor !== null && promiseCtor !== void 0 ? promiseCtor : config.Promise) !== null && _a !== void 0 ? _a : Promise;
 }
 function isObserver(value2) {
-  return value2 && isFunction$3(value2.next) && isFunction$3(value2.error) && isFunction$3(value2.complete);
+  return value2 && isFunction$4(value2.next) && isFunction$4(value2.error) && isFunction$4(value2.complete);
 }
 function isSubscriber(value2) {
   return value2 && value2 instanceof Subscriber || isObserver(value2) && isSubscription(value2);
 }
 function hasLift(source) {
-  return isFunction$3(source === null || source === void 0 ? void 0 : source.lift);
+  return isFunction$4(source === null || source === void 0 ? void 0 : source.lift);
 }
 function operate(init2) {
   return function(source) {
@@ -8510,28 +11448,28 @@ var AsyncAction = function(_super) {
   };
   return AsyncAction2;
 }(Action);
-var Scheduler$1 = function() {
-  function Scheduler2(schedulerActionCtor, now) {
+var Scheduler2 = function() {
+  function Scheduler3(schedulerActionCtor, now) {
     if (now === void 0) {
-      now = Scheduler2.now;
+      now = Scheduler3.now;
     }
     this.schedulerActionCtor = schedulerActionCtor;
     this.now = now;
   }
-  Scheduler2.prototype.schedule = function(work, delay, state) {
+  Scheduler3.prototype.schedule = function(work, delay, state) {
     if (delay === void 0) {
       delay = 0;
     }
     return new this.schedulerActionCtor(this, work).schedule(state, delay);
   };
-  Scheduler2.now = dateTimestampProvider.now;
-  return Scheduler2;
+  Scheduler3.now = dateTimestampProvider.now;
+  return Scheduler3;
 }();
 var AsyncScheduler = function(_super) {
   __extends(AsyncScheduler2, _super);
   function AsyncScheduler2(SchedulerAction, now) {
     if (now === void 0) {
-      now = Scheduler$1.now;
+      now = Scheduler2.now;
     }
     var _this = _super.call(this, SchedulerAction, now) || this;
     _this.actions = [];
@@ -8560,16 +11498,16 @@ var AsyncScheduler = function(_super) {
     }
   };
   return AsyncScheduler2;
-}(Scheduler$1);
+}(Scheduler2);
 var asyncScheduler = new AsyncScheduler(AsyncAction);
 function isScheduler(value2) {
-  return value2 && isFunction$3(value2.schedule);
+  return value2 && isFunction$4(value2.schedule);
 }
 function last(arr) {
   return arr[arr.length - 1];
 }
 function popResultSelector(args) {
-  return isFunction$3(last(args)) ? args.pop() : void 0;
+  return isFunction$4(last(args)) ? args.pop() : void 0;
 }
 function popScheduler(args) {
   return isScheduler(last(args)) ? args.pop() : void 0;
@@ -8578,13 +11516,13 @@ var isArrayLike = function(x2) {
   return x2 && typeof x2.length === "number" && typeof x2 !== "function";
 };
 function isPromise$1(value2) {
-  return isFunction$3(value2 === null || value2 === void 0 ? void 0 : value2.then);
+  return isFunction$4(value2 === null || value2 === void 0 ? void 0 : value2.then);
 }
 function isInteropObservable(input) {
-  return isFunction$3(input[observable]);
+  return isFunction$4(input[observable]);
 }
 function isAsyncIterable(obj) {
-  return Symbol.asyncIterator && isFunction$3(obj === null || obj === void 0 ? void 0 : obj[Symbol.asyncIterator]);
+  return Symbol.asyncIterator && isFunction$4(obj === null || obj === void 0 ? void 0 : obj[Symbol.asyncIterator]);
 }
 function createInvalidObservableTypeError(input) {
   return new TypeError("You provided " + (input !== null && typeof input === "object" ? "an invalid object" : "'" + input + "'") + " where a stream was expected. You can provide an Observable, Promise, ReadableStream, Array, AsyncIterable, or Iterable.");
@@ -8597,7 +11535,7 @@ function getSymbolIterator() {
 }
 var iterator = getSymbolIterator();
 function isIterable(input) {
-  return isFunction$3(input === null || input === void 0 ? void 0 : input[iterator]);
+  return isFunction$4(input === null || input === void 0 ? void 0 : input[iterator]);
 }
 function readableStreamLikeToAsyncGenerator(readableStream) {
   return __asyncGenerator(this, arguments, function readableStreamLikeToAsyncGenerator_1() {
@@ -8638,7 +11576,7 @@ function readableStreamLikeToAsyncGenerator(readableStream) {
   });
 }
 function isReadableStreamLike(obj) {
-  return isFunction$3(obj === null || obj === void 0 ? void 0 : obj.getReader);
+  return isFunction$4(obj === null || obj === void 0 ? void 0 : obj.getReader);
 }
 function innerFrom(input) {
   if (input instanceof Observable) {
@@ -8669,7 +11607,7 @@ function innerFrom(input) {
 function fromInteropObservable(obj) {
   return new Observable(function(subscriber) {
     var obs = obj[observable]();
-    if (isFunction$3(obs.subscribe)) {
+    if (isFunction$4(obs.subscribe)) {
       return obs.subscribe(subscriber);
     }
     throw new TypeError("Provided object does not correctly implement Symbol.observable");
@@ -8856,15 +11794,15 @@ function scheduleArray(input, scheduler) {
 }
 function scheduleIterable(input, scheduler) {
   return new Observable(function(subscriber) {
-    var iterator$1;
+    var iterator$12;
     executeSchedule(subscriber, scheduler, function() {
-      iterator$1 = input[iterator]();
+      iterator$12 = input[iterator]();
       executeSchedule(subscriber, scheduler, function() {
         var _a;
         var value2;
         var done2;
         try {
-          _a = iterator$1.next(), value2 = _a.value, done2 = _a.done;
+          _a = iterator$12.next(), value2 = _a.value, done2 = _a.done;
         } catch (err) {
           subscriber.error(err);
           return;
@@ -8877,7 +11815,7 @@ function scheduleIterable(input, scheduler) {
       }, 0, true);
     });
     return function() {
-      return isFunction$3(iterator$1 === null || iterator$1 === void 0 ? void 0 : iterator$1.return) && iterator$1.return();
+      return isFunction$4(iterator$12 === null || iterator$12 === void 0 ? void 0 : iterator$12.return) && iterator$12.return();
     };
   });
 }
@@ -9063,81 +12001,6 @@ function maybeSchedule(scheduler, execute, subscription) {
     execute();
   }
 }
-function mergeInternals(source, subscriber, project, concurrent, onBeforeNext, expand, innerSubScheduler, additionalFinalizer) {
-  var buffer2 = [];
-  var active = 0;
-  var index2 = 0;
-  var isComplete = false;
-  var checkComplete = function() {
-    if (isComplete && !buffer2.length && !active) {
-      subscriber.complete();
-    }
-  };
-  var outerNext = function(value2) {
-    return active < concurrent ? doInnerSub(value2) : buffer2.push(value2);
-  };
-  var doInnerSub = function(value2) {
-    expand && subscriber.next(value2);
-    active++;
-    var innerComplete = false;
-    innerFrom(project(value2, index2++)).subscribe(createOperatorSubscriber(subscriber, function(innerValue) {
-      onBeforeNext === null || onBeforeNext === void 0 ? void 0 : onBeforeNext(innerValue);
-      if (expand) {
-        outerNext(innerValue);
-      } else {
-        subscriber.next(innerValue);
-      }
-    }, function() {
-      innerComplete = true;
-    }, void 0, function() {
-      if (innerComplete) {
-        try {
-          active--;
-          var _loop_1 = function() {
-            var bufferedValue = buffer2.shift();
-            if (innerSubScheduler) {
-              executeSchedule(subscriber, innerSubScheduler, function() {
-                return doInnerSub(bufferedValue);
-              });
-            } else {
-              doInnerSub(bufferedValue);
-            }
-          };
-          while (buffer2.length && active < concurrent) {
-            _loop_1();
-          }
-          checkComplete();
-        } catch (err) {
-          subscriber.error(err);
-        }
-      }
-    }));
-  };
-  source.subscribe(createOperatorSubscriber(subscriber, outerNext, function() {
-    isComplete = true;
-    checkComplete();
-  }));
-  return function() {
-    additionalFinalizer === null || additionalFinalizer === void 0 ? void 0 : additionalFinalizer();
-  };
-}
-function mergeMap(project, resultSelector, concurrent) {
-  if (concurrent === void 0) {
-    concurrent = Infinity;
-  }
-  if (isFunction$3(resultSelector)) {
-    return mergeMap(function(a8, i2) {
-      return map$7(function(b3, ii) {
-        return resultSelector(a8, b3, i2, ii);
-      })(innerFrom(project(a8, i2)));
-    }, concurrent);
-  } else if (typeof resultSelector === "number") {
-    concurrent = resultSelector;
-  }
-  return operate(function(source, subscriber) {
-    return mergeInternals(source, subscriber, project, concurrent);
-  });
-}
 function forkJoin() {
   var args = [];
   for (var _i = 0; _i < arguments.length; _i++) {
@@ -9268,7 +12131,7 @@ function takeUntil(notifier) {
   });
 }
 function tap(observerOrNext, error2, complete) {
-  var tapObserver = isFunction$3(observerOrNext) || error2 || complete ? { next: observerOrNext, error: error2, complete } : observerOrNext;
+  var tapObserver = isFunction$4(observerOrNext) || error2 || complete ? { next: observerOrNext, error: error2, complete } : observerOrNext;
   return tapObserver ? operate(function(source, subscriber) {
     var _a;
     (_a = tapObserver.subscribe) === null || _a === void 0 ? void 0 : _a.call(tapObserver);
@@ -9296,1716 +12159,6 @@ function tap(observerOrNext, error2, complete) {
     }));
   }) : identity;
 }
-const buffer = /* @__PURE__ */ new Map();
-const bufferClient = /* @__PURE__ */ new Map();
-class RpgCommonMap extends MapClass {
-  constructor() {
-    super(...arguments);
-    this.shapes = {};
-  }
-  get tileWidth() {
-    return this.tilewidth;
-  }
-  get tileHeight() {
-    return this.tileheight;
-  }
-  /**
-   * Retrieves the X position of the map in the world (0 if no world assigned)
-   *
-   * @title World X Position
-   * @prop {number} [worldX]
-   * @readonly
-   * @since 3.0.0-beta.8
-   * @memberof Map
-   * */
-  get worldX() {
-    var _a, _b;
-    return ((_b = (_a = this.getInWorldMaps()) == null ? void 0 : _a.getMapInfo(this.id)) == null ? void 0 : _b.x) || 0;
-  }
-  /**
-   * Retrieves the Y position of the map in the world (0 if no world assigned)
-   *
-   * @title World Y Position
-   * @prop {number} [worldY]
-   * @readonly
-   * @since 3.0.0-beta.8
-   * @memberof Map
-   * */
-  get worldY() {
-    var _a, _b;
-    return ((_b = (_a = this.getInWorldMaps()) == null ? void 0 : _a.getMapInfo(this.id)) == null ? void 0 : _b.y) || 0;
-  }
-  /**
-   * Memorize the maps so you don't have to make a new request or open a file each time you load a map
-   */
-  static get buffer() {
-    return buffer;
-  }
-  /**
-   * In RPG mode, to avoid confusion with buffer, we have a new variable to memorize the maps
-   */
-  static get bufferClient() {
-    return bufferClient;
-  }
-  load(data) {
-    super.load(data);
-    this.gridTiles = new VirtualGrid(this.width, this.tileWidth, this.tileHeight);
-    this.grid = new VirtualGrid(this.width, this.tileWidth, this.tileHeight).zoom(10);
-    this.gridShapes = new VirtualGrid(this.width, this.tileWidth, this.tileHeight).zoom(20);
-  }
-  /**
-   * Create a shape dynamically on the map
-   *
-   * Object:
-   *  - (number) x: Position X
-   *  - (number) y: Position Y
-   *  - (number) width: Width
-   *  - (number) height: Height
-   *  - (object) properties (optionnal):
-   *      - (number) z: Position Z
-   *      - (hexadecimal) color: Color (shared with client)
-   *      - (boolean) collision
-   *      - You can your own properties
-   *
-   * @title Create Shape
-   * @since 3.0.0-beta.3
-   * @method map.createShape(obj)
-   * @param {object} obj
-   * @returns {RpgShape}
-   * @memberof Map
-   */
-  createShape(obj) {
-    const id = obj.name = obj.name || generateUID();
-    const shape = new RpgShape(obj);
-    this.shapes[id] = shape;
-    if (!shape.isShapePosition()) {
-      this.gridShapes.insertInCells(id, shape.getSizeBox(this.tileWidth));
-    }
-    return this.shapes[id];
-  }
-  /**
-   * Delete a shape
-   *
-   * @title Delete Shape
-   * @method map.removeShape(name)
-   * @param {string} name Name of shape
-   * @returns {void}
-   * @memberof Map
-   */
-  removeShape(name) {
-    delete this.shapes[name];
-  }
-  clearShapes() {
-    this.shapes = {};
-  }
-  /**
-   * Return all shapes on the map
-   *
-   * @title Get Shapes
-   * @method map.getShapes()
-   * @returns {RpgShape[]}
-   * @memberof Map
-   * @memberof RpgSceneMap
-   */
-  getShapes() {
-    return Object.values(this.shapes);
-  }
-  /**
-   * Returns a shape by its name. Returns undefined is nothing is found
-   *
-   * @title Get Shape by name
-   * @method map.getShape(name)
-   * @param {string} name Name of shape
-   * @returns {RpgShape[] | undefined}
-   * @memberof Map
-   * @memberof RpgSceneMap
-   */
-  getShape(name) {
-    return this.getShapes().find((shape) => shape.name == name);
-  }
-  getPositionByShape(filter2) {
-    const startsFind = this.getShapes().filter(filter2);
-    if (startsFind.length) {
-      const start = startsFind[random(0, startsFind.length - 1)];
-      return {
-        x: start.hitbox.x,
-        y: start.hitbox.y,
-        z: start.properties.z * this.zTileHeight || 0
-      };
-    }
-    return null;
-  }
-  /**
-   * Get tile and verify collision with hitbox
-   * @param hitbox
-   * @param x
-   * @param y
-   * @param z
-   * @returns TileInfo
-   */
-  getTile(hitbox, x2, y2, z2 = [0, 0]) {
-    const tile = {
-      ...this.getTileByPosition(x2, y2, z2)
-    };
-    const tilePos = this.getTileOriginPosition(x2, y2);
-    if (tile.objectGroups) {
-      for (let object of tile.objectGroups) {
-        const hit = Hit.getHitbox(object, {
-          x: tilePos.x,
-          y: tilePos.y
-        });
-        if (hit.type) {
-          const collided = Hit.testPolyCollision(hit.type, hit.hitbox, hitbox);
-          if (collided) {
-            tile.hasCollision = true;
-          }
-        }
-      }
-    }
-    return tile;
-  }
-  /**
-   * Assign the map to a world
-    * @title Assign the map to a world
-   * @method map.setInWorldMaps(name)
-   * @param {RpgWorldMaps} worldMap world maps
-   * @since 3.0.0-beta.8
-   * @memberof Map
-   */
-  setInWorldMaps(worldMap) {
-    this.worldMapParent = worldMap;
-  }
-  /**
-   * Remove this map from the world
-   * @title Remove this map from the world
-   * @method map.removeFromWorldMaps()
-   * @returns {boolean | undefined}
-   * @since 3.0.0-beta.8
-   * @memberof Map
-   */
-  removeFromWorldMaps() {
-    var _a;
-    return (_a = this.worldMapParent) == null ? void 0 : _a.removeMap(this.id);
-  }
-  /**
-  * Recover the world attached to this map (`undefined` if no world attached)
-   * @title Get attached World
-  * @method map.getInWorldMaps()
-  * @return {RpgCommonWorldMaps | undefined}
-  * @since 3.0.0-beta.8
-  * @memberof Map
-  */
-  getInWorldMaps() {
-    return this.worldMapParent;
-  }
-  boundingMap(nextPosition, hitbox) {
-    let bounding = false;
-    if (nextPosition.x < 0) {
-      nextPosition.x = 0;
-      bounding = true;
-    } else if (nextPosition.y < 0) {
-      nextPosition.y = 0;
-      bounding = true;
-    } else if (nextPosition.x > this.widthPx - hitbox.w) {
-      nextPosition.x = this.widthPx - hitbox.w;
-      bounding = true;
-    } else if (nextPosition.y > this.heightPx - hitbox.h) {
-      nextPosition.y = this.heightPx - hitbox.h;
-      bounding = true;
-    }
-    return {
-      bounding,
-      nextPosition
-    };
-  }
-  _createMovingHitbox(gameEngine, tick$, mapId, hitboxes, options = {}) {
-    const object = new AbstractObject(gameEngine, Utils.generateUID());
-    object.disableVirtualGrid = true;
-    object.map = mapId;
-    object.speed = options.speed ?? 1;
-    let i2 = 0;
-    let frame = 0;
-    const destroyHitbox$ = new Subject();
-    return tick$.pipe(takeUntil(destroyHitbox$), filter$1(() => {
-      frame++;
-      return frame % object.speed == 0;
-    }), map$7(() => {
-      const hitbox = hitboxes[i2];
-      if (!hitbox) {
-        destroyHitbox$.next(object);
-        destroyHitbox$.complete();
-        return object;
-      }
-      object.position.x = hitbox.x;
-      object.position.y = hitbox.y;
-      object.setHitbox(hitbox.width, hitbox.height);
-      i2++;
-      return object;
-    }), mergeMap((object2) => from(object2.isCollided(object2.position, {
-      allSearch: true
-    }))), map$7(() => object));
-  }
-}
-let EventEmitter$1 = class EventEmitter {
-  constructor() {
-    this.listeners = {};
-    this.listenersOnce = {};
-  }
-  has(name) {
-    return !!this.listeners[name] || !!this.listenersOnce[name];
-  }
-  once(name, cb) {
-    this.listenersOnce[name] = cb;
-    return this;
-  }
-  on(name, cb) {
-    if (!this.listeners[name])
-      this.listeners[name] = [];
-    this.listeners[name].push(cb);
-    return this;
-  }
-  emit(name, data, rest = false) {
-    const ret = [];
-    if (this.listeners[name]) {
-      for (let listener of this.listeners[name]) {
-        if (rest)
-          ret.push(listener(...data));
-        else
-          ret.push(listener(data));
-      }
-    } else if (this.listenersOnce[name]) {
-      if (rest)
-        ret.push(this.listenersOnce[name](...data));
-      else
-        ret.push(this.listenersOnce[name](data));
-    }
-    return Promise.all(ret.map((val) => {
-      if (!isPromise$2(val)) {
-        return Promise.resolve(val);
-      }
-      return val;
-    }));
-  }
-  off(name) {
-    delete this.listeners[name];
-    delete this.listenersOnce[name];
-  }
-  clear() {
-    this.listeners = {};
-    this.listenersOnce = {};
-  }
-};
-var HookServer;
-(function(HookServer2) {
-  HookServer2["Start"] = "Server.Start";
-  HookServer2["Step"] = "Server.Step";
-  HookServer2["PlayerConnected"] = "Server.onConnected";
-  HookServer2["PlayerDisconnected"] = "Server.onDisconnected";
-  HookServer2["AddMap"] = "Server.AddMap";
-  HookServer2["AddEvent"] = "Server.AddEvent";
-  HookServer2["AddWorldMaps"] = "Server.AddWorldMaps";
-  HookServer2["AddDatabase"] = "Server.AddDatabase";
-  HookServer2["PlayerInput"] = "Server.onInput";
-  HookServer2["PlayerJoinMap"] = "Server.onJoinMap";
-  HookServer2["PlayerLeaveMap"] = "Server.onLeaveMap";
-  HookServer2["PlayerLevelUp"] = "Server.onLevelUp";
-  HookServer2["PlayerDead"] = "Server.onDead";
-  HookServer2["PlayerInShape"] = "Server.onInShape";
-  HookServer2["PlayerOutShape"] = "Server.onOutShape";
-  HookServer2["PlayerMove"] = "Server.PlayerMove";
-  HookServer2["PlayerCanChangeMap"] = "Server.PlayerCanChangeMap";
-  HookServer2["ScalabilityPlayerConnected"] = "Server.ScalabilityPlayerConnected";
-  HookServer2["ScalabilityChangeServer"] = "Server.ScalabilityChangeServer";
-})(HookServer || (HookServer = {}));
-var HookClient;
-(function(HookClient2) {
-  HookClient2["Start"] = "Client.Start";
-  HookClient2["Step"] = "Client.Step";
-  HookClient2["Connected"] = "Client.Connected";
-  HookClient2["Disconnect"] = "Client.Disconnect";
-  HookClient2["ConnectedError"] = "Client.ConnectedError";
-  HookClient2["AddSpriteSheet"] = "Client.AddSpriteSheet";
-  HookClient2["AddGui"] = "Client.AddGui";
-  HookClient2["AddSound"] = "Client.AddSound";
-  HookClient2["SendInput"] = "Client.SendInput";
-  HookClient2["BeforeSceneLoading"] = "Client.BeforeSceneLoading";
-  HookClient2["AfterSceneLoading"] = "Client.AfterSceneLoading";
-  HookClient2["SceneMapLoading"] = "Client.SceneMapLoading";
-  HookClient2["SceneAddSprite"] = "Client.SceneAddSprite";
-  HookClient2["SceneOnChanges"] = "Client.SceneOnChanges";
-  HookClient2["SceneDraw"] = "Client.SceneDraw";
-  HookClient2["SceneRemoveSprite"] = "Client.SceneRemoveSprite";
-  HookClient2["AddSprite"] = "Client.AddSprite";
-  HookClient2["RemoveSprite"] = "Client.RemoveSprite";
-  HookClient2["UpdateSprite"] = "Client.UpdateSprite";
-  HookClient2["ChangesSprite"] = "Client.ChangesSprite";
-  HookClient2["WindowResize"] = "Client.WindowResize";
-  HookClient2["SpriteMove"] = "Client.SpriteMove";
-})(HookClient || (HookClient = {}));
-let PluginSystem$1 = class PluginSystem extends EventEmitter$1 {
-  constructor() {
-    super(...arguments);
-    this.customHooks = {};
-  }
-  customHookExists(name) {
-    return this.customHooks[name];
-  }
-  loadPlugins(plugins, shared, type) {
-    if (!plugins)
-      return;
-    for (let plugin of plugins) {
-      if (!plugin)
-        continue;
-      let plug = [];
-      if (!isArray$8(plugin)) {
-        plug = [plugin];
-      } else {
-        plug = plugin;
-      }
-      const [side, options] = plug;
-      if (!side[type])
-        continue;
-      side[type]({
-        RpgPlugin,
-        ...shared
-      }, options);
-    }
-  }
-  loadServerPlugins(plugins, shared) {
-    this.loadPlugins(plugins, shared, "server");
-  }
-  loadClientPlugins(plugins, shared) {
-    this.loadPlugins(plugins, shared, "client");
-  }
-};
-const RpgPlugin = new PluginSystem$1();
-class GameWorker {
-  constructor(options = {}) {
-    this.options = options;
-  }
-  load() {
-    return this;
-  }
-  call(methodName, data) {
-    return this.pool.exec(methodName, [data]);
-  }
-}
-var GameSide;
-(function(GameSide2) {
-  GameSide2["Server"] = "server";
-  GameSide2["Client"] = "client";
-  GameSide2["Worker"] = "worker";
-})(GameSide || (GameSide = {}));
-class RpgCommonGame extends EventEmitter$1 {
-  constructor(side) {
-    super();
-    this.side = side;
-    this.events = {};
-  }
-  get isWorker() {
-    return this.side == "worker";
-  }
-  start(world) {
-    this.world = world;
-  }
-  createWorkers(options) {
-    return new GameWorker(options);
-  }
-  addObject(_class, playerId) {
-    let event;
-    if (!playerId)
-      playerId = generateUID();
-    if (isClass(_class)) {
-      event = new _class(this, playerId);
-    } else {
-      event = _class;
-    }
-    return event;
-  }
-  addPlayer(playerClass, playerId) {
-    const player = this.addObject(playerClass, playerId);
-    return player;
-  }
-  addEvent(eventClass, eventId) {
-    const event = this.addObject(eventClass, eventId);
-    return event;
-  }
-  addShape(obj) {
-    const id = obj.name = obj.name || generateUID();
-    const shape = new RpgShape(obj);
-    shape.name = id;
-    return shape;
-  }
-  async processInput(playerId, controls) {
-    const player = this.world.getObject(playerId);
-    const inputs = [];
-    if (!player)
-      return {
-        player,
-        inputs
-      };
-    while (player.pendingMove.length > 0) {
-      const inputData = player.pendingMove.shift();
-      let {
-        input,
-        deltaTimeInt
-      } = inputData;
-      let moving2 = false;
-      if (controls && controls[input]) {
-        const control = controls[input];
-        const now = Date.now();
-        const inputTime = player.inputsTimestamp[input] || 0;
-        if (inputTime >= now) {
-          continue;
-        }
-        if (control.delay) {
-          let duration;
-          let otherControls = [];
-          if (typeof control.delay == "number") {
-            duration = control.delay;
-          } else {
-            duration = control.delay.duration;
-            if (control.delay.otherControls) {
-              otherControls = control.delay.otherControls;
-            }
-          }
-          player.inputsTimestamp[input] = now + duration;
-          for (let control2 of otherControls) {
-            player.inputsTimestamp[control2] = now + duration;
-          }
-        }
-      }
-      if (input == Control.Action) {
-        await player.triggerCollisionWith(RpgCommonPlayer.ACTIONS.ACTION);
-      } else if (input == Direction.Left || input == Direction.Right || input == Direction.Up || input == Direction.Down) {
-        moving2 = true;
-        await player.moveByDirection(+input, deltaTimeInt || 1);
-      }
-      if (this.side == GameSide.Server) {
-        await RpgPlugin.emit("Server.onInput", [player, {
-          ...inputData,
-          moving: moving2
-        }], true);
-      }
-      inputs.push(input);
-    }
-    return {
-      player,
-      inputs
-    };
-  }
-}
-const ACTIONS = {
-  IDLE: 0,
-  RUN: 1,
-  ACTION: 2
-};
-class AbstractObject {
-  static get ACTIONS() {
-    return ACTIONS;
-  }
-  constructor(gameEngine, playerId) {
-    this.gameEngine = gameEngine;
-    this.playerId = playerId;
-    this.map = "";
-    this.height = 0;
-    this.width = 0;
-    this.direction = 3;
-    this.checkCollision = true;
-    this.clientModeMove = MoveClientMode.ByDirection;
-    this.behavior = Behavior.Direction;
-    this.inShapes = {};
-    this.disableVirtualGrid = false;
-    this.shapes = [];
-    this.collisionWith = [];
-    this._collisionWithTiles = [];
-    this._collisionWithShapes = [];
-    this.destroyMove$ = new Subject();
-    this._destroy$ = new Subject();
-    this._hitboxPos = new SAT.Vector(0, 0);
-    this.setHitbox(this.width, this.height);
-    this.position = {
-      x: 0,
-      y: 0,
-      z: 0
-    };
-  }
-  get id() {
-    return this.playerId;
-  }
-  set id(str2) {
-    this.playerId = str2;
-  }
-  updateInVirtualGrid() {
-    const map2 = this.mapInstance;
-    if (map2 && !this.disableVirtualGrid) {
-      map2.grid.insertInCells(this.id, this.getSizeMaxShape());
-    }
-  }
-  get canMove() {
-    return this.clientModeMove == MoveClientMode.ByDirection;
-  }
-  set canMove(val) {
-    this.clientModeMove = val ? MoveClientMode.ByDirection : MoveClientMode.Disabled;
-  }
-  /**
-   * Get/Set position x, y and z of player
-   *
-   * z is the depth layer. By default, its value is 0. Collisions and overlays will be performed with other objects on the same z-position.
-   *
-   * @title Get/Set position
-   * @prop { { x: number, y: number, z: number } } position
-   * @memberof Player
-   */
-  set position(val) {
-    if (this.isDestroyed)
-      return;
-    const {
-      x: x2,
-      y: y2,
-      z: z2
-    } = val;
-    if (!isInstanceOf(val, Vector2d)) {
-      val = new Vector2d(x2, y2, z2);
-    }
-    this._hitboxPos.x = x2;
-    this._hitboxPos.y = y2;
-    this._hitboxPos.z = z2;
-    this.updateInVirtualGrid();
-    this._position = new Proxy(val, {
-      get: (target, prop) => target[prop],
-      set: (target, prop, value2) => {
-        this._hitboxPos[prop] = value2;
-        target[prop] = value2;
-        this.updateInVirtualGrid();
-        return true;
-      }
-    });
-  }
-  get position() {
-    return this._position;
-  }
-  get worldPositionX() {
-    let x2 = this.position.x;
-    if (this.mapInstance) {
-      x2 += this.mapInstance.worldX;
-    }
-    return x2;
-  }
-  get worldPositionY() {
-    let y2 = this.position.y;
-    if (this.mapInstance) {
-      y2 += this.mapInstance.worldY;
-    }
-    return y2;
-  }
-  set posX(val) {
-    this.position.x = val;
-  }
-  set posY(val) {
-    this.position.y = val;
-  }
-  set posZ(val) {
-    this.position.z = val;
-  }
-  /** @internal */
-  get mapInstance() {
-    if (this.gameEngine.side == GameSide.Client) {
-      return RpgCommonMap.bufferClient.get(this.map);
-    }
-    return RpgCommonMap.buffer.get(this.map);
-  }
-  /**
-  *
-  * Recovers all the colliding shapes of the current player
-  *
-  * @title Get Collision of shapes
-  * @since 3.2.0
-  * @readonly
-  * @prop { RpgShape[] } shapes
-  * @memberof Player
-  * @memberof RpgSpriteLogic
-  */
-  get shapesCollision() {
-    return this._collisionWithShapes;
-  }
-  /**
-  *
-  * Recovers all the colliding tiles of the current player
-  *
-  * @title Get Collision of tiles
-  * @since 3.0.0-beta.4
-  * @readonly
-  * @prop { TileInfo[] } tiles
-  * @memberof Player
-  * @memberof RpgSpriteLogic
-  */
-  get tilesCollision() {
-    return this._collisionWithTiles;
-  }
-  /**
-   *
-   * Recovers all other players and events colliding with the current player's hitbox
-   *
-   * @title Get Collision of other players/events
-   * @since 3.0.0-beta.4
-   * @readonly
-   * @prop { (RpgPlayer | RpgEvent)[] } otherPlayersCollision
-   * @memberof Player
-   * @memberof RpgSpriteLogic
-   */
-  get otherPlayersCollision() {
-    return this.collisionWith;
-  }
-  /**
-   * Define the size of the player. You can set the hitbox for collisions
-   *
-   * ```ts
-   * player.setSizes({
-   *      width: 32,
-   *      height: 32
-   * })
-   * ```
-   *
-   * and with hitbox:
-   *
-   *  ```ts
-   * player.setSizes({
-   *      width: 32,
-   *      height: 32,
-   *      hitbox: {
-   *          width: 20,
-   *          height: 20
-   *      }
-   * })
-   * ```
-   *
-   * @title Set Sizes
-   * @method player.setSizes(key,value)
-   * @param { { width: number, height: number, hitbox?: { width: number, height: number } } } obj
-   * @deprecated
-   * @returns {void}
-   * @memberof Player
-   */
-  setSizes(obj) {
-    this.width = obj.width;
-    this.height = obj.height;
-    if (obj.hitbox) {
-      this.hitbox = new SAT.Box(this._hitboxPos, obj.hitbox.width, obj.hitbox.height);
-    }
-  }
-  /**
-   * Define the hitbox of the player.
-   *
-   * ```ts
-   * player.setHitbox(20, 20)
-   * ```
-   *
-   * @title Set Hitbox
-   * @method player.setHitbox(width,height)
-   * @param {number} width
-   * @param {number} height
-   * @returns {void}
-   * @memberof Player
-   */
-  setHitbox(width, height) {
-    const map2 = this.mapInstance;
-    if (map2) {
-      this.width = map2.tileWidth;
-      this.height = map2.tileHeight;
-    }
-    this.hitbox = new SAT.Box(this._hitboxPos, width, height);
-    this.wHitbox = width;
-    this.hHitbox = height;
-    this.updateInVirtualGrid();
-  }
-  set wHitbox(val) {
-    this.hitbox.w = val;
-  }
-  set hHitbox(val) {
-    this.hitbox.h = val;
-  }
-  get wHitbox() {
-    return this.hitbox.w;
-  }
-  get hHitbox() {
-    return this.hitbox.h;
-  }
-  directionToAngle(direction) {
-    const angle2 = (direction < 2 ? +direction + 2 : direction - 2) * 90;
-    return toRadians(angle2);
-  }
-  /** @internal */
-  defineNextPosition(direction, deltaTimeInt) {
-    const angle2 = this.directionToAngle(direction);
-    const computePosition = (prop) => {
-      return this.position[prop] + this.speed * deltaTimeInt * (Math.round(Math[prop == "x" ? "cos" : "sin"](angle2) * 100) / 100);
-    };
-    const x2 = this.speed < 1 ? computePosition("x") : ~~computePosition("x");
-    const y2 = this.speed < 1 ? computePosition("y") : ~~computePosition("y");
-    return new Vector2d(x2, y2, ~~this.position.z);
-  }
-  /** @internal */
-  setPosition({
-    x: x2,
-    y: y2,
-    tileX,
-    tileY
-  }, move = true) {
-    const {
-      tileWidth,
-      tileHeight
-    } = this.mapInstance;
-    if (x2 !== void 0)
-      this.posX = x2;
-    if (y2 !== void 0)
-      this.posY = y2;
-    if (tileX !== void 0)
-      this.posX = tileX * tileWidth;
-    if (tileY !== void 0)
-      this.posY = tileY * tileHeight;
-  }
-  /** @internal */
-  async triggerCollisionWith(type) {
-    let doChanges = false;
-    for (let collisionWith of this.collisionWith) {
-      if (collisionWith.isDestroyed)
-        continue;
-      if (collisionWith instanceof RpgShape) {
-        const goMap = collisionWith.getProperty("go-map");
-        if (goMap && "changeMap" in this)
-          await this.changeMap(goMap);
-      } else {
-        if (type == AbstractObject.ACTIONS.ACTION) {
-          if ("onAction" in collisionWith) {
-            await collisionWith.execMethod("onAction", [this]);
-            doChanges = true;
-          }
-        } else if ("onPlayerTouch" in collisionWith) {
-          await collisionWith.execMethod("onPlayerTouch", [this]);
-          doChanges = true;
-        }
-      }
-    }
-    if (this.syncChanges && doChanges)
-      this.syncChanges();
-  }
-  /** @internal */
-  zCollision(other) {
-    const z2 = this.position.z;
-    const otherZ = other.position.z;
-    return intersection$1([z2, z2 + this.height], [otherZ, otherZ + other.height]);
-  }
-  /** @internal */
-  moveByDirection(direction, deltaTimeInt) {
-    const nextPosition = this.defineNextPosition(direction, deltaTimeInt);
-    return this.move(nextPosition);
-  }
-  /**
-   * Retrieves a tile and checks if the player has a collision
-   *
-   * ```ts
-   * const tileInfo = player.getTile(20, 30)
-   * console.log(tileInfo)
-   * ```
-   *
-   * Example of returns:
-   *
-   * ```ts
-   *   {
-   *       tiles: [
-   *           {
-   *               id: 0,
-   *               terrain: [],
-   *               probability: null,
-   *               properties: [Object],
-   *               animations: [],
-   *               objectGroups: [],
-   *               image: null,
-   *               gid: 1
-   *           }
-   *       ],
-   *       hasCollision: false,
-   *       isOverlay: undefined,
-   *       objectGroups: [],
-   *       isClimbable: undefined,
-   *       tileIndex: 93
-   *   }
-   * ```
-   *
-   * @title Get Tile
-   * @since 3.0.0-beta.4
-   * @method player.getTile(x,y,z?)
-   * @param {number} x
-   * @param {number} y
-   * @param {number} [z]
-   * @returns {object}
-   * @memberof Player
-   * @memberof RpgSpriteLogic
-   */
-  getTile(x2, y2, z2 = 0, hitbox) {
-    const map2 = this.mapInstance;
-    return map2.getTile(hitbox || this.hitbox, x2, y2, [z2, this.height]);
-  }
-  async collisionObjects(playerSizeBox, hitbox, triggers) {
-    const map2 = this.mapInstance;
-    if (!map2)
-      return true;
-    const events2 = this.gameEngine.world.getObjectsOfGroup(this.map, this);
-    const objects = map2.grid.getObjectsByBox(playerSizeBox);
-    let boolFound = false;
-    for (let objectId of objects) {
-      if (!events2[objectId])
-        continue;
-      const event = events2[objectId]["object"] || events2[objectId];
-      if (event.id == this.id)
-        continue;
-      if (!this.zCollision(event))
-        continue;
-      const collided = Hit.testPolyCollision(HitType.Box, hitbox, event.hitbox);
-      for (let shape of this.shapes) {
-        await this.collisionWithShape(shape, event);
-      }
-      for (let shape of event.shapes) {
-        await event.collisionWithShape(shape, this);
-      }
-      if (triggers == null ? void 0 : triggers.near)
-        triggers.near(event);
-      if (collided) {
-        this.collisionWith.push(event);
-        this.triggerCollisionWith();
-        let throughOtherPlayer = false;
-        if (event.type == PlayerType.Player && this.type == PlayerType.Player) {
-          if (!(event.throughOtherPlayer || this.throughOtherPlayer)) {
-            boolFound = true;
-            if (!(triggers == null ? void 0 : triggers.allSearch))
-              return true;
-          } else {
-            throughOtherPlayer = true;
-          }
-        }
-        if (!throughOtherPlayer && !(event.through || this.through)) {
-          boolFound = true;
-          if (!(triggers == null ? void 0 : triggers.allSearch))
-            return true;
-        }
-      }
-      if (boolFound) {
-        if (triggers == null ? void 0 : triggers.collision)
-          triggers.collision(event);
-      }
-    }
-    return boolFound;
-  }
-  /** @internal */
-  async collisionWithShape(shape, player, nextPosition) {
-    const collision = shape.hasCollision;
-    const z2 = shape.z;
-    if (shape.isShapePosition())
-      return false;
-    if (z2 !== void 0 && !this.zCollision({
-      position: {
-        z: z2
-      },
-      height: this.mapInstance.zTileHeight
-    })) {
-      return false;
-    }
-    let position;
-    let {
-      hitbox
-    } = player;
-    if (nextPosition) {
-      position = nextPosition.copy();
-    } else {
-      position = player.position.copy();
-    }
-    const hitboxObj = Hit.createObjectHitbox(position.x, position.y, position.z, hitbox.w, hitbox.h);
-    let collided = Hit.testPolyCollision(shape.type, hitboxObj, shape.hitbox);
-    const playerPositionSaved = player.position.copy();
-    const verifyIfPositionChanged = () => {
-      if (this.position.z != playerPositionSaved.z && nextPosition) {
-        nextPosition.z = this.position.z;
-      }
-      if (this.position.x != playerPositionSaved.x || this.position.y != playerPositionSaved.y) {
-        return true;
-      }
-    };
-    if (collided) {
-      this._collisionWithShapes.push(shape);
-      if (!collision)
-        await shape.in(this);
-      if (verifyIfPositionChanged() === true)
-        return true;
-      this.triggerCollisionWith();
-      if (collision)
-        return true;
-    } else {
-      await shape.out(this);
-      if (verifyIfPositionChanged() === true)
-        return true;
-    }
-    return false;
-  }
-  async collisionShapes(playerSizeBox, nextPosition, triggers) {
-    const map2 = this.mapInstance;
-    if (!map2)
-      return false;
-    const shapes = this.gameEngine.world.getShapesOfGroup(this.map);
-    const shapesInGrid = this.gameEngine.side == GameSide.Client ? new Set(Object.keys(shapes)) : map2.gridShapes.getObjectsByBox(playerSizeBox);
-    let boolFound = false;
-    for (let shapeId of shapesInGrid) {
-      const shape = shapes[shapeId]["object"] || shapes[shapeId];
-      if (triggers == null ? void 0 : triggers.near)
-        triggers.near(shape);
-      const bool = await this.collisionWithShape(shape, this, nextPosition);
-      if (bool) {
-        if (triggers == null ? void 0 : triggers.collision)
-          triggers.collision(shape);
-        boolFound = true;
-        if (!(triggers == null ? void 0 : triggers.allSearch))
-          return true;
-      }
-    }
-    return boolFound;
-  }
-  async computeNextPositionByTarget(nextPosition, target) {
-    const pullDistance = target.distanceWith(nextPosition);
-    if (pullDistance <= this.speed) {
-      return nextPosition.set(target);
-    }
-    const pull2 = target.copy().subtract(nextPosition).multiply(1 / pullDistance);
-    const totalPush = new Vector2dZero();
-    let contenders = 0;
-    const hitbox = Hit.createObjectHitbox(nextPosition.x, nextPosition.y, nextPosition.z, this.hitbox.w, this.hitbox.h);
-    const createObstacle = function(x2, y2, radius) {
-      const obstacle = new Vector2d(x2, y2);
-      let push2 = nextPosition.copy().subtract(obstacle);
-      let distance2 = nextPosition.distanceWith(obstacle) - radius - radius;
-      if (distance2 < radius * 2 * 10) {
-        ++contenders;
-        if (distance2 < 1e-4)
-          distance2 = 1e-4;
-        let weight = 1 / distance2;
-        totalPush.add(push2.multiply(weight));
-      }
-      return obstacle;
-    };
-    const area2 = this.mapInstance.tileheight * 2;
-    this.mapInstance.gridTiles.getCells({
-      minX: nextPosition.x - area2,
-      maxX: nextPosition.x + area2,
-      minY: nextPosition.y - area2,
-      maxY: nextPosition.y + area2
-    }, (index2) => {
-      if (index2 < 0)
-        return;
-      const pos = this.mapInstance.getTilePosition(index2);
-      const hitbox2 = Hit.createObjectHitbox(pos.x, pos.y, nextPosition.z, this.hitbox.w, this.hitbox.h);
-      const radius = this.mapInstance.tilewidth / 2;
-      const tile = this.getTile(pos.x, pos.y, nextPosition.z, hitbox2);
-      if (tile.hasCollision) {
-        createObstacle(pos.x, pos.y, radius);
-      }
-    });
-    const playerSizeBox = this.getSizeMaxShape(nextPosition.x, nextPosition.y);
-    await this.collisionObjects(playerSizeBox, hitbox, {
-      collision: (event) => {
-        const {
-          x: x2,
-          y: y2
-        } = event.position;
-        createObstacle(x2, y2, event.hitbox.w);
-      },
-      allSearch: true
-    });
-    await this.collisionShapes(playerSizeBox, nextPosition, {
-      collision: (shape) => {
-        const {
-          x: x2,
-          y: y2
-        } = shape.position;
-        createObstacle(x2, y2, shape.hitbox.w);
-      },
-      allSearch: true
-    });
-    pull2.multiply(Math.max(1, 4 * contenders)).add(totalPush).normalize();
-    return nextPosition.add(pull2.multiply(this.speed));
-  }
-  async isCollided(nextPosition, options = {}) {
-    var _a;
-    this.collisionWith = [];
-    this._collisionWithTiles = [];
-    const prevMapId = this.map;
-    const hitbox = Hit.createObjectHitbox(nextPosition.x, nextPosition.y, 0, this.hitbox.w, this.hitbox.h);
-    const boundingMap = (_a = this.mapInstance) == null ? void 0 : _a.boundingMap(nextPosition, this.hitbox);
-    let collided = false;
-    if (boundingMap == null ? void 0 : boundingMap.bounding) {
-      this.position.set(nextPosition);
-      if (!options.allSearch)
-        return true;
-      else
-        collided = true;
-    }
-    const tileCollision = (x2, y2) => {
-      const tile = this.getTile(x2, y2, nextPosition.z, hitbox);
-      if (tile.hasCollision) {
-        this._collisionWithTiles.push(tile);
-        return true;
-      }
-      return false;
-    };
-    if (tileCollision(nextPosition.x, nextPosition.y) || tileCollision(nextPosition.x + this.hitbox.w, nextPosition.y) || tileCollision(nextPosition.x, nextPosition.y + this.hitbox.h) || tileCollision(nextPosition.x + this.hitbox.w, nextPosition.y + this.hitbox.h)) {
-      if (!options.allSearch)
-        return true;
-      else
-        collided = true;
-    }
-    if (this.autoChangeMap && this.type == PlayerType.Player) {
-      const changeMap = await this.autoChangeMap(nextPosition);
-      if (changeMap) {
-        return true;
-      }
-    }
-    const playerSizeBox = this.getSizeMaxShape(nextPosition.x, nextPosition.y);
-    if (await this.collisionObjects(playerSizeBox, hitbox, options)) {
-      if (!options.allSearch)
-        return true;
-      else
-        collided = true;
-    }
-    if (await this.collisionShapes(playerSizeBox, nextPosition, options)) {
-      if (!options.allSearch)
-        return true;
-      else
-        collided = true;
-    }
-    if (prevMapId != this.map) {
-      return true;
-    }
-    return collided;
-  }
-  /**
-   * Attach a shape to the player (and allow interaction with it)
-   *
-   * ```ts
-   * import { ShapePositioning } from '@rpgjs/server'
-   *
-   * player.attachShape({
-   *      width: 100,
-   *      height: 100,
-   *      positioning: ShapePositioning.Center
-   * })
-   * ```
-   *
-   * @title Attach Shape
-   * @method player.attachShape(parameters)
-   * @param { { width: number, height: number, positioning?, name?, properties?: object } } obj
-   * - positioning: Indicate where the shape is placed.
-   * - properties: An object in order to retrieve information when interacting with the shape
-   * - name: The name of the shape
-   * @since 3.0.0-beta.3
-   * @returns {RpgShape}
-   * @memberof Player
-   */
-  attachShape(obj) {
-    obj.name = obj.name || generateUID();
-    const shape = new RpgShape({
-      ...obj,
-      fixEvent: this
-    });
-    this.shapes.push(shape);
-    return shape;
-  }
-  /**
-   * Returns all shapes assigned to this player
-   *
-   * @title Get Shapes
-   * @method player.getShapes()
-   * @returns {RpgShape[]}
-   * @since 3.0.0-beta.3
-   * @memberof Player
-   * @memberof RpgSpriteLogic
-   */
-  getShapes() {
-    return this.shapes;
-  }
-  autoChangeDirection(nextPosition) {
-    const {
-      x: x2,
-      y: y2
-    } = this.position;
-    const {
-      x: nx,
-      y: ny
-    } = nextPosition;
-    const diff = Math.abs(x2 - nx) > Math.abs(y2 - ny);
-    if (diff) {
-      if (nx > x2) {
-        this.changeDirection(Direction.Right);
-      } else {
-        this.changeDirection(Direction.Left);
-      }
-    } else {
-      if (ny > y2) {
-        this.changeDirection(Direction.Down);
-      } else {
-        this.changeDirection(Direction.Up);
-      }
-    }
-  }
-  // @internal
-  /**
-   * We need to know if the event is deleted. Because when the event is deleted, you don't update the positions and you don't send the positions back to the client.
-   */
-  get isDestroyed() {
-    return !!this._destroy$["_closed"];
-  }
-  /**
-  * Stops the movement of the player who moves towards his target
-  *
-  * @title Stop Move To
-  * @method player.stopMoveTo()
-  * @returns {void}
-  * @since 3.2.0
-  * @memberof MoveManager
-  */
-  stopMoveTo() {
-    if (this.destroyMove$.closed)
-      return;
-    this.destroyMove$.next(true);
-    this.destroyMove$.unsubscribe();
-  }
-  _moveTo(tick$, positionTarget, options = {}) {
-    let i2 = 0;
-    let count = 0;
-    const lastPositions = [];
-    this.stopMoveTo();
-    this.destroyMove$ = new Subject();
-    const {
-      infinite,
-      onStuck,
-      onComplete
-    } = options;
-    const getPosition = () => {
-      let pos;
-      if ("x" in positionTarget) {
-        pos = new Vector2d(positionTarget.x, positionTarget.y);
-      } else {
-        pos = positionTarget.position;
-      }
-      return pos;
-    };
-    return tick$.pipe(takeUntil(this.destroyMove$), takeUntil(this._destroy$), mergeMap(() => from(this.computeNextPositionByTarget(this.position.copy(), getPosition()))), filter$1(() => {
-      return this.isDestroyed === false;
-    }), map$7((position) => {
-      this.autoChangeDirection(position);
-      return this.position.set(position);
-    }), tap((position) => {
-      lastPositions[i2] = position.copy();
-      i2++;
-      count++;
-      if (i2 >= 3) {
-        i2 = 0;
-      }
-      if (lastPositions[2] && lastPositions[0].isEqual(lastPositions[2])) {
-        onStuck == null ? void 0 : onStuck(count);
-      } else if (this.position.isEqual(getPosition())) {
-        onComplete == null ? void 0 : onComplete();
-        if (!infinite) {
-          this.stopMoveTo();
-        }
-      } else {
-        count = 0;
-      }
-    }));
-  }
-  /** @internal */
-  async move(nextPosition) {
-    this.autoChangeDirection(nextPosition);
-    const notCollided = !await this.isCollided(nextPosition);
-    if ((notCollided || !this.checkCollision) && !this.isDestroyed) {
-      this.position = nextPosition.copy();
-      await RpgPlugin.emit(HookServer.PlayerMove, this);
-    }
-    return true;
-  }
-  /**
-   * Retrieves all shapes where the player is located
-   *
-   * @title Get In-Shapes
-   * @method player.getInShapes()
-   * @returns {RpgShape[]}
-   * @since 3.0.0-beta.3
-   * @memberof Player
-   */
-  getInShapes() {
-    return Object.values(this.inShapes);
-  }
-  /**
-  * Get the current direction.
-  *
-  * ```ts
-  * player.getDirection()
-  * ```
-  *
-  * @title Get Direction
-  * @method player.getDirection()
-  * @returns {Direction | number} direction
-  * @memberof Player
-  */
-  getDirection(direction) {
-    return direction || this.direction;
-  }
-  /**
-  * Changes the player's direction
-  *
-  * ```ts
-  * import { Direction } from '@rpgjs/server'
-  *
-  * player.changeDirection(Direction.Left)
-  * ```
-  *
-  * @title Change direction
-  * @method player.changeDirection(direction)
-  * @param {Direction} direction
-  * @enum {string}
-  *
-  * Direction.Left | left
-  * Direction.Right | right
-  * Direction.Up | up
-  * Direction.Down | down
-  * @returns {boolean} the direction has changed
-  * @memberof Player
-  */
-  changeDirection(direction) {
-    const dir = +this.getDirection(direction);
-    if (dir === void 0)
-      return false;
-    this.direction = dir;
-    return true;
-  }
-  /**
-   * Gets the necessary number of pixels to allow the player to cross a tile.
-   * This is the ratio between the height or width of the tile and the speed of the player.
-   */
-  get nbPixelInTile() {
-    const direction = this.getDirection();
-    switch (direction) {
-      case Direction.Down:
-      case Direction.Up:
-        return Math.floor(this.mapInstance.tileHeight / this.speed);
-      case Direction.Left:
-      case Direction.Right:
-        return Math.floor(this.mapInstance.tileWidth / this.speed);
-      default:
-        return NaN;
-    }
-  }
-  getSizeMaxShape(x2, y2) {
-    const _x = x2 || this.position.x;
-    const _y = y2 || this.position.y;
-    let minX = _x;
-    let minY = _y;
-    let maxX = _x + this.wHitbox;
-    let maxY = _y + this.hHitbox;
-    const shapes = this.getShapes();
-    for (let shape of shapes) {
-      if (shape.x < minX)
-        minX = shape.x;
-      if (shape.y < minY)
-        minY = shape.y;
-      const shapeMaxX = shape.x + shape.width;
-      const shapeMaxY = shape.y + shape.height;
-      if (shapeMaxX > maxX)
-        maxX = shapeMaxX;
-      if (shapeMaxY > maxY)
-        maxY = shapeMaxY;
-    }
-    return {
-      minX,
-      minY,
-      maxX,
-      maxY
-    };
-  }
-  /** @internal */
-  async execMethod(methodName, methodData, instance) {
-  }
-}
-class RpgCommonPlayer extends AbstractObject {
-  constructor() {
-    super(...arguments);
-    this.events = [];
-    this.layerName = "";
-    this.data = {};
-    this.pendingMove = [];
-    this.inputsTimestamp = {};
-  }
-}
-var PrebuiltGui;
-(function(PrebuiltGui2) {
-  PrebuiltGui2["Dialog"] = "rpg-dialog";
-  PrebuiltGui2["MainMenu"] = "rpg-main-menu";
-  PrebuiltGui2["Shop"] = "rpg-shop";
-  PrebuiltGui2["Disconnect"] = "rpg-disconnect";
-  PrebuiltGui2["Gameover"] = "rpg-gameover";
-  PrebuiltGui2["Save"] = "rpg-save";
-  PrebuiltGui2["Controls"] = "rpg-controls";
-  PrebuiltGui2["Notification"] = "rpg-notification";
-})(PrebuiltGui || (PrebuiltGui = {}));
-class MockIo {
-  constructor() {
-    this.events = /* @__PURE__ */ new Map();
-  }
-  on(name, value2) {
-    this.events.set(name, value2);
-  }
-  off(name) {
-    this.events.delete(name);
-  }
-  once(name, value2) {
-    this.on(name, value2);
-  }
-  _trigger(name, data, client) {
-    const fn = this.events.get(name);
-    if (fn)
-      fn(data, client);
-  }
-}
-class MockSocket {
-  constructor(io, handshake) {
-    this.io = io;
-    this.handshake = handshake;
-    this.id = "" + Math.random();
-  }
-  on(name, value2) {
-    this.io.on(name, value2, this.id);
-    return this;
-  }
-  once(name, value2) {
-    this.io.once(name, value2, this.id);
-    return this;
-  }
-  emit(name, data) {
-    this.io.emit(name, data, this.id);
-  }
-  removeAllListeners(name) {
-    return this.off(name);
-  }
-  off(name) {
-    this.io.off(name, this.id);
-  }
-}
-class MockServerIo extends MockIo {
-  constructor() {
-    super(...arguments);
-    this.clients = /* @__PURE__ */ new Map();
-  }
-  connection(client, handshake) {
-    const socket = new MockSocket(this, handshake);
-    this.clients.set(socket.id, client);
-    client.id = socket.id;
-    this._trigger("connection", socket);
-  }
-  emit(name, data, id) {
-    var _a;
-    (_a = this.clients.get(id)) == null ? void 0 : _a._trigger(name, data);
-  }
-  clear() {
-    this.clients.clear();
-  }
-}
-new MockServerIo();
-class Scheduler extends EventEmitter$1 {
-  constructor() {
-    super(...arguments);
-    this.fps = 60;
-    this.deltaTime = 0;
-    this.frame = 0;
-    this.timestamp = 0;
-    this.requestedDelay = 0;
-    this.lastTimestamp = 0;
-    this._tick = new BehaviorSubject({
-      timestamp: 0,
-      deltaTime: 0,
-      frame: 0,
-      deltaRatio: 0
-    });
-    this._stop = false;
-  }
-  get tick() {
-    return this._tick.asObservable();
-  }
-  nextTick(timestamp) {
-    this.lastTimestamp = this.lastTimestamp || this.timestamp;
-    this.deltaTime = Utils.preciseNow() - this.timestamp;
-    this.timestamp = timestamp;
-    this._tick.next({
-      timestamp: this.timestamp,
-      deltaTime: this.deltaTime,
-      frame: this.frame,
-      deltaRatio: ~~this.deltaTime / ~~Utils.fps2ms(this.fps)
-    });
-    this.lastTimestamp = this.timestamp;
-    this.frame++;
-  }
-  /**
-   * start the schedule
-   * @return {Scheduler} returns this scheduler instance
-   */
-  start(options) {
-    if (options.maxFps)
-      this.maxFps = options.maxFps;
-    if (options.fps)
-      this.fps = options.fps;
-    if (options.delay)
-      this.requestedDelay = options.delay;
-    const requestAnimationFrame2 = (fn) => {
-      if (Utils.isBrowser()) {
-        window.requestAnimationFrame(fn.bind(this));
-      } else {
-        setTimeout(() => {
-          this.requestedDelay = 0;
-          fn(Utils.preciseNow());
-        }, Utils.fps2ms(this.fps) + this.requestedDelay);
-      }
-    };
-    if (!this.maxFps) {
-      const loop = (timestamp) => {
-        requestAnimationFrame2(loop);
-        this.nextTick(timestamp);
-      };
-      requestAnimationFrame2(loop);
-    } else {
-      const msInterval = Utils.fps2ms(this.maxFps);
-      let now = Utils.preciseNow();
-      let then = Utils.preciseNow();
-      const loop = (timestamp) => {
-        if (this._stop)
-          return;
-        requestAnimationFrame2(loop);
-        now = Utils.preciseNow();
-        const elapsed = now - then;
-        if (elapsed > msInterval) {
-          then = now - elapsed % msInterval;
-          this.nextTick(timestamp);
-        }
-      };
-      requestAnimationFrame2(loop);
-    }
-    return this;
-  }
-  stop() {
-    this._stop = true;
-    this._tick.complete();
-  }
-}
-function warning(...message) {
-  console.warn("[RPGJS Warning]", ...message);
-}
-var Side;
-(function(Side2) {
-  Side2["Server"] = "server";
-  Side2["Client"] = "client";
-})(Side || (Side = {}));
-function RpgModule(options) {
-  return (target) => {
-    if (options.hooks) {
-      target.hooks = options.hooks;
-    }
-    for (let key in options) {
-      target.prototype[key] = options[key];
-    }
-  };
-}
-async function loadModules(modules, obj, middleware) {
-  const {
-    side,
-    relations
-  } = obj;
-  let playerProps = {};
-  let hooks = {};
-  const getModuleClass = (module) => {
-    if (!module)
-      return null;
-    let plug = [];
-    if (!isArray$8(module)) {
-      plug = [module];
-    } else {
-      plug = module;
-    }
-    const [moduleClassSides, options] = plug;
-    const moduleClass = moduleClassSides[side];
-    if (!moduleClass)
-      return null;
-    return {
-      moduleClass,
-      options
-    };
-  };
-  for (let module of modules) {
-    const moduleObject = getModuleClass(module);
-    if (!moduleObject)
-      continue;
-    const {
-      moduleClass
-    } = moduleObject;
-    if (moduleClass.hooks) {
-      for (let key in moduleClass.hooks) {
-        if (!hooks[key])
-          hooks[key] = [];
-        hooks[key] = [...hooks[key], ...moduleClass.hooks[key]];
-      }
-    }
-  }
-  for (let module of modules) {
-    const moduleObject = getModuleClass(module);
-    if (!moduleObject)
-      continue;
-    const {
-      moduleClass,
-      options
-    } = moduleObject;
-    let mod;
-    if (options && side == Side.Client && options[Side.Server]) {
-      warning(`Data that may be sensitive (normally visible only on the server side) are made optional and visible on the client side.
-Instead, import the configuration with the server! flag into an import. Example: 
-
-import config from 'server!./config
-
-'`, options[Side.Server]);
-    }
-    if (options && !isClass(moduleClass) && isFunction$5(moduleClass)) {
-      mod = new (moduleClass(options[side]))();
-    } else if (isClass(moduleClass)) {
-      mod = new moduleClass();
-    } else {
-      mod = moduleClass;
-    }
-    if (middleware) {
-      mod = middleware(mod);
-      if (isPromise$2(mod)) {
-        mod = await mod;
-      }
-    }
-    const {
-      imports,
-      maps,
-      spritesheets: spritesheets2,
-      sounds: sounds2,
-      gui,
-      scenes,
-      engine,
-      database,
-      worldMaps,
-      scalability,
-      events: events2
-    } = mod;
-    if (imports) {
-      await loadModules(imports, obj);
-    }
-    if (maps) {
-      RpgPlugin.on(HookServer.AddMap, () => maps);
-    }
-    if (events2) {
-      RpgPlugin.on(HookServer.AddEvent, () => events2);
-    }
-    if (worldMaps) {
-      RpgPlugin.on(HookServer.AddWorldMaps, () => worldMaps);
-    }
-    if (database) {
-      RpgPlugin.on(HookServer.AddDatabase, () => database);
-    }
-    if (spritesheets2) {
-      RpgPlugin.on(HookClient.AddSpriteSheet, () => spritesheets2);
-    }
-    if (sounds2) {
-      RpgPlugin.on(HookClient.AddSound, () => sounds2);
-    }
-    if (gui) {
-      RpgPlugin.on(HookClient.AddGui, () => gui);
-    }
-    const player = side == Side.Server ? mod.player : mod.sprite;
-    const loadRelations = (hook, relationName) => {
-      if (!hook)
-        return;
-      for (let method in relations[relationName]) {
-        const hookName = relations[relationName][method];
-        if (hook[method])
-          RpgPlugin.on(hookName, hook[method]);
-      }
-      if (hooks[relationName]) {
-        for (let methodName of hooks[relationName]) {
-          const hookName = side + "." + relationName + "." + methodName;
-          RpgPlugin.customHooks[hookName] = true;
-          if (hook[methodName])
-            RpgPlugin.on(hookName, hook[methodName]);
-        }
-      }
-    };
-    loadRelations(player, "player");
-    if (player && player.props) {
-      playerProps = Object.assign(playerProps, player.props);
-    }
-    loadRelations(engine, "engine");
-    if (scalability)
-      loadRelations(scalability._hooks, "scalability");
-    if (scenes)
-      loadRelations(scenes.map, "sceneMap");
-  }
-  return {
-    playerProps
-  };
-}
-function hexToRGB(hex) {
-  let r2 = parseInt(hex.substring(0, 2), 16);
-  let g2 = parseInt(hex.substring(2, 4), 16);
-  let b3 = parseInt(hex.substring(4, 6), 16);
-  return [r2, g2, b3];
-}
-function RGBToHex(rgb) {
-  let r2 = rgb[0].toString(16).padStart(2, "0");
-  let g2 = rgb[1].toString(16).padStart(2, "0");
-  let b3 = rgb[2].toString(16).padStart(2, "0");
-  return r2 + g2 + b3;
-}
-function transitionColor(startColor, endColor, steps) {
-  let startRGB = hexToRGB(startColor.replace("#", ""));
-  let endRGB = hexToRGB(endColor.replace("#", ""));
-  let deltaRGB = [(endRGB[0] - startRGB[0]) / steps, (endRGB[1] - startRGB[1]) / steps, (endRGB[2] - startRGB[2]) / steps];
-  let colors = [];
-  for (let i2 = 0; i2 < steps; i2++) {
-    let color = [startRGB[0] + deltaRGB[0] * i2, startRGB[1] + deltaRGB[1] * i2, startRGB[2] + deltaRGB[2] * i2];
-    colors.push(RGBToHex(color));
-  }
-  colors.push(endColor.replace("#", ""));
-  return colors;
-}
-const DefaultInput = {
-  [Control.Up]: {
-    repeat: true,
-    bind: Input.Up
-  },
-  [Control.Down]: {
-    repeat: true,
-    bind: Input.Down
-  },
-  [Control.Right]: {
-    repeat: true,
-    bind: Input.Right
-  },
-  [Control.Left]: {
-    repeat: true,
-    bind: Input.Left
-  },
-  [Control.Action]: {
-    bind: [Input.Space, Input.Enter]
-  },
-  [Control.Back]: {
-    bind: Input.Escape
-  }
-};
 class GameEngineClient extends RpgCommonGame {
   constructor() {
     super(GameSide.Client);
@@ -11254,7 +12407,7 @@ class GameEngineClient extends RpgCommonGame {
     return newObject;
   }
 }
-const keyCodeTable = {
+const keyCodeTable$1 = {
   3: "break",
   8: "backspace",
   9: "tab",
@@ -11273,10 +12426,10 @@ const keyCodeTable = {
   34: "page down",
   35: "end",
   36: "home",
-  37: Direction.Left,
-  38: Direction.Up,
-  39: Direction.Right,
-  40: Direction.Down,
+  37: Direction$2.Left,
+  38: Direction$2.Up,
+  39: Direction$2.Right,
+  40: Direction$2.Down,
   41: "select",
   42: "print",
   43: "execute",
@@ -11419,15 +12572,15 @@ const keyCodeTable = {
   255: "toggle touchpad"
 };
 const directionCode = {
-  [Direction.Up]: 1,
-  [Direction.Right]: 2,
-  [Direction.Down]: 3,
-  [Direction.Left]: 4
+  [Direction$2.Up]: 1,
+  [Direction$2.Right]: 2,
+  [Direction$2.Down]: 3,
+  [Direction$2.Left]: 4
 };
 const {
   isArray: isArray$3
 } = Utils$1;
-const inverse = (obj) => {
+const inverse$1 = (obj) => {
   const newObj = {};
   for (let key in obj) {
     const val = obj[key];
@@ -11435,7 +12588,7 @@ const inverse = (obj) => {
   }
   return newObj;
 };
-const inverseKeyCodeTable = inverse(keyCodeTable);
+const inverseKeyCodeTable = inverse$1(keyCodeTable$1);
 class KeyboardControls {
   constructor(clientEngine) {
     this.clientEngine = clientEngine;
@@ -11559,7 +12712,7 @@ class KeyboardControls {
   }
   onKeyChange(e3, isDown) {
     e3 = e3 || window.event;
-    const keyName = keyCodeTable[e3.keyCode];
+    const keyName = keyCodeTable$1[e3.keyCode];
     if (keyName && this.boundKeys[keyName]) {
       if (this.keyState[keyName] == null) {
         this.keyState[keyName] = {
@@ -17723,9 +18876,9 @@ const _BatchRenderer = class extends ObjectRenderer {
     drawCall.start = this._iIndex;
     drawCall.texArray = texArray;
     for (let i2 = start; i2 < finish; ++i2) {
-      const sprite = elements[i2];
-      const tex = sprite._texture.baseTexture;
-      const spriteBlendMode = premultiplyBlendMode[tex.alphaMode ? 1 : 0][sprite.blendMode];
+      const sprite2 = elements[i2];
+      const tex = sprite2._texture.baseTexture;
+      const spriteBlendMode = premultiplyBlendMode[tex.alphaMode ? 1 : 0][sprite2.blendMode];
       elements[i2] = null;
       if (start < i2 && drawCall.blend !== spriteBlendMode) {
         drawCall.size = iIndex - drawCall.start;
@@ -17734,9 +18887,9 @@ const _BatchRenderer = class extends ObjectRenderer {
         drawCall.texArray = texArray;
         drawCall.start = iIndex;
       }
-      this.packInterleavedGeometry(sprite, _attributeBuffer, _indexBuffer, aIndex, iIndex);
-      aIndex += sprite.vertexData.length / 2 * vertexSize;
-      iIndex += sprite.indices.length;
+      this.packInterleavedGeometry(sprite2, _attributeBuffer, _indexBuffer, aIndex, iIndex);
+      aIndex += sprite2.vertexData.length / 2 * vertexSize;
+      iIndex += sprite2.indices.length;
       drawCall.blend = spriteBlendMode;
     }
     if (start < finish) {
@@ -19294,15 +20447,15 @@ class FilterSystem {
       renderer2.geometry.draw(DRAW_MODES.TRIANGLE_STRIP);
     }
   }
-  calculateSpriteMatrix(outputMatrix, sprite) {
+  calculateSpriteMatrix(outputMatrix, sprite2) {
     const { sourceFrame, destinationFrame } = this.activeState;
-    const { orig } = sprite._texture;
+    const { orig } = sprite2._texture;
     const mappedMatrix = outputMatrix.set(destinationFrame.width, 0, 0, destinationFrame.height, sourceFrame.x, sourceFrame.y);
-    const worldTransform = sprite.worldTransform.copyTo(Matrix.TEMP_MATRIX);
+    const worldTransform = sprite2.worldTransform.copyTo(Matrix.TEMP_MATRIX);
     worldTransform.invert();
     mappedMatrix.prepend(worldTransform);
     mappedMatrix.scale(1 / orig.width, 1 / orig.height);
-    mappedMatrix.translate(sprite.anchor.x, sprite.anchor.y);
+    mappedMatrix.translate(sprite2.anchor.x, sprite2.anchor.y);
     return mappedMatrix;
   }
   destroy() {
@@ -20080,15 +21233,15 @@ var fragment$7 = "varying vec2 vMaskCoord;\nvarying vec2 vTextureCoord;\n\nunifo
 var vertex$4 = "attribute vec2 aVertexPosition;\nattribute vec2 aTextureCoord;\n\nuniform mat3 projectionMatrix;\nuniform mat3 otherMatrix;\n\nvarying vec2 vMaskCoord;\nvarying vec2 vTextureCoord;\n\nvoid main(void)\n{\n    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n\n    vTextureCoord = aTextureCoord;\n    vMaskCoord = ( otherMatrix * vec3( aTextureCoord, 1.0)  ).xy;\n}\n";
 class SpriteMaskFilter extends Filter {
   constructor(vertexSrc, fragmentSrc, uniforms) {
-    let sprite = null;
+    let sprite2 = null;
     if (typeof vertexSrc !== "string" && fragmentSrc === void 0 && uniforms === void 0) {
-      sprite = vertexSrc;
+      sprite2 = vertexSrc;
       vertexSrc = void 0;
       fragmentSrc = void 0;
       uniforms = void 0;
     }
     super(vertexSrc || vertex$4, fragmentSrc || fragment$7, uniforms);
-    this.maskSprite = sprite;
+    this.maskSprite = sprite2;
     this.maskMatrix = new Matrix();
   }
   get maskSprite() {
@@ -25630,16 +26783,16 @@ ColorMatrixFilter.prototype.grayscale = ColorMatrixFilter.prototype.greyscale;
 var fragment$4 = "varying vec2 vFilterCoord;\nvarying vec2 vTextureCoord;\n\nuniform vec2 scale;\nuniform mat2 rotation;\nuniform sampler2D uSampler;\nuniform sampler2D mapSampler;\n\nuniform highp vec4 inputSize;\nuniform vec4 inputClamp;\n\nvoid main(void)\n{\n  vec4 map =  texture2D(mapSampler, vFilterCoord);\n\n  map -= 0.5;\n  map.xy = scale * inputSize.zw * (rotation * map.xy);\n\n  gl_FragColor = texture2D(uSampler, clamp(vec2(vTextureCoord.x + map.x, vTextureCoord.y + map.y), inputClamp.xy, inputClamp.zw));\n}\n";
 var vertex$3 = "attribute vec2 aVertexPosition;\n\nuniform mat3 projectionMatrix;\nuniform mat3 filterMatrix;\n\nvarying vec2 vTextureCoord;\nvarying vec2 vFilterCoord;\n\nuniform vec4 inputSize;\nuniform vec4 outputFrame;\n\nvec4 filterVertexPosition( void )\n{\n    vec2 position = aVertexPosition * max(outputFrame.zw, vec2(0.)) + outputFrame.xy;\n\n    return vec4((projectionMatrix * vec3(position, 1.0)).xy, 0.0, 1.0);\n}\n\nvec2 filterTextureCoord( void )\n{\n    return aVertexPosition * (outputFrame.zw * inputSize.zw);\n}\n\nvoid main(void)\n{\n	gl_Position = filterVertexPosition();\n	vTextureCoord = filterTextureCoord();\n	vFilterCoord = ( filterMatrix * vec3( vTextureCoord, 1.0)  ).xy;\n}\n";
 class DisplacementFilter extends Filter {
-  constructor(sprite, scale) {
+  constructor(sprite2, scale) {
     const maskMatrix = new Matrix();
-    sprite.renderable = false;
+    sprite2.renderable = false;
     super(vertex$3, fragment$4, {
-      mapSampler: sprite._texture,
+      mapSampler: sprite2._texture,
       filterMatrix: maskMatrix,
       scale: { x: 1, y: 1 },
       rotation: new Float32Array([1, 0, 0, 1])
     });
-    this.maskSprite = sprite;
+    this.maskSprite = sprite2;
     this.maskMatrix = maskMatrix;
     if (scale === null || scale === void 0) {
       scale = 20;
@@ -32432,22 +33585,22 @@ class ParticleRenderer extends ObjectRenderer {
     let h0 = 0;
     let h1 = 0;
     for (let i2 = 0; i2 < amount; ++i2) {
-      const sprite = children[startIndex + i2];
-      const texture = sprite._texture;
-      const sx = sprite.scale.x;
-      const sy = sprite.scale.y;
+      const sprite2 = children[startIndex + i2];
+      const texture = sprite2._texture;
+      const sx = sprite2.scale.x;
+      const sy = sprite2.scale.y;
       const trim = texture.trim;
       const orig = texture.orig;
       if (trim) {
-        w1 = trim.x - sprite.anchor.x * orig.width;
+        w1 = trim.x - sprite2.anchor.x * orig.width;
         w0 = w1 + trim.width;
-        h1 = trim.y - sprite.anchor.y * orig.height;
+        h1 = trim.y - sprite2.anchor.y * orig.height;
         h0 = h1 + trim.height;
       } else {
-        w0 = orig.width * (1 - sprite.anchor.x);
-        w1 = orig.width * -sprite.anchor.x;
-        h0 = orig.height * (1 - sprite.anchor.y);
-        h1 = orig.height * -sprite.anchor.y;
+        w0 = orig.width * (1 - sprite2.anchor.x);
+        w1 = orig.width * -sprite2.anchor.x;
+        h0 = orig.height * (1 - sprite2.anchor.y);
+        h1 = orig.height * -sprite2.anchor.y;
       }
       array2[offset] = w1 * sx;
       array2[offset + 1] = h1 * sy;
@@ -32512,8 +33665,8 @@ class ParticleRenderer extends ObjectRenderer {
   }
   uploadTint(children, startIndex, amount, array2, stride, offset) {
     for (let i2 = 0; i2 < amount; ++i2) {
-      const sprite = children[startIndex + i2];
-      const result = Color.shared.setValue(sprite._tintRGB).toPremultiplied(sprite.alpha, sprite.texture.baseTexture.alphaMode > 0);
+      const sprite2 = children[startIndex + i2];
+      const result = Color.shared.setValue(sprite2._tintRGB).toPremultiplied(sprite2.alpha, sprite2.texture.baseTexture.alphaMode > 0);
       array2[offset] = result;
       array2[offset + stride] = result;
       array2[offset + stride * 2] = result;
@@ -36237,7 +37390,7 @@ const PIXI = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty
   unsafeEvalSupported,
   utils: index
 }, Symbol.toStringTag, { value: "Module" }));
-class CommonLayer extends Container {
+let CommonLayer$1 = class CommonLayer extends Container {
   constructor(layer, map2) {
     super();
     this.layer = layer;
@@ -36251,8 +37404,8 @@ class CommonLayer extends Container {
     this.y = this.layer.offsety ?? 0;
     this.z = this.layer.properties.z ?? 0;
   }
-}
-class ImageLayer extends CommonLayer {
+};
+class ImageLayer extends CommonLayer$1 {
   applyProperties() {
     super.applyProperties();
     const engine = this.map["renderer"]["clientEngine"];
@@ -36269,7 +37422,7 @@ class ImageLayer extends CommonLayer {
     }
   }
 }
-class Tile2 extends AnimatedSprite {
+let Tile$1 = class Tile2 extends AnimatedSprite {
   static getTextures(tile, tileSet) {
     const textures = [];
     if (tile.animations && tile.animations.length) {
@@ -36331,7 +37484,7 @@ class Tile2 extends AnimatedSprite {
     if (symmetry)
       this.texture.rotate = symmetry;
   }
-}
+};
 let B$1 = class B {
   /** @param renderer */
   constructor(t2) {
@@ -37141,7 +38294,7 @@ extensions$1.add({
   ref: st
 });
 m$1.use32bitIndex = true;
-class TileLayer extends CommonLayer {
+let TileLayer$1 = class TileLayer extends CommonLayer$1 {
   static findTileSet(gid, tileSets) {
     let tileset;
     for (let i2 = tileSets.length - 1; i2 >= 0; i2--) {
@@ -37179,7 +38332,7 @@ class TileLayer extends CommonLayer {
     const tileset = TileLayer.findTileSet(tiledTile.gid, this.tileSets);
     if (!tileset)
       return;
-    const tile = new Tile2(tiledTile, tileset);
+    const tile = new Tile$1(tiledTile, tileset);
     tile.x = x2 * tilewidth;
     tile.y = y2 * tileheight + (tileheight - tile.texture.height);
     tile._x = x2;
@@ -37263,7 +38416,7 @@ class TileLayer extends CommonLayer {
     }
     this.addChild(this.tilemap);
   }
-}
+};
 function _initResource(memory, _resources, prop, engine) {
   for (let resource of _resources) {
     const pluralProp = prop + "s";
@@ -37280,11 +38433,11 @@ function _initResource(memory, _resources, prop, engine) {
     }
   }
 }
-const spritesheets = /* @__PURE__ */ new Map();
+const spritesheets$1 = /* @__PURE__ */ new Map();
 function _initSpritesheet(_spritesheets, engine) {
-  return _initResource(spritesheets, _spritesheets, "image", engine);
+  return _initResource(spritesheets$1, _spritesheets, "image", engine);
 }
-function log(message) {
+function log$1(message) {
   return new Error(`[RPGJS] - ${message}`);
 }
 class TileSet extends Tileset {
@@ -37294,9 +38447,9 @@ class TileSet extends Tileset {
   }
   /** @internal */
   load() {
-    const spritesheet = spritesheets.get(this.name);
+    const spritesheet = spritesheets$1.get(this.name);
     if (!spritesheet) {
-      throw log(`Impossible to find ${this.name} tileset`);
+      throw log$1(`Impossible to find ${this.name} tileset`);
     }
     this.baseTexture = spritesheet.resource;
     for (let y2 = this.margin; y2 < this.image.height; y2 += this.tileheight + this.spacing) {
@@ -37358,7 +38511,7 @@ class TileMap extends Container {
     this.data.layers.forEach((layerData) => {
       switch (layerData.type) {
         case TiledLayerType.Tile: {
-          const tileLayer = new TileLayer(layerData, this.tilesets, this);
+          const tileLayer = new TileLayer$1(layerData, this.tilesets, this);
           const tile = tileLayer.createTile(x2, y2, {
             real: true,
             filter: (tile2) => {
@@ -37421,8 +38574,8 @@ class TileMap extends Container {
   changeTile(x2, y2, layerName) {
     const layer = this.layers[layerName];
     if (!layer)
-      throw log(`${layerName} not exists`);
-    if (layer instanceof TileLayer) {
+      throw log$1(`${layerName} not exists`);
+    if (layer instanceof TileLayer$1) {
       layer.changeTile(x2, y2);
     }
   }
@@ -37433,7 +38586,7 @@ class TileMap extends Container {
     this.data.layers.forEach((layerData) => {
       switch (layerData.type) {
         case TiledLayerType.Tile: {
-          const tileLayer = new TileLayer(layerData, this.tilesets, this);
+          const tileLayer = new TileLayer$1(layerData, this.tilesets, this);
           if (options == null ? void 0 : options.drawTiles)
             tileLayer.create();
           this.layers[layerData.name] = tileLayer;
@@ -39555,16 +40708,16 @@ var howler = {};
        * @param  {Boolean} internal Internal Use: true prevents event firing.
        * @return {Number}          Sound ID.
        */
-      play: function(sprite, internal) {
+      play: function(sprite2, internal) {
         var self2 = this;
         var id = null;
-        if (typeof sprite === "number") {
-          id = sprite;
-          sprite = null;
-        } else if (typeof sprite === "string" && self2._state === "loaded" && !self2._sprite[sprite]) {
+        if (typeof sprite2 === "number") {
+          id = sprite2;
+          sprite2 = null;
+        } else if (typeof sprite2 === "string" && self2._state === "loaded" && !self2._sprite[sprite2]) {
           return null;
-        } else if (typeof sprite === "undefined") {
-          sprite = "__default";
+        } else if (typeof sprite2 === "undefined") {
+          sprite2 = "__default";
           if (!self2._playLock) {
             var num = 0;
             for (var i2 = 0; i2 < self2._sounds.length; i2++) {
@@ -39574,7 +40727,7 @@ var howler = {};
               }
             }
             if (num === 1) {
-              sprite = null;
+              sprite2 = null;
             } else {
               id = null;
             }
@@ -39584,11 +40737,11 @@ var howler = {};
         if (!sound) {
           return null;
         }
-        if (id && !sprite) {
-          sprite = sound._sprite || "__default";
+        if (id && !sprite2) {
+          sprite2 = sound._sprite || "__default";
         }
         if (self2._state !== "loaded") {
-          sound._sprite = sprite;
+          sound._sprite = sprite2;
           sound._ended = false;
           var soundId = sound._id;
           self2._queue.push({
@@ -39608,19 +40761,19 @@ var howler = {};
         if (self2._webAudio) {
           Howler2._autoResume();
         }
-        var seek = Math.max(0, sound._seek > 0 ? sound._seek : self2._sprite[sprite][0] / 1e3);
-        var duration = Math.max(0, (self2._sprite[sprite][0] + self2._sprite[sprite][1]) / 1e3 - seek);
+        var seek = Math.max(0, sound._seek > 0 ? sound._seek : self2._sprite[sprite2][0] / 1e3);
+        var duration = Math.max(0, (self2._sprite[sprite2][0] + self2._sprite[sprite2][1]) / 1e3 - seek);
         var timeout = duration * 1e3 / Math.abs(sound._rate);
-        var start = self2._sprite[sprite][0] / 1e3;
-        var stop = (self2._sprite[sprite][0] + self2._sprite[sprite][1]) / 1e3;
-        sound._sprite = sprite;
+        var start = self2._sprite[sprite2][0] / 1e3;
+        var stop = (self2._sprite[sprite2][0] + self2._sprite[sprite2][1]) / 1e3;
+        sound._sprite = sprite2;
         sound._ended = false;
         var setParams = function() {
           sound._paused = false;
           sound._seek = seek;
           sound._start = start;
           sound._stop = stop;
-          sound._loop = !!(sound._loop || self2._sprite[sprite][2]);
+          sound._loop = !!(sound._loop || self2._sprite[sprite2][2]);
         };
         if (seek >= stop) {
           self2._ended(sound);
@@ -39692,7 +40845,7 @@ var howler = {};
                 self2._emit("playerror", sound._id, "Playback was unable to start. This is most commonly an issue on mobile devices and Chrome where playback was not within a user interaction.");
                 return;
               }
-              if (sprite !== "__default" || sound._loop) {
+              if (sprite2 !== "__default" || sound._loop) {
                 self2._endTimers[sound._id] = setTimeout(self2._ended.bind(self2, sound), timeout);
               } else {
                 self2._endTimers[sound._id] = function() {
@@ -40429,12 +41582,12 @@ var howler = {};
        */
       _ended: function(sound) {
         var self2 = this;
-        var sprite = sound._sprite;
+        var sprite2 = sound._sprite;
         if (!self2._webAudio && sound._node && !sound._node.paused && !sound._node.ended && sound._node.currentTime < sound._stop) {
           setTimeout(self2._ended.bind(self2, sound), 100);
           return self2;
         }
-        var loop = !!(sound._loop || self2._sprite[sprite][2]);
+        var loop = !!(sound._loop || self2._sprite[sprite2][2]);
         self2._emit("end", sound._id);
         if (!self2._webAudio && loop) {
           self2.stop(sound._id, true).play(sound._id);
@@ -41258,11 +42411,11 @@ var howler = {};
     };
   })();
 })(howler);
-const sounds = /* @__PURE__ */ new Map();
+const sounds$1 = /* @__PURE__ */ new Map();
 function _initSound(_sounds, engine) {
-  return _initResource(sounds, _sounds, "sound", engine);
+  return _initResource(sounds$1, _sounds, "sound", engine);
 }
-class RpgSoundClass {
+let RpgSoundClass$1 = class RpgSoundClass {
   constructor() {
     this.sounds = /* @__PURE__ */ new Map();
   }
@@ -41270,9 +42423,9 @@ class RpgSoundClass {
     if (this.sounds.has(id)) {
       return this.sounds.get(id);
     }
-    const resource = sounds.get(id);
+    const resource = sounds$1.get(id);
     if (!resource) {
-      throw log(`Impossible to find the ${id} sound. Did you put the right name or create the sound?`);
+      throw log$1(`Impossible to find the ${id} sound. Did you put the right name or create the sound?`);
     }
     const howl = new howler.Howl({
       src: [resource.sound],
@@ -41302,21 +42455,21 @@ class RpgSoundClass {
   get global() {
     return howler.Howler;
   }
-}
-const RpgSound = new RpgSoundClass();
-var Animation$1;
-(function(Animation2) {
-  Animation2["Stand"] = "stand";
-  Animation2["Walk"] = "walk";
-  Animation2["Attack"] = "attack";
-  Animation2["Defense"] = "defense";
-  Animation2["Skill"] = "skill";
-})(Animation$1 || (Animation$1 = {}));
+};
+const RpgSound$1 = new RpgSoundClass$1();
+var Animation$3;
+(function(Animation3) {
+  Animation3["Stand"] = "stand";
+  Animation3["Walk"] = "walk";
+  Animation3["Attack"] = "attack";
+  Animation3["Defense"] = "defense";
+  Animation3["Skill"] = "skill";
+})(Animation$3 || (Animation$3 = {}));
 const {
-  isFunction: isFunction$2,
-  arrayEquals
+  isFunction: isFunction$3,
+  arrayEquals: arrayEquals$1
 } = Utils$1;
-class Animation extends Sprite {
+let Animation$2 = class Animation extends Sprite {
   get attachTo() {
     return this._attachTo;
   }
@@ -41335,9 +42488,9 @@ class Animation extends Sprite {
     this.animations = /* @__PURE__ */ new Map();
     this._animation$ = new BehaviorSubject(null);
     this.animation$ = this._animation$.asObservable();
-    this.spritesheet = spritesheets.get(this.id);
+    this.spritesheet = spritesheets$1.get(this.id);
     if (!this.spritesheet) {
-      throw log(`Impossible to find the ${this.id} spritesheet. Did you put the right name or create the spritesheet?`);
+      throw log$1(`Impossible to find the ${this.id} spritesheet. Did you put the right name or create the spritesheet?`);
     }
     this.createAnimations();
   }
@@ -41364,10 +42517,10 @@ class Animation extends Sprite {
         const rectX = j2 * spriteWidth + offsetX;
         const rectY = i2 * spriteHeight + offsetY;
         if (rectY > height) {
-          throw log(`Warning, there is a problem with the height of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the height of the image.`);
+          throw log$1(`Warning, there is a problem with the height of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the height of the image.`);
         }
         if (rectX > width) {
-          throw log(`Warning, there is a problem with the width of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the width of the image.`);
+          throw log$1(`Warning, there is a problem with the width of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the width of the image.`);
         }
         frames[i2].push(new Texture(baseTexture, new Rectangle(rectX, rectY, spriteWidth, spriteHeight)));
       }
@@ -41414,7 +42567,7 @@ class Animation extends Sprite {
   }
   getSpriteSize(name) {
     var _a, _b;
-    return ((_b = this.animations.get(((_a = this.currentAnimation) == null ? void 0 : _a.name) || Animation$1.Stand)) == null ? void 0 : _b.data[name]) || 0;
+    return ((_b = this.animations.get(((_a = this.currentAnimation) == null ? void 0 : _a.name) || Animation$3.Stand)) == null ? void 0 : _b.data[name]) || 0;
   }
   getSpriteHeight() {
     return this.getSpriteSize("spriteHeight");
@@ -41443,7 +42596,7 @@ class Animation extends Sprite {
   play(name, params = []) {
     var _a;
     const animParams = (_a = this.currentAnimation) == null ? void 0 : _a.params;
-    if (this.isPlaying(name) && arrayEquals(params, animParams || []))
+    if (this.isPlaying(name) && arrayEquals$1(params, animParams || []))
       return;
     const animation = this.get(name);
     if (!animation) {
@@ -41456,18 +42609,18 @@ class Animation extends Sprite {
     this.time = 0;
     this.frameIndex = 0;
     let animations = animation.animations;
-    animations = isFunction$2(animations) ? animations(...params) : animations;
+    animations = isFunction$3(animations) ? animations(...params) : animations;
     this.currentAnimation.container = new Container();
     for (let container of animations) {
-      const sprite = new Sprite();
+      const sprite2 = new Sprite();
       for (let frame of container) {
         this.currentAnimation.sprites.push(frame);
       }
-      this.currentAnimation.container.addChild(sprite);
+      this.currentAnimation.container.addChild(sprite2);
     }
     const sound = this.currentAnimation.data.sound;
     if (sound) {
-      RpgSound.get(sound).play();
+      RpgSound$1.get(sound).play();
     }
     this.addChild(this.currentAnimation.container);
     this.update(1);
@@ -41484,8 +42637,8 @@ class Animation extends Sprite {
     let frame = sprites[this.frameIndex];
     const nextFrame2 = sprites[this.frameIndex + 1];
     if (this.attachTo) {
-      const sprite = this.attachTo;
-      const pos = sprite == null ? void 0 : sprite.getPositionsOfGraphic("middle");
+      const sprite2 = this.attachTo;
+      const pos = sprite2 == null ? void 0 : sprite2.getPositionsOfGraphic("middle");
       if (pos) {
         container.x = pos.x;
         container.y = pos.y;
@@ -41496,19 +42649,19 @@ class Animation extends Sprite {
         const optionProp = alias || prop;
         const val = getVal(optionProp);
         if (val !== void 0) {
-          sprite[prop] = val;
+          sprite2[prop] = val;
         }
       };
-      const sprite = _sprite;
+      const sprite2 = _sprite;
       if (!frame || frame.frameY == void 0 || frame.frameX == void 0) {
         continue;
       }
-      sprite.texture = frames[frame.frameY][frame.frameX];
+      sprite2.texture = frames[frame.frameY][frame.frameX];
       const getVal = (prop) => frame[prop] || data[prop] || this.spritesheet[prop];
       const applyTransform = (prop) => {
         const val = getVal(prop);
         if (val) {
-          sprite[prop].set(...val);
+          sprite2[prop].set(...val);
         }
       };
       if (this.applyTransform) {
@@ -41529,11 +42682,11 @@ class Animation extends Sprite {
           const w2 = (spriteWidth - this.hitbox.w) / 2 / spriteWidth;
           const gap = (spriteHeight - heightOfSprite) / 2;
           const h2 = (spriteHeight - this.hitbox.h - gap) / spriteHeight;
-          sprite.anchor.set(w2, h2);
+          sprite2.anchor.set(w2, h2);
         }
       };
       if (frame.sound) {
-        RpgSound.get(frame.sound).play();
+        RpgSound$1.get(frame.sound).play();
       }
       applyAnchorBySize();
       applyTransform("anchor");
@@ -41547,9 +42700,9 @@ class Animation extends Sprite {
       applyTransformValue("rotation");
       applyTransformValue("visible");
       this._animation$.next({
-        spriteWidth: widthOfSprite || sprite.width,
-        spriteHeight: heightOfSprite || sprite.height,
-        anchor: sprite.anchor,
+        spriteWidth: widthOfSprite || sprite2.width,
+        spriteHeight: heightOfSprite || sprite2.height,
+        anchor: sprite2.anchor,
         width: getVal("spriteWidth"),
         height: getVal("spriteHeight")
       });
@@ -41569,7 +42722,7 @@ class Animation extends Sprite {
       this.frameIndex++;
     }
   }
-}
+};
 function makeMap(str2, expectsLowerCase) {
   const map2 = /* @__PURE__ */ Object.create(null);
   const list = str2.split(",");
@@ -41598,12 +42751,12 @@ const hasOwn = (val, key) => hasOwnProperty$2.call(val, key);
 const isArray$1 = Array.isArray;
 const isMap = (val) => toTypeString(val) === "[object Map]";
 const isSet = (val) => toTypeString(val) === "[object Set]";
-const isFunction$1 = (val) => typeof val === "function";
+const isFunction$2 = (val) => typeof val === "function";
 const isString$1 = (val) => typeof val === "string";
 const isSymbol$1 = (val) => typeof val === "symbol";
 const isObject$2 = (val) => val !== null && typeof val === "object";
 const isPromise = (val) => {
-  return isObject$2(val) && isFunction$1(val.then) && isFunction$1(val.catch);
+  return isObject$2(val) && isFunction$2(val.then) && isFunction$2(val.catch);
 };
 const objectToString$1 = Object.prototype.toString;
 const toTypeString = (value2) => objectToString$1.call(value2);
@@ -41631,11 +42784,11 @@ const hyphenateRE = /\B([A-Z])/g;
 const hyphenate = cacheStringFunction(
   (str2) => str2.replace(hyphenateRE, "-$1").toLowerCase()
 );
-const capitalize$1 = cacheStringFunction(
+const capitalize$2 = cacheStringFunction(
   (str2) => str2.charAt(0).toUpperCase() + str2.slice(1)
 );
 const toHandlerKey = cacheStringFunction(
-  (str2) => str2 ? `on${capitalize$1(str2)}` : ``
+  (str2) => str2 ? `on${capitalize$2(str2)}` : ``
 );
 const hasChanged = (value2, oldValue) => !Object.is(value2, oldValue);
 const invokeArrayFns = (fns, arg) => {
@@ -41732,7 +42885,7 @@ function includeBooleanAttr(value2) {
   return !!value2 || value2 === "";
 }
 const toDisplayString = (val) => {
-  return isString$1(val) ? val : val == null ? "" : isArray$1(val) || isObject$2(val) && (val.toString === objectToString$1 || !isFunction$1(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
+  return isString$1(val) ? val : val == null ? "" : isArray$1(val) || isObject$2(val) && (val.toString === objectToString$1 || !isFunction$2(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
 const replacer = (_key, val) => {
   if (val && val.__v_isRef) {
@@ -42640,7 +43793,7 @@ class ComputedRefImpl {
 function computed$1(getterOrOptions, debugOptions, isSSR = false) {
   let getter;
   let setter;
-  const onlyGetter = isFunction$1(getterOrOptions);
+  const onlyGetter = isFunction$2(getterOrOptions);
   if (onlyGetter) {
     getter = getterOrOptions;
     setter = NOOP;
@@ -42664,7 +43817,7 @@ function callWithErrorHandling(fn, instance, type, args) {
   return res;
 }
 function callWithAsyncErrorHandling(fn, instance, type, args) {
-  if (isFunction$1(fn)) {
+  if (isFunction$2(fn)) {
     const res = callWithErrorHandling(fn, instance, type, args);
     if (res && isPromise(res)) {
       res.catch((err) => {
@@ -42775,7 +43928,7 @@ function queuePostFlushCb(cb) {
   }
   queueFlush();
 }
-function flushPreFlushCbs(seen, i2 = isFlushing ? flushIndex + 1 : 0) {
+function flushPreFlushCbs(seen2, i2 = isFlushing ? flushIndex + 1 : 0) {
   for (; i2 < queue.length; i2++) {
     const cb = queue[i2];
     if (cb && cb.pre) {
@@ -42785,7 +43938,7 @@ function flushPreFlushCbs(seen, i2 = isFlushing ? flushIndex + 1 : 0) {
     }
   }
 }
-function flushPostFlushCbs(seen) {
+function flushPostFlushCbs(seen2) {
   if (pendingPostFlushCbs.length) {
     const deduped = [...new Set(pendingPostFlushCbs)];
     pendingPostFlushCbs.length = 0;
@@ -42813,7 +43966,7 @@ const comparator = (a8, b3) => {
   }
   return diff;
 };
-function flushJobs(seen) {
+function flushJobs(seen2) {
   isFlushPending = false;
   isFlushing = true;
   queue.sort(comparator);
@@ -42894,7 +44047,7 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
   const raw = comp.emits;
   let normalized = {};
   let hasExtends = false;
-  if (!isFunction$1(comp)) {
+  if (!isFunction$2(comp)) {
     const extendEmits = (raw2) => {
       const normalizedFromExtend = normalizeEmitsOptions(raw2, appContext, true);
       if (normalizedFromExtend) {
@@ -43188,12 +44341,12 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
         return s2.value;
       } else if (isReactive(s2)) {
         return traverse(s2);
-      } else if (isFunction$1(s2)) {
+      } else if (isFunction$2(s2)) {
         return callWithErrorHandling(s2, instance, 2);
       } else
         ;
     });
-  } else if (isFunction$1(source)) {
+  } else if (isFunction$2(source)) {
     if (cb) {
       getter = () => callWithErrorHandling(source, instance, 2);
     } else {
@@ -43310,7 +44463,7 @@ function instanceWatch(source, value2, options) {
   const publicThis = this.proxy;
   const getter = isString$1(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
   let cb;
-  if (isFunction$1(value2)) {
+  if (isFunction$2(value2)) {
     cb = value2;
   } else {
     cb = value2.handler;
@@ -43336,31 +44489,62 @@ function createPathGetter(ctx, path2) {
     return cur;
   };
 }
-function traverse(value2, seen) {
+function traverse(value2, seen2) {
   if (!isObject$2(value2) || value2["__v_skip"]) {
     return value2;
   }
-  seen = seen || /* @__PURE__ */ new Set();
-  if (seen.has(value2)) {
+  seen2 = seen2 || /* @__PURE__ */ new Set();
+  if (seen2.has(value2)) {
     return value2;
   }
-  seen.add(value2);
+  seen2.add(value2);
   if (isRef(value2)) {
-    traverse(value2.value, seen);
+    traverse(value2.value, seen2);
   } else if (isArray$1(value2)) {
     for (let i2 = 0; i2 < value2.length; i2++) {
-      traverse(value2[i2], seen);
+      traverse(value2[i2], seen2);
     }
   } else if (isSet(value2) || isMap(value2)) {
     value2.forEach((v2) => {
-      traverse(v2, seen);
+      traverse(v2, seen2);
     });
   } else if (isPlainObject(value2)) {
     for (const key in value2) {
-      traverse(value2[key], seen);
+      traverse(value2[key], seen2);
     }
   }
   return value2;
+}
+function withDirectives(vnode, directives) {
+  const internalInstance = currentRenderingInstance;
+  if (internalInstance === null) {
+    return vnode;
+  }
+  const instance = getExposeProxy(internalInstance) || internalInstance.proxy;
+  const bindings = vnode.dirs || (vnode.dirs = []);
+  for (let i2 = 0; i2 < directives.length; i2++) {
+    let [dir, value2, arg, modifiers = EMPTY_OBJ] = directives[i2];
+    if (dir) {
+      if (isFunction$2(dir)) {
+        dir = {
+          mounted: dir,
+          updated: dir
+        };
+      }
+      if (dir.deep) {
+        traverse(value2);
+      }
+      bindings.push({
+        dir,
+        instance,
+        value: value2,
+        oldValue: void 0,
+        arg,
+        modifiers
+      });
+    }
+  }
+  return vnode;
 }
 function invokeDirectiveHook(vnode, prevVNode, instance, name) {
   const bindings = vnode.dirs;
@@ -43802,7 +44986,7 @@ function resolveAsset(type, name, warnMissing = true, maybeSelfReference = false
         false
         /* do not include inferred name to avoid breaking existing code */
       );
-      if (selfName && (selfName === name || selfName === camelize(name) || selfName === capitalize$1(camelize(name)))) {
+      if (selfName && (selfName === name || selfName === camelize(name) || selfName === capitalize$2(camelize(name)))) {
         return Component;
       }
     }
@@ -43819,7 +45003,7 @@ function resolveAsset(type, name, warnMissing = true, maybeSelfReference = false
   }
 }
 function resolve(registry, name) {
-  return registry && (registry[name] || registry[camelize(name)] || registry[capitalize$1(camelize(name))]);
+  return registry && (registry[name] || registry[camelize(name)] || registry[capitalize$2(camelize(name))]);
 }
 function renderList(source, renderItem, cache2, index2) {
   let ret;
@@ -44077,7 +45261,7 @@ function applyOptions(instance) {
   if (methods) {
     for (const key in methods) {
       const methodHandler = methods[key];
-      if (isFunction$1(methodHandler)) {
+      if (isFunction$2(methodHandler)) {
         {
           ctx[key] = methodHandler.bind(publicThis);
         }
@@ -44096,8 +45280,8 @@ function applyOptions(instance) {
   if (computedOptions) {
     for (const key in computedOptions) {
       const opt = computedOptions[key];
-      const get2 = isFunction$1(opt) ? opt.bind(publicThis, publicThis) : isFunction$1(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP;
-      const set2 = !isFunction$1(opt) && isFunction$1(opt.set) ? opt.set.bind(publicThis) : NOOP;
+      const get2 = isFunction$2(opt) ? opt.bind(publicThis, publicThis) : isFunction$2(opt.get) ? opt.get.bind(publicThis, publicThis) : NOOP;
+      const set2 = !isFunction$2(opt) && isFunction$2(opt.set) ? opt.set.bind(publicThis) : NOOP;
       const c3 = computed({
         get: get2,
         set: set2
@@ -44116,7 +45300,7 @@ function applyOptions(instance) {
     }
   }
   if (provideOptions) {
-    const provides = isFunction$1(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
+    const provides = isFunction$2(provideOptions) ? provideOptions.call(publicThis) : provideOptions;
     Reflect.ownKeys(provides).forEach((key) => {
       provide(key, provides[key]);
     });
@@ -44211,17 +45395,17 @@ function createWatcher(raw, ctx, publicThis, key) {
   const getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
   if (isString$1(raw)) {
     const handler = ctx[raw];
-    if (isFunction$1(handler)) {
+    if (isFunction$2(handler)) {
       watch(getter, handler);
     }
-  } else if (isFunction$1(raw)) {
+  } else if (isFunction$2(raw)) {
     watch(getter, raw.bind(publicThis));
   } else if (isObject$2(raw)) {
     if (isArray$1(raw)) {
       raw.forEach((r2) => createWatcher(r2, ctx, publicThis, key));
     } else {
-      const handler = isFunction$1(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
-      if (isFunction$1(handler)) {
+      const handler = isFunction$2(raw.handler) ? raw.handler.bind(publicThis) : ctx[raw.handler];
+      if (isFunction$2(handler)) {
         watch(getter, handler, raw);
       }
     }
@@ -44318,8 +45502,8 @@ function mergeDataFn(to, from2) {
   }
   return function mergedDataFn() {
     return extend$1(
-      isFunction$1(to) ? to.call(this, this) : to,
-      isFunction$1(from2) ? from2.call(this, this) : from2
+      isFunction$2(to) ? to.call(this, this) : to,
+      isFunction$2(from2) ? from2.call(this, this) : from2
     );
   };
 }
@@ -44391,7 +45575,7 @@ function createAppContext() {
 let uid$1 = 0;
 function createAppAPI(render2, hydrate) {
   return function createApp2(rootComponent, rootProps = null) {
-    if (!isFunction$1(rootComponent)) {
+    if (!isFunction$2(rootComponent)) {
       rootComponent = extend$1({}, rootComponent);
     }
     if (rootProps != null && !isObject$2(rootProps)) {
@@ -44416,10 +45600,10 @@ function createAppAPI(render2, hydrate) {
       use(plugin, ...options) {
         if (installedPlugins.has(plugin))
           ;
-        else if (plugin && isFunction$1(plugin.install)) {
+        else if (plugin && isFunction$2(plugin.install)) {
           installedPlugins.add(plugin);
           plugin.install(app, ...options);
-        } else if (isFunction$1(plugin)) {
+        } else if (isFunction$2(plugin)) {
           installedPlugins.add(plugin);
           plugin(app, ...options);
         } else
@@ -44508,7 +45692,7 @@ function inject(key, defaultValue2, treatDefaultAsFactory = false) {
     if (provides && key in provides) {
       return provides[key];
     } else if (arguments.length > 1) {
-      return treatDefaultAsFactory && isFunction$1(defaultValue2) ? defaultValue2.call(instance && instance.proxy) : defaultValue2;
+      return treatDefaultAsFactory && isFunction$2(defaultValue2) ? defaultValue2.call(instance && instance.proxy) : defaultValue2;
     } else
       ;
   }
@@ -44674,7 +45858,7 @@ function resolvePropValue(options, props, key, value2, instance, isAbsent) {
     const hasDefault = hasOwn(opt, "default");
     if (hasDefault && value2 === void 0) {
       const defaultValue2 = opt.default;
-      if (opt.type !== Function && !opt.skipFactory && isFunction$1(defaultValue2)) {
+      if (opt.type !== Function && !opt.skipFactory && isFunction$2(defaultValue2)) {
         const { propsDefaults } = instance;
         if (key in propsDefaults) {
           value2 = propsDefaults[key];
@@ -44716,7 +45900,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
   const normalized = {};
   const needCastKeys = [];
   let hasExtends = false;
-  if (!isFunction$1(comp)) {
+  if (!isFunction$2(comp)) {
     const extendProps = (raw2) => {
       hasExtends = true;
       const [props, keys2] = normalizePropsOptions(raw2, appContext, true);
@@ -44752,7 +45936,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
       const normalizedKey = camelize(key);
       if (validatePropName(normalizedKey)) {
         const opt = raw[key];
-        const prop = normalized[normalizedKey] = isArray$1(opt) || isFunction$1(opt) ? { type: opt } : extend$1({}, opt);
+        const prop = normalized[normalizedKey] = isArray$1(opt) || isFunction$2(opt) ? { type: opt } : extend$1({}, opt);
         if (prop) {
           const booleanIndex = getTypeIndex(Boolean, prop.type);
           const stringIndex = getTypeIndex(String, prop.type);
@@ -44793,7 +45977,7 @@ function isSameType(a8, b3) {
 function getTypeIndex(type, expectedTypes) {
   if (isArray$1(expectedTypes)) {
     return expectedTypes.findIndex((t2) => isSameType(t2, type));
-  } else if (isFunction$1(expectedTypes)) {
+  } else if (isFunction$2(expectedTypes)) {
     return isSameType(expectedTypes, type) ? 0 : -1;
   }
   return -1;
@@ -44818,7 +46002,7 @@ const normalizeObjectSlots = (rawSlots, slots, instance) => {
     if (isInternalKey(key))
       continue;
     const value2 = rawSlots[key];
-    if (isFunction$1(value2)) {
+    if (isFunction$2(value2)) {
       slots[key] = normalizeSlot(key, value2, ctx);
     } else if (value2 != null) {
       const normalized = normalizeSlotValue(value2);
@@ -44914,7 +46098,7 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
       oldRef.value = null;
     }
   }
-  if (isFunction$1(ref)) {
+  if (isFunction$2(ref)) {
     callWithErrorHandling(ref, owner, 12, [value2, refs]);
   } else {
     const _isString = isString$1(ref);
@@ -46350,7 +47534,7 @@ const normalizeRef = ({
   if (typeof ref === "number") {
     ref = "" + ref;
   }
-  return ref != null ? isString$1(ref) || isRef(ref) || isFunction$1(ref) ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for } : ref : null;
+  return ref != null ? isString$1(ref) || isRef(ref) || isFunction$2(ref) ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for } : ref : null;
 };
 function createBaseVNode(type, props = null, children = null, patchFlag = 0, dynamicProps = null, shapeFlag = type === Fragment ? 0 : 1, isBlockNode = false, needFullChildrenNormalization = false) {
   const vnode = {
@@ -46443,7 +47627,7 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
       props.style = normalizeStyle(style);
     }
   }
-  const shapeFlag = isString$1(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$2(type) ? 4 : isFunction$1(type) ? 2 : 0;
+  const shapeFlag = isString$1(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$2(type) ? 4 : isFunction$2(type) ? 2 : 0;
   return createBaseVNode(
     type,
     props,
@@ -46562,7 +47746,7 @@ function normalizeChildren(vnode, children) {
         }
       }
     }
-  } else if (isFunction$1(children)) {
+  } else if (isFunction$2(children)) {
     children = { default: children, _ctx: currentRenderingInstance };
     type = 32;
   } else {
@@ -46774,7 +47958,7 @@ function setupStatefulComponent(instance, isSSR) {
   }
 }
 function handleSetupResult(instance, setupResult, isSSR) {
-  if (isFunction$1(setupResult)) {
+  if (isFunction$2(setupResult)) {
     if (instance.type.__ssrInlineRender) {
       instance.ssrRender = setupResult;
     } else {
@@ -46861,10 +48045,10 @@ function getExposeProxy(instance) {
   }
 }
 function getComponentName(Component, includeInferred = true) {
-  return isFunction$1(Component) ? Component.displayName || Component.name : Component.name || includeInferred && Component.__name;
+  return isFunction$2(Component) ? Component.displayName || Component.name : Component.name || includeInferred && Component.__name;
 }
 function isClassComponent(value2) {
-  return isFunction$1(value2) && "__vccOpts" in value2;
+  return isFunction$2(value2) && "__vccOpts" in value2;
 }
 const computed = (getterOrOptions, debugOptions) => {
   return computed$1(getterOrOptions, debugOptions, isInSSRComponentSetup);
@@ -47038,7 +48222,7 @@ function autoPrefix(style, rawName) {
   if (name !== "filter" && name in style) {
     return prefixCache[rawName] = name;
   }
-  name = capitalize$1(name);
+  name = capitalize$2(name);
   for (let i2 = 0; i2 < prefixes.length; i2++) {
     const prefixed = prefixes[i2] + name;
     if (prefixed in style) {
@@ -47208,7 +48392,7 @@ function shouldSetAsProp(el, key, value2, isSVG) {
     if (key === "innerHTML" || key === "textContent") {
       return true;
     }
-    if (key in el && nativeOnRE.test(key) && isFunction$1(value2)) {
+    if (key in el && nativeOnRE.test(key) && isFunction$2(value2)) {
       return true;
     }
     return false;
@@ -47492,6 +48676,92 @@ function toMs(s2) {
 function forceReflow() {
   return document.body.offsetHeight;
 }
+const getModelAssigner = (vnode) => {
+  const fn = vnode.props["onUpdate:modelValue"] || false;
+  return isArray$1(fn) ? (value2) => invokeArrayFns(fn, value2) : fn;
+};
+function onCompositionStart(e3) {
+  e3.target.composing = true;
+}
+function onCompositionEnd(e3) {
+  const target = e3.target;
+  if (target.composing) {
+    target.composing = false;
+    target.dispatchEvent(new Event("input"));
+  }
+}
+const vModelText = {
+  created(el, { modifiers: { lazy, trim, number } }, vnode) {
+    el._assign = getModelAssigner(vnode);
+    const castToNumber = number || vnode.props && vnode.props.type === "number";
+    addEventListener$1(el, lazy ? "change" : "input", (e3) => {
+      if (e3.target.composing)
+        return;
+      let domValue = el.value;
+      if (trim) {
+        domValue = domValue.trim();
+      }
+      if (castToNumber) {
+        domValue = looseToNumber(domValue);
+      }
+      el._assign(domValue);
+    });
+    if (trim) {
+      addEventListener$1(el, "change", () => {
+        el.value = el.value.trim();
+      });
+    }
+    if (!lazy) {
+      addEventListener$1(el, "compositionstart", onCompositionStart);
+      addEventListener$1(el, "compositionend", onCompositionEnd);
+      addEventListener$1(el, "change", onCompositionEnd);
+    }
+  },
+  // set value on mounted so it's after min/max for type="range"
+  mounted(el, { value: value2 }) {
+    el.value = value2 == null ? "" : value2;
+  },
+  beforeUpdate(el, { value: value2, modifiers: { lazy, trim, number } }, vnode) {
+    el._assign = getModelAssigner(vnode);
+    if (el.composing)
+      return;
+    if (document.activeElement === el && el.type !== "range") {
+      if (lazy) {
+        return;
+      }
+      if (trim && el.value.trim() === value2) {
+        return;
+      }
+      if ((number || el.type === "number") && looseToNumber(el.value) === value2) {
+        return;
+      }
+    }
+    const newValue = value2 == null ? "" : value2;
+    if (el.value !== newValue) {
+      el.value = newValue;
+    }
+  }
+};
+const keyNames = {
+  esc: "escape",
+  space: " ",
+  up: "arrow-up",
+  left: "arrow-left",
+  right: "arrow-right",
+  down: "arrow-down",
+  delete: "backspace"
+};
+const withKeys = (fn, modifiers) => {
+  return (event) => {
+    if (!("key" in event)) {
+      return;
+    }
+    const eventKey = hyphenate(event.key);
+    if (modifiers.some((k4) => k4 === eventKey || keyNames[k4] === eventKey)) {
+      return fn(event);
+    }
+  };
+};
 const rendererOptions = /* @__PURE__ */ extend$1({ patchProp }, nodeOps);
 let renderer;
 function ensureRenderer() {
@@ -47505,7 +48775,7 @@ const createApp = (...args) => {
     if (!container)
       return;
     const component = app._component;
-    if (!isFunction$1(component) && !component.render && !component.template) {
+    if (!isFunction$2(component) && !component.render && !component.template) {
       component.template = container.innerHTML;
     }
     container.innerHTML = "";
@@ -47525,7 +48795,7 @@ function normalizeContainer(container) {
   }
   return container;
 }
-const _hoisted_1$c = {
+const _hoisted_1$e = {
   id: "tooltips",
   style: {
     "position": "absolute",
@@ -47533,7 +48803,7 @@ const _hoisted_1$c = {
     "left": "0"
   }
 };
-function render(_ctx, _cache) {
+function render$1(_ctx, _cache) {
   return openBlock(), createElementBlock(
     "div",
     {
@@ -47566,7 +48836,7 @@ function render(_ctx, _cache) {
       }),
       256
       /* UNKEYED_FRAGMENT */
-    )), createBaseVNode("div", _hoisted_1$c, [(openBlock(true), createElementBlock(
+    )), createBaseVNode("div", _hoisted_1$e, [(openBlock(true), createElementBlock(
       Fragment,
       null,
       renderList(_ctx.attachedGui, (ui) => {
@@ -47615,7 +48885,7 @@ function render(_ctx, _cache) {
     /* HYDRATE_EVENTS */
   );
 }
-class Gui {
+let Gui$1 = class Gui {
   constructor() {
     this.gui = {};
   }
@@ -47653,7 +48923,7 @@ class Gui {
                </div>
            </div>
        `,*/
-      render,
+      render: render$1,
       data() {
         return {
           gui,
@@ -47891,7 +49161,7 @@ class Gui {
            * @prop {RpgSound} [rpgSound]
            * @memberof VueInject
            * */
-          rpgSound: RpgSound,
+          rpgSound: RpgSound$1,
           /**
            * Find the game's image and sound library
            *
@@ -47908,7 +49178,7 @@ class Gui {
            * @prop { { spritesheets: Map, sounds: Map } } [rpgResource]
            * @memberof VueInject
            * */
-          rpgResource: RpgResource,
+          rpgResource: RpgResource$1,
           /**
            * Get RpgClientEngine instance
            *
@@ -47989,9 +49259,9 @@ class Gui {
     }) => {
       var _a;
       for (let playerId of players) {
-        const sprite = (_a = this.renderer.getScene()) == null ? void 0 : _a.getSprite(playerId);
-        if (sprite)
-          sprite.guiDisplay = display;
+        const sprite2 = (_a = this.renderer.getScene()) == null ? void 0 : _a.getSprite(playerId);
+        if (sprite2)
+          sprite2.guiDisplay = display;
       }
     });
     this.socket.on("gui.exit", (guiId) => {
@@ -48113,9 +49383,9 @@ class Gui {
   clear() {
     this.gui = {};
   }
-}
-const RpgGui = new Gui();
-let Scene$1 = class Scene {
+};
+const RpgGui$1 = new Gui$1();
+let Scene$2 = class Scene {
   constructor(game) {
     this.game = game;
     this.objects = /* @__PURE__ */ new Map();
@@ -48168,10 +49438,10 @@ let Scene$1 = class Scene {
   get valuesChange() {
     return this._data.asObservable();
   }
-  triggerSpriteChanges(logic, sprite, moving2) {
+  triggerSpriteChanges(logic, sprite2, moving2) {
     if (this.onUpdateObject)
-      this.onUpdateObject(logic, sprite, moving2);
-    RpgPlugin.emit(HookClient.UpdateSprite, [sprite, logic], true);
+      this.onUpdateObject(logic, sprite2, moving2);
+    RpgPlugin.emit(HookClient.UpdateSprite, [sprite2, logic], true);
   }
   /** @internal */
   update(obj) {
@@ -48196,8 +49466,8 @@ let Scene$1 = class Scene {
       const val = logicObjects[key].object;
       const valueChanged = logicObjects[key].paramsChanged;
       if (!renderObjects.has(key)) {
-        const sprite = this.addObject(val, key);
-        this.triggerSpriteChanges(val, sprite, true);
+        const sprite2 = this.addObject(val, key);
+        this.triggerSpriteChanges(val, sprite2, true);
       } else {
         const object = renderObjects.get(key);
         if (!(object == null ? void 0 : object.update))
@@ -48217,7 +49487,7 @@ let Scene$1 = class Scene {
       animation.update(deltaRatio);
     }
     this.onDraw(time);
-    RpgGui.update(logicObjects);
+    RpgGui$1.update(logicObjects);
     RpgPlugin.emit(HookClient.SceneDraw, this);
   }
   /**
@@ -48282,7 +49552,7 @@ let Scene$1 = class Scene {
       attachTo.showAnimation(graphic, animationName);
       return;
     }
-    const animation = new Animation(graphic);
+    const animation = new Animation$2(graphic);
     this.animationLayer.addChild(animation);
     if (!loop) {
       animation.onFinish = () => {
@@ -48334,15 +49604,217 @@ let Scene$1 = class Scene {
   }
   onDraw(t2) {
   }
-  onAddSprite(sprite) {
+  onAddSprite(sprite2) {
   }
-  onRemoveSprite(sprite) {
+  onRemoveSprite(sprite2) {
   }
 };
+var HitType$1;
+(function(HitType2) {
+  HitType2["Box"] = "box";
+  HitType2["Circle"] = "circle";
+  HitType2["Polygon"] = "polygon";
+})(HitType$1 || (HitType$1 = {}));
+var MoveClientMode$1;
+(function(MoveClientMode2) {
+  MoveClientMode2[MoveClientMode2["Disabled"] = 0] = "Disabled";
+  MoveClientMode2[MoveClientMode2["ByDirection"] = 1] = "ByDirection";
+  MoveClientMode2[MoveClientMode2["Drag"] = 2] = "Drag";
+})(MoveClientMode$1 || (MoveClientMode$1 = {}));
+var Behavior$1;
+(function(Behavior2) {
+  Behavior2[Behavior2["Direction"] = 0] = "Direction";
+  Behavior2[Behavior2["Target"] = 1] = "Target";
+})(Behavior$1 || (Behavior$1 = {}));
+var Direction$1;
+(function(Direction2) {
+  Direction2[Direction2["Up"] = 1] = "Up";
+  Direction2[Direction2["Down"] = 3] = "Down";
+  Direction2[Direction2["Left"] = 4] = "Left";
+  Direction2[Direction2["Right"] = 2] = "Right";
+  Direction2[Direction2["UpRight"] = 1.5] = "UpRight";
+  Direction2[Direction2["DownRight"] = 2.5] = "DownRight";
+  Direction2[Direction2["DownLeft"] = 3.5] = "DownLeft";
+  Direction2[Direction2["UpLeft"] = 2.5] = "UpLeft";
+})(Direction$1 || (Direction$1 = {}));
+var PlayerType$1;
+(function(PlayerType2) {
+  PlayerType2["Player"] = "player";
+  PlayerType2["Event"] = "event";
+  PlayerType2["Shape"] = "shape";
+})(PlayerType$1 || (PlayerType$1 = {}));
+var SocketMethods$1;
+(function(SocketMethods2) {
+  SocketMethods2["CameraFollow"] = "cameraFollow";
+  SocketMethods2["ShowAnimation"] = "showAnimation";
+  SocketMethods2["PlaySound"] = "playSound";
+  SocketMethods2["ModeMove"] = "modeMove";
+})(SocketMethods$1 || (SocketMethods$1 = {}));
+var SocketEvents$1;
+(function(SocketEvents2) {
+  SocketEvents2["CallMethod"] = "callMethod";
+  SocketEvents2["GameReload"] = "gameReload";
+  SocketEvents2["ChangeServer"] = "changeServer";
+  SocketEvents2["LoadScene"] = "loadScene";
+})(SocketEvents$1 || (SocketEvents$1 = {}));
+var Control$1;
+(function(Control2) {
+  Control2["Action"] = "action";
+  Control2["Attack"] = "attack";
+  Control2["Defense"] = "defense";
+  Control2["Skill"] = "skill";
+  Control2["Back"] = "back";
+  Control2[Control2["Up"] = 1] = "Up";
+  Control2[Control2["Down"] = 3] = "Down";
+  Control2[Control2["Right"] = 2] = "Right";
+  Control2[Control2["Left"] = 4] = "Left";
+})(Control$1 || (Control$1 = {}));
+var Input$1;
+(function(Input2) {
+  Input2["Break"] = "break";
+  Input2["Backspace"] = "backspace";
+  Input2["Tab"] = "tab";
+  Input2["Clear"] = "clear";
+  Input2["Enter"] = "enter";
+  Input2["Shift"] = "shift";
+  Input2["Ctrl"] = "ctrl";
+  Input2["Alt"] = "alt";
+  Input2["Pause"] = "pause/break";
+  Input2["CapsLock"] = "caps lock";
+  Input2["Escape"] = "escape";
+  Input2["Conversion"] = "conversion";
+  Input2["NonConversion"] = "non-conversion";
+  Input2["Space"] = "space";
+  Input2["PageUp"] = "page up";
+  Input2["PageDown"] = "page down";
+  Input2["End"] = "end";
+  Input2["Home"] = "home";
+  Input2[Input2["Left"] = 4] = "Left";
+  Input2[Input2["Up"] = 1] = "Up";
+  Input2[Input2["Right"] = 2] = "Right";
+  Input2[Input2["Down"] = 3] = "Down";
+  Input2["Select"] = "select";
+  Input2["Print"] = "print";
+  Input2["Execute"] = "execute";
+  Input2["PrintScreen"] = "Print Screen";
+  Input2["Insert"] = "insert";
+  Input2["Delete"] = "delete";
+  Input2["Zero"] = "0";
+  Input2["One"] = "1";
+  Input2["Two"] = "2";
+  Input2["Three"] = "3";
+  Input2["Four"] = "4";
+  Input2["Five"] = "5";
+  Input2["Six"] = "6";
+  Input2["Seven"] = "7";
+  Input2["Height"] = "8";
+  Input2["Nine"] = "9";
+  Input2["Equal"] = "=";
+  Input2["Semicolon"] = "semicolon (firefox), equals";
+  Input2["LessThan"] = "<";
+  Input2["Equals"] = "equals (firefox)";
+  Input2["Beta"] = "ß";
+  Input2["At"] = "@";
+  Input2["A"] = "a";
+  Input2["B"] = "b";
+  Input2["C"] = "c";
+  Input2["D"] = "d";
+  Input2["E"] = "e";
+  Input2["F"] = "f";
+  Input2["G"] = "g";
+  Input2["H"] = "h";
+  Input2["I"] = "i";
+  Input2["J"] = "j";
+  Input2["K"] = "k";
+  Input2["L"] = "l";
+  Input2["M"] = "m";
+  Input2["N"] = "n";
+  Input2["O"] = "o";
+  Input2["P"] = "p";
+  Input2["Q"] = "q";
+  Input2["R"] = "r";
+  Input2["S"] = "s";
+  Input2["T"] = "t";
+  Input2["U"] = "u";
+  Input2["V"] = "v";
+  Input2["W"] = "w";
+  Input2["X"] = "x";
+  Input2["Y"] = "y";
+  Input2["Z"] = "z";
+  Input2["SearchKey"] = "Windows Key / Left ⌘ / Chromebook Search key";
+  Input2["NumPad0"] = "numpad 0";
+  Input2["NumPad1"] = "numpad 1";
+  Input2["NumPad2"] = "numpad 2";
+  Input2["NumPad3"] = "numpad 3";
+  Input2["NumPad4"] = "numpad 4";
+  Input2["NumPad5"] = "numpad 5";
+  Input2["NumPad6"] = "numpad 6";
+  Input2["NumPad7"] = "numpad 7";
+  Input2["NumPad8"] = "numpad 8";
+  Input2["NumPad9"] = "numpad 9";
+  Input2["Multiply"] = "multiply";
+  Input2["Add"] = "add";
+  Input2["Subtract"] = "subtract";
+  Input2["DecimalPoint"] = "decimal point";
+  Input2["Divide"] = "divide";
+  Input2["F1"] = "f1";
+  Input2["F2"] = "f2";
+  Input2["F3"] = "f3";
+  Input2["F4"] = "f4";
+  Input2["F5"] = "f5";
+  Input2["F6"] = "f6";
+  Input2["F7"] = "f7";
+  Input2["F8"] = "f8";
+  Input2["F9"] = "f9";
+  Input2["F10"] = "f10";
+  Input2["F11"] = "f11";
+  Input2["F12"] = "f12";
+  Input2["F13"] = "f13";
+  Input2["F14"] = "f14";
+  Input2["F15"] = "f15";
+  Input2["F16"] = "f16";
+  Input2["F17"] = "f17";
+  Input2["F18"] = "f18";
+  Input2["F19"] = "f19";
+  Input2["F20"] = "f20";
+  Input2["F21"] = "f21";
+  Input2["F22"] = "f22";
+  Input2["F23"] = "f23";
+  Input2["F24"] = "f24";
+  Input2["NumLock"] = "num lock";
+  Input2["ScrollLock"] = "scroll lock";
+  Input2["CircumflexAccent"] = "^";
+  Input2["ExclamationMark"] = "!";
+  Input2["Hash"] = "#";
+  Input2["Dollar"] = "$";
+  Input2["AccentU"] = "ù";
+  Input2["PageBackward"] = "page backward";
+  Input2["PageForWard"] = "page forward";
+  Input2["Star"] = "*";
+  Input2["DecreaseVolume"] = "decrease volume level";
+  Input2["IncreaseVolume"] = "increase volume level";
+  Input2["Next"] = "next";
+  Input2["Previous"] = "previous";
+  Input2["Stop"] = "stop";
+  Input2["PlayPause"] = "play/pause";
+  Input2["Email"] = "e-mail";
+  Input2["SemiColon"] = "semi-colon / ñ";
+  Input2["EqualSign"] = "equal sign";
+  Input2["Comma"] = "comma";
+  Input2["Dash"] = "dash";
+  Input2["FowardSlach"] = "forward slash / ç";
+  Input2["GraveAccent"] = "grave accent / ñ / æ";
+  Input2["OpenBracket"] = "open bracket";
+  Input2["BackSlach"] = "back slash";
+  Input2["CloseBracket"] = "close bracket / å";
+  Input2["SingleQuote"] = "single quote / ø";
+  Input2["BackQuote"] = "`";
+  Input2["Altgr"] = "altgr";
+})(Input$1 || (Input$1 = {}));
 const {
-  capitalize
+  capitalize: capitalize$1
 } = Utils$1;
-class Character extends Sprite {
+let Character$1 = class Character extends Sprite {
   constructor(component, graphic) {
     super();
     this.component = component;
@@ -48359,7 +49831,7 @@ class Character extends Sprite {
   showAnimation(graphic, animationName) {
     const refreshAnimation = (graphic2) => {
       this.removeChild(this.animation);
-      this.animation = new Animation(graphic2);
+      this.animation = new Animation$2(graphic2);
       this.addChild(this.animation);
       this.setAnimationAnchor();
     };
@@ -48393,8 +49865,8 @@ class Character extends Sprite {
       }
     });
     this.graphic = graphic;
-    this.spritesheet = spritesheets.get(this.graphic);
-    this.animation = new Animation(this.graphic);
+    this.spritesheet = spritesheets$1.get(this.graphic);
+    this.animation = new Animation$2(this.graphic);
     this.addChild(this.animation);
     this.setAnimationAnchor();
   }
@@ -48443,9 +49915,9 @@ class Character extends Sprite {
     if (this.playStandardAnimation) {
       if (moving2) {
         RpgPlugin.emit(HookClient.SpriteMove, this);
-        this.playAnimation(Animation$1.Walk);
+        this.playAnimation(Animation$3.Walk);
       } else {
-        this.playAnimation(Animation$1.Stand);
+        this.playAnimation(Animation$3.Stand);
       }
     }
     this.objSaved = obj;
@@ -48456,7 +49928,7 @@ class Character extends Sprite {
   }
   /** @internal */
   playAnimation(name) {
-    const hook = `onCharacter${capitalize(name)}`;
+    const hook = `onCharacter${capitalize$1(name)}`;
     if (!this.spritesheet)
       return;
     if (this.spritesheet[hook]) {
@@ -48465,9 +49937,9 @@ class Character extends Sprite {
       this.animation.play(name, [this.data.direction]);
     }
   }
-}
-Character.id = "graphic";
-class RpgSprite extends Character {
+};
+Character$1.id = "graphic";
+class RpgSprite extends Character$1 {
 }
 var FUNC_ERROR_TEXT = "Expected a function";
 var HASH_UNDEFINED = "__lodash_hash_undefined__";
@@ -48643,7 +50115,7 @@ function baseIsNative(value2) {
   if (!isObject$1(value2) || isMasked(value2)) {
     return false;
   }
-  var pattern = isFunction(value2) || isHostObject(value2) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction$1(value2) || isHostObject(value2) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value2));
 }
 function baseToString(value2) {
@@ -48736,7 +50208,7 @@ function eq(value2, other) {
   return value2 === other || value2 !== value2 && other !== other;
 }
 var isArray = Array.isArray;
-function isFunction(value2) {
+function isFunction$1(value2) {
   var tag = isObject$1(value2) ? objectToString.call(value2) : "";
   return tag == funcTag || tag == genTag;
 }
@@ -48759,8 +50231,8 @@ function get(object, path2, defaultValue2) {
 }
 var lodash_get = get;
 const get$1 = /* @__PURE__ */ getDefaultExportFromCjs(lodash_get);
-const REGEXP_VAR = /{([^\}]+)}/g;
-class AbstractComponent extends Container {
+const REGEXP_VAR$1 = /{([^\}]+)}/g;
+let AbstractComponent$1 = class AbstractComponent extends Container {
   constructor(component, value2) {
     var _a;
     super();
@@ -48778,12 +50250,12 @@ class AbstractComponent extends Container {
     return this.style || {};
   }
   parseTextAndCache(text) {
-    const matches = text.matchAll(REGEXP_VAR);
+    const matches = text.matchAll(REGEXP_VAR$1);
     this.cacheParams = [...this.cacheParams, ...Array.from(matches).map((match) => match[1])];
     return this.cacheParams;
   }
   replaceText(object, text) {
-    return text.replace(REGEXP_VAR, (match, key) => {
+    return text.replace(REGEXP_VAR$1, (match, key) => {
       const value2 = get$1(object, key);
       if (value2 !== void 0) {
         this.cacheText[key] = value2;
@@ -48846,9 +50318,9 @@ class AbstractComponent extends Container {
     this._onDestroy$.next();
     this._onDestroy$.complete();
   }
-}
-const DEFAULT_COLOR = "#000000";
-class BarComponent extends AbstractComponent {
+};
+const DEFAULT_COLOR$1 = "#000000";
+let BarComponent$1 = class BarComponent extends AbstractComponent$1 {
   constructor() {
     var _a;
     super(...arguments);
@@ -48875,8 +50347,8 @@ class BarComponent extends AbstractComponent {
       };
     }
     const {
-      bgColor = DEFAULT_COLOR,
-      borderColor = DEFAULT_COLOR,
+      bgColor = DEFAULT_COLOR$1,
+      borderColor = DEFAULT_COLOR$1,
       borderWidth = 1,
       borderRadius = 0
     } = this.barStyle || {};
@@ -48926,7 +50398,7 @@ class BarComponent extends AbstractComponent {
       this.currentValue = this.nextValue;
     }
     const getColor2 = (value2) => {
-      let determineLastColor = DEFAULT_COLOR;
+      let determineLastColor = DEFAULT_COLOR$1;
       const percent = Math.max(0, value2 / this.maxValue * 100);
       const perPercent = style.perPercent;
       if (perPercent) {
@@ -48945,7 +50417,7 @@ class BarComponent extends AbstractComponent {
     if (style) {
       colors = transitionColor(getColor2(this.currentValue), getColor2(this.nextValue), 1);
     } else {
-      colors = transitionColor(DEFAULT_COLOR, DEFAULT_COLOR, 1);
+      colors = transitionColor(DEFAULT_COLOR$1, DEFAULT_COLOR$1, 1);
     }
     const render2 = (up = false) => {
       let currentValue = ~~this.currentValue;
@@ -48960,7 +50432,7 @@ class BarComponent extends AbstractComponent {
       const {
         value: color,
         alpha
-      } = hexaToNumber(fillColor ?? DEFAULT_COLOR);
+      } = hexaToNumber(fillColor ?? DEFAULT_COLOR$1);
       this.barFill.beginFill(color, alpha);
       const percent = Math.max(0, currentValue / this.maxValue);
       const bWidth = borderWidth / 4;
@@ -49009,9 +50481,9 @@ class BarComponent extends AbstractComponent {
     this.notifier.complete();
     super.onRemove();
   }
-}
-BarComponent.id = "bar";
-class ShapeComponent extends AbstractComponent {
+};
+BarComponent$1.id = "bar";
+let ShapeComponent$1 = class ShapeComponent extends AbstractComponent$1 {
   constructor() {
     super(...arguments);
     this.type = this.value.type;
@@ -49068,9 +50540,9 @@ class ShapeComponent extends AbstractComponent {
     }
     this.container.endFill();
   }
-}
-ShapeComponent.id = "shape";
-class DebugComponent extends AbstractComponent {
+};
+ShapeComponent$1.id = "shape";
+let DebugComponent$1 = class DebugComponent extends AbstractComponent$1 {
   constructor() {
     super(...arguments);
     this.color = "#ff0000";
@@ -49102,9 +50574,9 @@ class DebugComponent extends AbstractComponent {
     this.container.drawRect(0, 0, w2, h2);
     this.container.endFill();
   }
-}
-DebugComponent.id = "debug";
-class ImageComponent extends AbstractComponent {
+};
+DebugComponent$1.id = "debug";
+let ImageComponent$1 = class ImageComponent extends AbstractComponent$1 {
   constructor() {
     super(...arguments);
     this.cacheParams = [];
@@ -49127,9 +50599,9 @@ class ImageComponent extends AbstractComponent {
     const engine = this.component.getScene().game.clientEngine;
     this.addChild(Sprite.from(engine.getResourceUrl(this.source)));
   }
-}
-ImageComponent.id = "image";
-class TextComponent extends AbstractComponent {
+};
+ImageComponent$1.id = "image";
+let TextComponent$1 = class TextComponent extends AbstractComponent$1 {
   constructor() {
     super(...arguments);
     this.cacheParams = [];
@@ -49156,9 +50628,9 @@ class TextComponent extends AbstractComponent {
   updateRender(object) {
     this.container.text = this.replaceText(object, this.originValue);
   }
-}
-TextComponent.id = "text";
-class TileComponent extends AbstractComponent {
+};
+TextComponent$1.id = "text";
+let TileComponent$1 = class TileComponent extends AbstractComponent$1 {
   constructor() {
     super(...arguments);
     this.cacheParams = [];
@@ -49181,9 +50653,9 @@ class TileComponent extends AbstractComponent {
     const width = typeof this.value != "number" ? this.getValue(object, this.value.width) : ((_b = this.cell) == null ? void 0 : _b.width) ?? 0;
     const scene = this.component.getScene();
     const tilemap = scene.tilemap;
-    const tileset = TileLayer.findTileSet(this.gid, tilemap.tilesets);
+    const tileset = TileLayer$1.findTileSet(this.gid, tilemap.tilesets);
     if (tileset) {
-      const tile = new Tile2({
+      const tile = new Tile$1({
         gid: this.gid
       }, tileset);
       tile.width = width ?? 0;
@@ -49191,8 +50663,8 @@ class TileComponent extends AbstractComponent {
       this.addChild(tile);
     }
   }
-}
-TileComponent.id = "tile";
+};
+TileComponent$1.id = "tile";
 const layoutObject = {
   lines: []
 };
@@ -49234,12 +50706,12 @@ class RpgComponent extends Container {
     this.id = this.data.id;
     this.setPosition(false);
     this.registerComponents.set(RpgSprite.id, RpgSprite);
-    this.registerComponents.set(TextComponent.id, TextComponent);
-    this.registerComponents.set(ShapeComponent.id, ShapeComponent);
-    this.registerComponents.set(TileComponent.id, TileComponent);
-    this.registerComponents.set(ImageComponent.id, ImageComponent);
-    this.registerComponents.set(BarComponent.id, BarComponent);
-    this.registerComponents.set(DebugComponent.id, DebugComponent);
+    this.registerComponents.set(TextComponent$1.id, TextComponent$1);
+    this.registerComponents.set(ShapeComponent$1.id, ShapeComponent$1);
+    this.registerComponents.set(TileComponent$1.id, TileComponent$1);
+    this.registerComponents.set(ImageComponent$1.id, ImageComponent$1);
+    this.registerComponents.set(BarComponent$1.id, BarComponent$1);
+    this.registerComponents.set(DebugComponent$1.id, DebugComponent$1);
     this.addChild(this.container);
     for (let layout of [...layoutTypes, "center"]) {
       this.containersLayout[layout] = new Container();
@@ -49279,7 +50751,7 @@ class RpgComponent extends Container {
   * @memberof RpgSprite
   * */
   get isPlayer() {
-    return this.data.type == PlayerType.Player;
+    return this.data.type == PlayerType$1.Player;
   }
   /**
    * To know if the sprite is an event
@@ -49289,7 +50761,7 @@ class RpgComponent extends Container {
    * @memberof RpgSprite
    * */
   get isEvent() {
-    return this.data.type == PlayerType.Event;
+    return this.data.type == PlayerType$1.Event;
   }
   /**
    * To know if the sprite is a shape
@@ -49458,14 +50930,14 @@ class RpgComponent extends Container {
   */
   getPositionsOfGraphic(align) {
     var _a;
-    let sprite;
+    let sprite2;
     if (((_a = this.components.center) == null ? void 0 : _a.lines.length) !== 0) {
-      sprite = this.containersLayout.center.getChildAt(0);
+      sprite2 = this.containersLayout.center.getChildAt(0);
     }
     const isMiddle = align == "middle";
     return {
-      x: this.x - this.w * ((sprite == null ? void 0 : sprite.anchor.x) ?? 1) + (isMiddle ? this.w / 2 : 0),
-      y: this.y - this.h * ((sprite == null ? void 0 : sprite.anchor.y) ?? 1) + (isMiddle ? this.h / 2 : 0)
+      x: this.x - this.w * ((sprite2 == null ? void 0 : sprite2.anchor.x) ?? 1) + (isMiddle ? this.w / 2 : 0),
+      y: this.y - this.h * ((sprite2 == null ? void 0 : sprite2.anchor.y) ?? 1) + (isMiddle ? this.h / 2 : 0)
     };
   }
   /**
@@ -49500,15 +50972,15 @@ class RpgComponent extends Container {
         component[name](...params);
     }
   }
-  createGrid(position, gridArray, options, sprite) {
+  createGrid(position, gridArray, options, sprite2) {
     var _a, _b;
     const gridContainer = new Sprite();
     const {
       height,
       spriteWidth,
       spriteHeight
-    } = sprite;
-    const width = options.width ?? spriteWidth ?? sprite.width;
+    } = sprite2;
+    const width = options.width ?? spriteWidth ?? sprite2.width;
     const gridHeight = options.height ?? 20;
     const hitBoxWidth = ((_a = this.logic) == null ? void 0 : _a.hitbox.w) ?? 0;
     const middleWidth = hitBoxWidth / 2 - width / 2;
@@ -49556,7 +51028,7 @@ class RpgComponent extends Container {
   applyComponent(component) {
     const compClass = this.registerComponents.get(component.id);
     if (!compClass) {
-      throw log(`Impossible to find ${component.id} component`);
+      throw log$1(`Impossible to find ${component.id} component`);
     }
     return new compClass(this, component.value);
   }
@@ -49579,14 +51051,14 @@ class RpgComponent extends Container {
     }
     this.components = components;
   }
-  refreshComponents(components, sprite) {
+  refreshComponents(components, sprite2) {
     for (let type of layoutTypes) {
       const layout = components[type];
       if (layout == null ? void 0 : layout.lines) {
         const layoutContainer = this.getLayoutContainer(type);
         layoutContainer.removeChildren();
         this.layoutNotifierClear[type].next();
-        layoutContainer.addChild(this.createGrid(type, layout.lines, layout, sprite));
+        layoutContainer.addChild(this.createGrid(type, layout.lines, layout, sprite2));
       }
     }
   }
@@ -49600,8 +51072,8 @@ class RpgComponent extends Container {
       this.subscriptionGraphic.unsubscribe();
     const child = this.getLayoutContainer().children[0];
     if (child instanceof RpgSprite) {
-      this.subscriptionGraphic = child.animationSprite().pipe(takeUntil(this.game.getDeleteNotifier(this.id)), filter$1((sprite) => sprite), distinctUntilChanged((p2, q2) => p2.width === q2.width && p2.height === q2.height && p2.anchor.x === q2.anchor.x && p2.anchor.y === q2.anchor.y)).subscribe((sprite) => {
-        this.refreshComponents(components, sprite);
+      this.subscriptionGraphic = child.animationSprite().pipe(takeUntil(this.game.getDeleteNotifier(this.id)), filter$1((sprite2) => sprite2), distinctUntilChanged((p2, q2) => p2.width === q2.width && p2.height === q2.height && p2.anchor.x === q2.anchor.x && p2.anchor.y === q2.anchor.y)).subscribe((sprite2) => {
+        this.refreshComponents(components, sprite2);
       });
     } else {
       this.refreshComponents(components, {
@@ -49628,7 +51100,7 @@ class EventLayer extends Container {
 const {
   Viewport: PixiViewport
 } = _PixiViewport;
-class SceneMap extends Scene$1 {
+class SceneMap extends Scene$2 {
   constructor(game, renderer2, options = {}) {
     super(game);
     this.game = game;
@@ -49676,10 +51148,10 @@ class SceneMap extends Scene$1 {
     }
     const assets = [];
     for (let tileset of this.tilemap.tilesets) {
-      let spritesheet = spritesheets.get(tileset.name);
+      let spritesheet = spritesheets$1.get(tileset.name);
       if (!spritesheet) {
         clientEngine.addSpriteSheet(tileset.image.source, tileset.name);
-        spritesheet = spritesheets.get(tileset.name);
+        spritesheet = spritesheets$1.get(tileset.name);
       }
       if (spritesheet == null ? void 0 : spritesheet.resource) {
         continue;
@@ -49693,7 +51165,7 @@ class SceneMap extends Scene$1 {
       for (let assetName in assetsLoaded) {
         if (!assetsLoaded[assetName])
           console.log(assetName, assetsLoaded[assetName]);
-        const spritesheet = spritesheets.get(assetName);
+        const spritesheet = spritesheets$1.get(assetName);
         if (spritesheet)
           spritesheet.resource = assetsLoaded[assetName];
       }
@@ -49721,11 +51193,11 @@ class SceneMap extends Scene$1 {
       prevObj.sounds.forEach((soundId) => {
         const continueSound = (obj.sounds || []).find((id) => id == soundId);
         if (!continueSound)
-          RpgSound.stop(soundId);
+          RpgSound$1.stop(soundId);
       });
     }
     if (sounds2)
-      sounds2.forEach((soundId) => RpgSound.play(soundId));
+      sounds2.forEach((soundId) => RpgSound$1.play(soundId));
     if (this.onLoad)
       this.onLoad();
     return this.viewport;
@@ -49790,27 +51262,27 @@ class SceneMap extends Scene$1 {
   // @internal
   updateTilesOverlayAllSprites() {
     const objects = this.objects;
-    for (let [id, sprite] of objects) {
-      this.updateTilesOverlay(sprite);
+    for (let [id, sprite2] of objects) {
+      this.updateTilesOverlay(sprite2);
     }
   }
-  updateTilesOverlay(sprite) {
+  updateTilesOverlay(sprite2) {
     if (!this.gameMap)
-      return sprite;
+      return sprite2;
     const {
       tileWidth,
       tileHeight
     } = this.gameMap;
     const {
       tilesOverlay
-    } = sprite;
-    const bounds = sprite.parent.getLocalBounds();
+    } = sprite2;
+    const bounds = sprite2.parent.getLocalBounds();
     const width = Math.ceil(bounds.width / tileWidth) * tileWidth;
     const height = Math.ceil(bounds.height / tileHeight) * tileHeight;
     const _x = bounds.x;
     const _y = bounds.y;
     const addTile = (x2, y2) => {
-      const tiles = this.tilemap.createOverlayTiles(x2, y2, sprite);
+      const tiles = this.tilemap.createOverlayTiles(x2, y2, sprite2);
       if (tiles.length)
         tilesOverlay.addChild(...tiles);
     };
@@ -49820,18 +51292,18 @@ class SceneMap extends Scene$1 {
         addTile(i2, j2);
       }
     }
-    return sprite;
+    return sprite2;
   }
-  onUpdateObject(logic, sprite, moving2) {
+  onUpdateObject(logic, sprite2, moving2) {
     const {
       paramsChanged
     } = logic;
     if (!this.gameMap)
-      return sprite;
+      return sprite2;
     if (moving2 || paramsChanged && (paramsChanged.width || paramsChanged.height)) {
-      this.updateTilesOverlay(sprite);
+      this.updateTilesOverlay(sprite2);
     }
-    return sprite;
+    return sprite2;
   }
   /** @internal */
   setPlayerPosition(id, {
@@ -49861,15 +51333,15 @@ class SceneMap extends Scene$1 {
     return component;
   }
   removeObject(id) {
-    let sprite = this.objects.get(id);
-    if (sprite) {
-      if (!sprite.animationIsPlaying) {
+    let sprite2 = this.objects.get(id);
+    if (sprite2) {
+      if (!sprite2.animationIsPlaying) {
         this.objects.delete(id);
-        RpgPlugin.emit(HookClient.SceneRemoveSprite, [this, sprite], true);
-        RpgPlugin.emit(HookClient.RemoveSprite, sprite);
-        sprite.destroy();
+        RpgPlugin.emit(HookClient.SceneRemoveSprite, [this, sprite2], true);
+        RpgPlugin.emit(HookClient.RemoveSprite, sprite2);
+        sprite2.destroy();
       } else {
-        sprite.visible = false;
+        sprite2.visible = false;
       }
     }
   }
@@ -49883,11 +51355,11 @@ class SceneMap extends Scene$1 {
   }
   cameraFollowSprite(id, options = {}) {
     var _a, _b;
-    const sprite = this.getSprite(id);
+    const sprite2 = this.getSprite(id);
     const follow = () => {
       var _a2;
-      if (sprite)
-        (_a2 = this.viewport) == null ? void 0 : _a2.follow(sprite);
+      if (sprite2)
+        (_a2 = this.viewport) == null ? void 0 : _a2.follow(sprite2);
     };
     if (options.smoothMove) {
       (_a = this.viewport) == null ? void 0 : _a.plugins.remove("follow");
@@ -49896,7 +51368,7 @@ class SceneMap extends Scene$1 {
         moreOptions = options.smoothMove;
       }
       (_b = this.viewport) == null ? void 0 : _b.animate({
-        position: new Point(sprite == null ? void 0 : sprite.x, sprite == null ? void 0 : sprite.y),
+        position: new Point(sprite2 == null ? void 0 : sprite2.x, sprite2 == null ? void 0 : sprite2.y),
         ...moreOptions,
         callbackOnComplete: follow
       });
@@ -49941,10 +51413,10 @@ class SceneMap extends Scene$1 {
   }
 }
 SceneMap.EVENTS_LAYER_DEFAULT = "events-layer-default";
-var Scene2;
+var Scene$1;
 (function(Scene3) {
   Scene3["Map"] = "map";
-})(Scene2 || (Scene2 = {}));
+})(Scene$1 || (Scene$1 = {}));
 const Ease = {
   linear: (time, _from, to, duration) => {
     return _from + (to - _from) * time / duration;
@@ -50366,15 +51838,15 @@ class SpinnerGraphic extends Graphics {
     this.clear().lineStyle(4, 16777215, 1).moveTo(40, 0).arc(0, 0, 40, 0, Math.PI * 2 * percent, false);
   }
 }
-var TransitionMode;
+var TransitionMode$1;
 (function(TransitionMode2) {
   TransitionMode2[TransitionMode2["None"] = 0] = "None";
   TransitionMode2[TransitionMode2["Fading"] = 1] = "Fading";
-})(TransitionMode || (TransitionMode = {}));
-var ContainerName;
+})(TransitionMode$1 || (TransitionMode$1 = {}));
+var ContainerName$1;
 (function(ContainerName2) {
   ContainerName2["Map"] = "map";
-})(ContainerName || (ContainerName = {}));
+})(ContainerName$1 || (ContainerName$1 = {}));
 class RpgRenderer {
   constructor(clientEngine) {
     this.clientEngine = clientEngine;
@@ -50393,7 +51865,7 @@ class RpgRenderer {
     };
     this.freeze = false;
     this.prevObjectScene = {};
-    this.transitionMode = TransitionMode.Fading;
+    this.transitionMode = TransitionMode$1.Fading;
     this.clientEngine.tick.subscribe(({
       timestamp,
       deltaRatio,
@@ -50472,7 +51944,7 @@ class RpgRenderer {
     this.fadeContainer.addChild(this.spinner);
     this.fadeContainer.visible = false;
     this.fadeContainer.alpha = 0;
-    RpgGui._initalize(this.clientEngine);
+    RpgGui$1._initalize(this.clientEngine);
     this.resize();
   }
   /** @internal */
@@ -50525,11 +51997,11 @@ class RpgRenderer {
       ...obj
     };
     this.sceneContainer.children.forEach((child) => {
-      if (child.name === ContainerName.Map)
+      if (child.name === ContainerName$1.Map)
         this.sceneContainer.removeChild(child);
     });
     if (container) {
-      container.name = ContainerName.Map;
+      container.name = ContainerName$1.Map;
       this.sceneContainer.addChild(container);
     }
     (_b = this.scene) == null ? void 0 : _b.update();
@@ -50547,7 +52019,7 @@ class RpgRenderer {
       this.loadingScene.transitionOut.next(name);
       this.loadingScene.transitionOut.complete();
     };
-    if (this.transitionMode == TransitionMode.Fading) {
+    if (this.transitionMode == TransitionMode$1.Fading) {
       new TransitionScene(this.clientEngine, this.fadeContainer).addFadeOut().onComplete(finish).start();
     } else {
       finish();
@@ -50573,8 +52045,8 @@ class RpgRenderer {
       } = data;
       const scenes = this.options.scenes || {};
       switch (name) {
-        case Scene2.Map:
-          const sceneClass = scenes[Scene2.Map] || SceneMap;
+        case Scene$1.Map:
+          const sceneClass = scenes[Scene$1.Map] || SceneMap;
           this.scene = new sceneClass(this.gameEngine, this.renderer, {
             screenWidth: this.renderer.screen.width,
             screenHeight: this.renderer.screen.height,
@@ -50590,7 +52062,7 @@ class RpgRenderer {
         this.transitionCompleted();
         RpgPlugin.emit(HookClient.AfterSceneLoading, this.scene);
       };
-      if (this.transitionMode == TransitionMode.Fading) {
+      if (this.transitionMode == TransitionMode$1.Fading) {
         new TransitionScene(this.clientEngine, this.fadeContainer).addFadeIn().onComplete(finish).start();
       } else {
         finish();
@@ -53776,7 +55248,7 @@ const {
   extractId,
   isString
 } = Utils$1;
-let RpgClientEngine$2 = class RpgClientEngine {
+let RpgClientEngine$3 = class RpgClientEngine {
   constructor(gameEngine, options) {
     this.gameEngine = gameEngine;
     this.options = options;
@@ -53800,7 +55272,7 @@ let RpgClientEngine$2 = class RpgClientEngine {
     this.lastScene = "";
     this.matchMakerService = null;
     this.serverFps = 60;
-    this.scheduler = new Scheduler();
+    this.scheduler = new Scheduler$1();
     this._serverUrl = "";
     this.objects = this.gameEngine.objects;
     this.envs = {};
@@ -53881,7 +55353,7 @@ let RpgClientEngine$2 = class RpgClientEngine {
   addSpriteSheet(spritesheetClass, id) {
     if (typeof spritesheetClass === "string") {
       if (!id) {
-        throw log("Please, specify the resource ID (second parameter)");
+        throw log$1("Please, specify the resource ID (second parameter)");
       }
       let AutoSpritesheet = class AutoSpritesheet {
       };
@@ -53897,7 +55369,7 @@ let RpgClientEngine$2 = class RpgClientEngine {
   addSound(soundClass, id) {
     if (typeof soundClass === "string") {
       if (!id) {
-        throw log("Please, specify the resource ID (second parameter)");
+        throw log$1("Please, specify the resource ID (second parameter)");
       }
       let AutoSound = class AutoSound {
       };
@@ -53950,7 +55422,7 @@ let RpgClientEngine$2 = class RpgClientEngine {
     if (!hasFalseValue) {
       let serverUri = {};
       if (this.matchMakerService) {
-        if (isFunction$5(this.matchMakerService)) {
+        if (isFunction$7(this.matchMakerService)) {
           serverUri = this.matchMakerService();
         } else {
           serverUri = await lastValueFrom(ajax.getJSON(this.matchMakerService));
@@ -54062,8 +55534,8 @@ let RpgClientEngine$2 = class RpgClientEngine {
       this.socket = this.io;
     }
     this.socket.on("connect", () => {
-      if (RpgGui.exists(PrebuiltGui.Disconnect))
-        RpgGui.hide(PrebuiltGui.Disconnect);
+      if (RpgGui$1.exists(PrebuiltGui.Disconnect))
+        RpgGui$1.hide(PrebuiltGui.Disconnect);
       RpgPlugin.emit(HookClient.Connected, [this, this.socket], true);
       this.hasBeenDisconnected = false;
     });
@@ -54081,16 +55553,16 @@ let RpgClientEngine$2 = class RpgClientEngine {
       this.lastScene = name;
       this.renderer.transitionScene(name);
     });
-    this.socket.on(SocketEvents.GameReload, () => {
+    this.socket.on(SocketEvents$1.GameReload, () => {
       window.location.reload();
     });
-    this.socket.on(SocketEvents.LoadScene, ({
+    this.socket.on(SocketEvents$1.LoadScene, ({
       name,
       data
     }) => {
       this.renderer.loadScene(name, data);
     });
-    this.socket.on(SocketEvents.ChangeServer, ({
+    this.socket.on(SocketEvents$1.ChangeServer, ({
       url: url2,
       port
     }) => {
@@ -54120,26 +55592,26 @@ let RpgClientEngine$2 = class RpgClientEngine {
       name
     }) => {
       const scene = this.renderer.getScene();
-      const sprite = scene == null ? void 0 : scene.getPlayer(objectId);
-      if (!sprite)
+      const sprite2 = scene == null ? void 0 : scene.getPlayer(objectId);
+      if (!sprite2)
         return;
       switch (name) {
-        case SocketMethods.ShowAnimation:
+        case SocketMethods$1.ShowAnimation:
           scene == null ? void 0 : scene.showAnimation({
-            attachTo: sprite,
+            attachTo: sprite2,
             graphic: params[0],
             animationName: params[1],
             replaceGraphic: params[2]
           });
           break;
-        case SocketMethods.CameraFollow:
+        case SocketMethods$1.CameraFollow:
           const [spriteId, options] = params;
           scene == null ? void 0 : scene.cameraFollowSprite(spriteId, options);
           break;
-        case SocketMethods.PlaySound:
-          RpgSound.play(params[0]);
+        case SocketMethods$1.PlaySound:
+          RpgSound$1.play(params[0]);
           break;
-        case SocketMethods.ModeMove:
+        case SocketMethods$1.ModeMove:
           const player = this.player;
           const {
             checkCollision
@@ -54150,7 +55622,7 @@ let RpgClientEngine$2 = class RpgClientEngine {
           break;
       }
     };
-    this.socket.on(SocketEvents.CallMethod, callMethod);
+    this.socket.on(SocketEvents$1.CallMethod, callMethod);
     let lastRoomId = "";
     this.subscriptionWorld = World.listen(this.socket).value.subscribe(async (val) => {
       const scene = this.renderer.getScene();
@@ -54167,11 +55639,11 @@ let RpgClientEngine$2 = class RpgClientEngine {
       }
       const objectsChanged = {};
       const callAction = (objectId, paramsChanged) => {
-        if (paramsChanged && SocketEvents.CallMethod in paramsChanged) {
+        if (paramsChanged && SocketEvents$1.CallMethod in paramsChanged) {
           this.renderer.draw(Date.now(), 1, 1, 1);
           callMethod({
             objectId,
-            ...paramsChanged[SocketEvents.CallMethod]
+            ...paramsChanged[SocketEvents$1.CallMethod]
           });
         }
       };
@@ -54203,8 +55675,8 @@ let RpgClientEngine$2 = class RpgClientEngine {
             continue;
           if (!isShape) {
             obj.type = {
-              users: PlayerType.Player,
-              events: PlayerType.Event
+              users: PlayerType$1.Player,
+              events: PlayerType$1.Event
             }[prop];
           }
           if (prop == "users" && this.gameEngine.playerId == key) {
@@ -54255,12 +55727,12 @@ let RpgClientEngine$2 = class RpgClientEngine {
       if (this.serverChanging) {
         return;
       }
-      if (RpgGui.exists(PrebuiltGui.Disconnect))
-        RpgGui.display(PrebuiltGui.Disconnect);
+      if (RpgGui$1.exists(PrebuiltGui.Disconnect))
+        RpgGui$1.display(PrebuiltGui.Disconnect);
       RpgPlugin.emit(HookClient.Disconnect, [this, reason, this.socket], true);
       this.hasBeenDisconnected = true;
     });
-    RpgGui._setSocket(this.socket);
+    RpgGui$1._setSocket(this.socket);
     if (standalone) {
       this.socket.connection({
         auth: {
@@ -54392,8 +55864,8 @@ let RpgClientEngine$2 = class RpgClientEngine {
   reset() {
     this.subscriptionWorld.unsubscribe();
     this.world.reset();
-    spritesheets.clear();
-    sounds.clear();
+    spritesheets$1.clear();
+    sounds$1.clear();
     Assets.reset();
     clearTextureCache();
     for (let textureUrl in BaseTextureCache) {
@@ -54402,9 +55874,9 @@ let RpgClientEngine$2 = class RpgClientEngine {
     for (let textureUrl in TextureCache) {
       delete TextureCache[textureUrl];
     }
-    RpgGui.clear();
+    RpgGui$1.clear();
     RpgCommonMap.bufferClient.clear();
-    RpgSound.clear();
+    RpgSound$1.clear();
   }
 };
 const entryPoint = (modules, options) => {
@@ -54448,16 +55920,16 @@ const entryPoint = (modules, options) => {
     }
   });
   const gameEngine = new GameEngineClient();
-  const clientEngine = new RpgClientEngine$2(gameEngine, options);
+  const clientEngine = new RpgClientEngine$3(gameEngine, options);
   return clientEngine;
 };
 const RMSpritesheet = (framesWidth, framesHeight, frameStand = 1) => {
   const frameY = (direction) => {
     return {
-      [Direction.Down]: 0,
-      [Direction.Left]: 1,
-      [Direction.Right]: 2,
-      [Direction.Up]: 3
+      [Direction$2.Down]: 0,
+      [Direction$2.Left]: 1,
+      [Direction$2.Right]: 2,
+      [Direction$2.Up]: 3
     }[direction];
   };
   const stand = (direction) => [{
@@ -54482,10 +55954,10 @@ const RMSpritesheet = (framesWidth, framesHeight, frameStand = 1) => {
   };
   return {
     textures: {
-      [Animation$1.Stand]: {
+      [Animation$3.Stand]: {
         animations: (direction) => [stand(direction)]
       },
-      [Animation$1.Walk]: {
+      [Animation$3.Walk]: {
         animations: (direction) => [walk(direction)]
       }
     },
@@ -54497,9 +55969,9 @@ const Presets = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   __proto__: null,
   RMSpritesheet
 }, Symbol.toStringTag, { value: "Module" }));
-const RpgResource = {
-  spritesheets,
-  sounds
+const RpgResource$1 = {
+  spritesheets: spritesheets$1,
+  sounds: sounds$1
 };
 const PACKET_TYPES = /* @__PURE__ */ Object.create(null);
 PACKET_TYPES["open"] = "0";
@@ -57728,6 +59200,2292 @@ Object.assign(lookup, {
   io: lookup,
   connect: lookup
 });
+const keyCodeTable = {
+  3: "break",
+  8: "backspace",
+  9: "tab",
+  12: "clear",
+  13: "enter",
+  16: "shift",
+  17: "ctrl",
+  18: "alt",
+  19: "pause/break",
+  20: "caps lock",
+  27: "escape",
+  28: "conversion",
+  29: "non-conversion",
+  32: "space",
+  33: "page up",
+  34: "page down",
+  35: "end",
+  36: "home",
+  37: Direction$2.Left,
+  38: Direction$2.Up,
+  39: Direction$2.Right,
+  40: Direction$2.Down,
+  41: "select",
+  42: "print",
+  43: "execute",
+  44: "Print Screen",
+  45: "insert",
+  46: "delete",
+  48: "n0",
+  49: "n1",
+  50: "n2",
+  51: "n3",
+  52: "n4",
+  53: "n5",
+  54: "n6",
+  55: "n7",
+  56: "n8",
+  57: "n9",
+  58: ":",
+  59: "semicolon (firefox), equals",
+  60: "<",
+  61: "equals (firefox)",
+  63: "ß",
+  64: "@",
+  65: "a",
+  66: "b",
+  67: "c",
+  68: "d",
+  69: "e",
+  70: "f",
+  71: "g",
+  72: "h",
+  73: "i",
+  74: "j",
+  75: "k",
+  76: "l",
+  77: "m",
+  78: "n",
+  79: "o",
+  80: "p",
+  81: "q",
+  82: "r",
+  83: "s",
+  84: "t",
+  85: "u",
+  86: "v",
+  87: "w",
+  88: "x",
+  89: "y",
+  90: "z",
+  91: "Windows Key / Left ⌘ / Chromebook Search key",
+  92: "right window key",
+  93: "Windows Menu / Right ⌘",
+  96: "numpad 0",
+  97: "numpad 1",
+  98: "numpad 2",
+  99: "numpad 3",
+  100: "numpad 4",
+  101: "numpad 5",
+  102: "numpad 6",
+  103: "numpad 7",
+  104: "numpad 8",
+  105: "numpad 9",
+  106: "multiply",
+  107: "add",
+  108: "numpad period (firefox)",
+  109: "subtract",
+  110: "decimal point",
+  111: "divide",
+  112: "f1",
+  113: "f2",
+  114: "f3",
+  115: "f4",
+  116: "f5",
+  117: "f6",
+  118: "f7",
+  119: "f8",
+  120: "f9",
+  121: "f10",
+  122: "f11",
+  123: "f12",
+  124: "f13",
+  125: "f14",
+  126: "f15",
+  127: "f16",
+  128: "f17",
+  129: "f18",
+  130: "f19",
+  131: "f20",
+  132: "f21",
+  133: "f22",
+  134: "f23",
+  135: "f24",
+  144: "num lock",
+  145: "scroll lock",
+  160: "^",
+  161: "!",
+  163: "#",
+  164: "$",
+  165: "ù",
+  166: "page backward",
+  167: "page forward",
+  169: "closing paren (AZERTY)",
+  170: "*",
+  171: "~ + * key",
+  173: "minus (firefox), mute/unmute",
+  174: "decrease volume level",
+  175: "increase volume level",
+  176: "next",
+  177: "previous",
+  178: "stop",
+  179: "play/pause",
+  180: "e-mail",
+  181: "mute/unmute (firefox)",
+  182: "decrease volume level (firefox)",
+  183: "increase volume level (firefox)",
+  186: "semi-colon / ñ",
+  187: "equal sign",
+  188: "comma",
+  189: "dash",
+  190: "period",
+  191: "forward slash / ç",
+  192: "grave accent / ñ / æ",
+  193: "?, / or °",
+  194: "numpad period (chrome)",
+  219: "open bracket",
+  220: "back slash",
+  221: "close bracket / å",
+  222: "single quote / ø",
+  223: "`",
+  224: "left or right ⌘ key (firefox)",
+  225: "altgr",
+  226: "< /git >",
+  230: "GNOME Compose Key",
+  231: "ç",
+  233: "XF86Forward",
+  234: "XF86Back",
+  240: "alphanumeric",
+  242: "hiragana/katakana",
+  243: "half-width/full-width",
+  244: "kanji",
+  255: "toggle touchpad"
+};
+({
+  [Direction$2.Up]: 1,
+  [Direction$2.Right]: 2,
+  [Direction$2.Down]: 3,
+  [Direction$2.Left]: 4
+});
+const inverse = (obj) => {
+  const newObj = {};
+  for (let key in obj) {
+    const val = obj[key];
+    newObj[val] = key;
+  }
+  return newObj;
+};
+inverse(keyCodeTable);
+class CommonLayer2 extends Container {
+  constructor(layer, map2) {
+    super();
+    this.layer = layer;
+    this.map = map2;
+    this.applyProperties();
+  }
+  applyProperties() {
+    this.alpha = this.layer.opacity ?? 1;
+    this.visible = this.layer.visible ?? true;
+    this.x = this.layer.offsetx ?? 0;
+    this.y = this.layer.offsety ?? 0;
+    this.z = this.layer.properties.z ?? 0;
+  }
+}
+class Tile3 extends AnimatedSprite {
+  static getTextures(tile, tileSet) {
+    const textures = [];
+    if (tile.animations && tile.animations.length) {
+      tile.animations.forEach((frame) => {
+        textures.push(tileSet.textures[frame.tileid].clone());
+      });
+    } else {
+      textures.push(tileSet.textures[tile.gid - tileSet.firstgid].clone());
+    }
+    return textures;
+  }
+  constructor(tile, tileSet) {
+    super(Tile3.getTextures(tile, tileSet));
+    this.tile = tile;
+    this.tileSet = tileSet;
+    this.animations = [];
+    this._x = 0;
+    this._y = 0;
+    this.properties = {};
+    this.animations = tile.animations || [];
+    this.properties = tile.properties;
+    this.textures = Tile3.getTextures(tile, tileSet);
+    this.texture = this.textures[0];
+    this.flip();
+  }
+  get gid() {
+    return this.tile.gid;
+  }
+  setAnimation(frame) {
+    const size2 = this.animations.length;
+    if (size2 > 1) {
+      const offset = (this.animations[1].tileid - this.animations[0].tileid) * this.width;
+      frame.tileAnimX(offset, size2);
+    }
+  }
+  flip() {
+    let symmetry;
+    let i2 = 0;
+    const add2 = (symmetrySecond) => {
+      i2++;
+      if (symmetry)
+        symmetry = groupD8.add(symmetry, symmetrySecond);
+      else
+        symmetry = symmetrySecond;
+    };
+    if (this.tile.horizontalFlip) {
+      add2(groupD8.MIRROR_HORIZONTAL);
+    }
+    if (this.tile.verticalFlip) {
+      add2(groupD8.MIRROR_VERTICAL);
+    }
+    if (this.tile.diagonalFlip) {
+      if (i2 % 2 == 0) {
+        add2(groupD8.MAIN_DIAGONAL);
+      } else {
+        add2(groupD8.REVERSE_DIAGONAL);
+      }
+    }
+    if (symmetry)
+      this.texture.rotate = symmetry;
+  }
+}
+m$1.use32bitIndex = true;
+class TileLayer2 extends CommonLayer2 {
+  static findTileSet(gid, tileSets) {
+    let tileset;
+    for (let i2 = tileSets.length - 1; i2 >= 0; i2--) {
+      tileset = tileSets[i2];
+      if (tileset.firstgid && tileset.firstgid <= gid) {
+        break;
+      }
+    }
+    return tileset;
+  }
+  constructor(layer, tileSets, map2) {
+    super(layer, map2);
+    this.tileSets = tileSets;
+    this._tiles = {};
+  }
+  /** @internal */
+  createTile(x2, y2, options = {}) {
+    const {
+      real,
+      filter: filter2
+    } = options;
+    const {
+      width,
+      tilewidth,
+      tileheight
+    } = this.map.getData();
+    if (real) {
+      x2 = Math.floor(x2 / tilewidth);
+      y2 = Math.floor(y2 / tileheight);
+    }
+    const i2 = x2 + y2 * width;
+    const tiledTile = this.layer.getTileByIndex(i2);
+    if (!tiledTile || tiledTile && tiledTile.gid == 0)
+      return;
+    const tileset = TileLayer2.findTileSet(tiledTile.gid, this.tileSets);
+    if (!tileset)
+      return;
+    const tile = new Tile3(tiledTile, tileset);
+    tile.x = x2 * tilewidth;
+    tile.y = y2 * tileheight + (tileheight - tile.texture.height);
+    tile._x = x2;
+    tile._y = y2;
+    if (tileset.tileoffset) {
+      tile.x += tileset.tileoffset.x ?? 0;
+      tile.y += tileset.tileoffset.y ?? 0;
+    }
+    if (filter2) {
+      const ret = filter2(tile);
+      if (!ret)
+        return;
+    }
+    return tile;
+  }
+  /** @internal */
+  changeTile(x2, y2) {
+    const {
+      tilewidth,
+      tileheight
+    } = this.map.getData();
+    x2 = Math.floor(x2 / tilewidth);
+    y2 = Math.floor(y2 / tileheight);
+    const oldTile = this._tiles[x2 + ";" + y2];
+    const newTile = this.createTile(x2, y2);
+    if (!oldTile && newTile) {
+      this.addFrame(newTile, x2, y2);
+    } else {
+      if (newTile) {
+        const bufComposite = new Z$1();
+        const frame = bufComposite.tile(newTile.texture, newTile.x, newTile.y);
+        newTile.setAnimation(frame);
+        this._tiles[x2 + ";" + y2] = newTile;
+        const pointsBufComposite = bufComposite.children[0].pointsBuf;
+        [0, 1, 4, 6, 7, 8].forEach((i2) => {
+          if (this.pointsBuf)
+            this.pointsBuf[oldTile.pointsBufIndex + i2] = pointsBufComposite[i2];
+        });
+        this.tilemap.children[0].modificationMarker = 0;
+        this.addFrame(newTile, x2, y2);
+        this["modificationMarker"] = 0;
+      } else {
+        delete this._tiles[x2 + ";" + y2];
+        if (this.pointsBuf)
+          this.pointsBuf.splice(oldTile.pointsBufIndex, L$1);
+      }
+    }
+  }
+  /** @internal */
+  get pointsBuf() {
+    const child = this.tilemap.children[0];
+    if (!child)
+      return null;
+    return child["pointsBuf"];
+  }
+  addFrame(tile, x2, y2) {
+    const frame = this.tilemap.tile(tile.texture, tile.x, tile.y, {
+      rotate: tile.texture.rotate
+    });
+    const pb = this.pointsBuf;
+    if (!pb)
+      return null;
+    tile.pointsBufIndex = pb.length - L$1;
+    tile.setAnimation(frame);
+    this._tiles[x2 + ";" + y2] = tile;
+  }
+  /** @internal */
+  create() {
+    this.tilemap = new Z$1();
+    const {
+      width,
+      height
+    } = this.map.getData();
+    for (let y2 = 0; y2 < height; y2++) {
+      for (let x2 = 0; x2 < width; x2++) {
+        const tile = this.createTile(x2, y2);
+        if (tile) {
+          this.addFrame(tile, x2, y2);
+        }
+      }
+    }
+    this.addChild(this.tilemap);
+  }
+}
+const spritesheets = /* @__PURE__ */ new Map();
+function log(message) {
+  return new Error(`[RPGJS] - ${message}`);
+}
+const sounds = /* @__PURE__ */ new Map();
+class RpgSoundClass2 {
+  constructor() {
+    this.sounds = /* @__PURE__ */ new Map();
+  }
+  get(id) {
+    if (this.sounds.has(id)) {
+      return this.sounds.get(id);
+    }
+    const resource = sounds.get(id);
+    if (!resource) {
+      throw log(`Impossible to find the ${id} sound. Did you put the right name or create the sound?`);
+    }
+    const howl = new howler.Howl({
+      src: [resource.sound],
+      loop: resource.loop,
+      autoplay: resource.autoplay,
+      volume: resource.volume,
+      sprite: resource.sprite
+    });
+    this.sounds.set(id, howl);
+    return howl;
+  }
+  stop(id) {
+    this.get(id).stop();
+  }
+  play(id) {
+    const sound = this.get(id);
+    if (!sound.playing()) {
+      sound.play();
+      return true;
+    }
+    return false;
+  }
+  clear() {
+    this.sounds.clear();
+    this.global.stop();
+  }
+  get global() {
+    return howler.Howler;
+  }
+}
+const RpgSound = new RpgSoundClass2();
+var Animation$1;
+(function(Animation3) {
+  Animation3["Stand"] = "stand";
+  Animation3["Walk"] = "walk";
+  Animation3["Attack"] = "attack";
+  Animation3["Defense"] = "defense";
+  Animation3["Skill"] = "skill";
+})(Animation$1 || (Animation$1 = {}));
+const {
+  isFunction,
+  arrayEquals
+} = Utils$1;
+class Animation2 extends Sprite {
+  get attachTo() {
+    return this._attachTo;
+  }
+  set attachTo(component) {
+    if (!component)
+      return;
+    component.animationIsPlaying = true;
+    this._attachTo = component;
+  }
+  constructor(id) {
+    super();
+    this.id = id;
+    this.currentAnimation = null;
+    this.time = 0;
+    this.frameIndex = 0;
+    this.animations = /* @__PURE__ */ new Map();
+    this._animation$ = new BehaviorSubject(null);
+    this.animation$ = this._animation$.asObservable();
+    this.spritesheet = spritesheets.get(this.id);
+    if (!this.spritesheet) {
+      throw log(`Impossible to find the ${this.id} spritesheet. Did you put the right name or create the spritesheet?`);
+    }
+    this.createAnimations();
+  }
+  createTextures(options) {
+    const {
+      width,
+      height,
+      framesHeight,
+      framesWidth,
+      image,
+      offset
+    } = options;
+    const {
+      baseTexture
+    } = Texture.from(image);
+    const spriteWidth = options.spriteWidth;
+    const spriteHeight = options.spriteHeight;
+    const frames = [];
+    const offsetX = offset && offset.x || 0;
+    const offsetY = offset && offset.y || 0;
+    for (let i2 = 0; i2 < framesHeight; i2++) {
+      frames[i2] = [];
+      for (let j2 = 0; j2 < framesWidth; j2++) {
+        const rectX = j2 * spriteWidth + offsetX;
+        const rectY = i2 * spriteHeight + offsetY;
+        if (rectY > height) {
+          throw log(`Warning, there is a problem with the height of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the height of the image.`);
+        }
+        if (rectX > width) {
+          throw log(`Warning, there is a problem with the width of the "${this.id}" spritesheet. When cutting into frames, the frame exceeds the width of the image.`);
+        }
+        frames[i2].push(new Texture(baseTexture, new Rectangle(rectX, rectY, spriteWidth, spriteHeight)));
+      }
+    }
+    return frames;
+  }
+  createAnimations() {
+    const {
+      textures
+    } = this.spritesheet;
+    if (!textures) {
+      return;
+    }
+    for (let animationName in textures) {
+      const props = ["width", "height", "framesHeight", "framesWidth", "rectWidth", "rectHeight", "offset", "image", "sound"];
+      const parentObj = props.reduce((prev2, val) => ({
+        ...prev2,
+        [val]: this.spritesheet[val]
+      }), {});
+      const optionsTextures = {
+        ...parentObj,
+        ...textures[animationName]
+      };
+      const {
+        rectWidth,
+        width = 0,
+        framesWidth = 1,
+        rectHeight,
+        height = 0,
+        framesHeight = 1
+      } = optionsTextures;
+      optionsTextures.spriteWidth = rectWidth ? rectWidth : width / framesWidth;
+      optionsTextures.spriteHeight = rectHeight ? rectHeight : height / framesHeight;
+      this.animations.set(animationName, {
+        container: new Sprite(),
+        frames: this.createTextures(optionsTextures),
+        name: animationName,
+        animations: textures[animationName].animations,
+        params: [],
+        data: optionsTextures,
+        sprites: []
+      });
+    }
+  }
+  getSpriteSize(name) {
+    var _a, _b;
+    return ((_b = this.animations.get(((_a = this.currentAnimation) == null ? void 0 : _a.name) || Animation$1.Stand)) == null ? void 0 : _b.data[name]) || 0;
+  }
+  getSpriteHeight() {
+    return this.getSpriteSize("spriteHeight");
+  }
+  getSpriteWidth() {
+    return this.getSpriteSize("spriteWidth");
+  }
+  has(name) {
+    return this.animations.has(name);
+  }
+  get(name) {
+    return this.animations.get(name);
+  }
+  isPlaying(name) {
+    if (!name)
+      return !!this.currentAnimation;
+    if (this.currentAnimation == null)
+      return false;
+    return this.currentAnimation.name == name;
+  }
+  stop() {
+    var _a;
+    this.currentAnimation = null;
+    (_a = this.parent) == null ? void 0 : _a.removeChild(this);
+  }
+  play(name, params = []) {
+    var _a;
+    const animParams = (_a = this.currentAnimation) == null ? void 0 : _a.params;
+    if (this.isPlaying(name) && arrayEquals(params, animParams || []))
+      return;
+    const animation = this.get(name);
+    if (!animation) {
+      throw new Error(`Impossible to play the ${name} animation because it doesn't exist on the ${this.id} spritesheet`);
+    }
+    this.removeChildren();
+    animation.sprites = [];
+    this.currentAnimation = animation;
+    this.currentAnimation.params = params;
+    this.time = 0;
+    this.frameIndex = 0;
+    let animations = animation.animations;
+    animations = isFunction(animations) ? animations(...params) : animations;
+    this.currentAnimation.container = new Container();
+    for (let container of animations) {
+      const sprite2 = new Sprite();
+      for (let frame of container) {
+        this.currentAnimation.sprites.push(frame);
+      }
+      this.currentAnimation.container.addChild(sprite2);
+    }
+    const sound = this.currentAnimation.data.sound;
+    if (sound) {
+      RpgSound.get(sound).play();
+    }
+    this.addChild(this.currentAnimation.container);
+    this.update(1);
+  }
+  update(deltaRatio) {
+    if (!this.isPlaying() || !this.currentAnimation)
+      return;
+    const {
+      frames,
+      container,
+      sprites,
+      data
+    } = this.currentAnimation;
+    let frame = sprites[this.frameIndex];
+    const nextFrame2 = sprites[this.frameIndex + 1];
+    if (this.attachTo) {
+      const sprite2 = this.attachTo;
+      const pos = sprite2 == null ? void 0 : sprite2.getPositionsOfGraphic("middle");
+      if (pos) {
+        container.x = pos.x;
+        container.y = pos.y;
+      }
+    }
+    for (let _sprite of container.children) {
+      let applyTransformValue = function(prop, alias) {
+        const optionProp = alias || prop;
+        const val = getVal(optionProp);
+        if (val !== void 0) {
+          sprite2[prop] = val;
+        }
+      };
+      const sprite2 = _sprite;
+      if (!frame || frame.frameY == void 0 || frame.frameX == void 0) {
+        continue;
+      }
+      sprite2.texture = frames[frame.frameY][frame.frameX];
+      const getVal = (prop) => frame[prop] || data[prop] || this.spritesheet[prop];
+      const applyTransform = (prop) => {
+        const val = getVal(prop);
+        if (val) {
+          sprite2[prop].set(...val);
+        }
+      };
+      if (this.applyTransform) {
+        frame = {
+          ...frame,
+          ...this.applyTransform(frame, data, this.spritesheet)
+        };
+      }
+      const realSize = getVal("spriteRealSize");
+      const heightOfSprite = typeof realSize == "number" ? realSize : realSize == null ? void 0 : realSize.height;
+      const widthOfSprite = typeof realSize == "number" ? realSize : realSize == null ? void 0 : realSize.width;
+      const applyAnchorBySize = () => {
+        if (heightOfSprite && this.hitbox) {
+          const {
+            spriteWidth,
+            spriteHeight
+          } = data;
+          const w2 = (spriteWidth - this.hitbox.w) / 2 / spriteWidth;
+          const gap = (spriteHeight - heightOfSprite) / 2;
+          const h2 = (spriteHeight - this.hitbox.h - gap) / spriteHeight;
+          sprite2.anchor.set(w2, h2);
+        }
+      };
+      if (frame.sound) {
+        RpgSound.get(frame.sound).play();
+      }
+      applyAnchorBySize();
+      applyTransform("anchor");
+      applyTransform("scale");
+      applyTransform("skew");
+      applyTransform("pivot");
+      applyTransformValue("alpha", "opacity");
+      applyTransformValue("x");
+      applyTransformValue("y");
+      applyTransformValue("angle");
+      applyTransformValue("rotation");
+      applyTransformValue("visible");
+      this._animation$.next({
+        spriteWidth: widthOfSprite || sprite2.width,
+        spriteHeight: heightOfSprite || sprite2.height,
+        anchor: sprite2.anchor,
+        width: getVal("spriteWidth"),
+        height: getVal("spriteHeight")
+      });
+    }
+    if (!nextFrame2) {
+      this.time = 0;
+      this.frameIndex = 0;
+      if (this.attachTo) {
+        this.attachTo.animationIsPlaying = false;
+      }
+      if (this.onFinish)
+        this.onFinish();
+      return;
+    }
+    this.time += deltaRatio;
+    if (this.time >= nextFrame2.time) {
+      this.frameIndex++;
+    }
+  }
+}
+const scriptRel = "modulepreload";
+const assetsURL = function(dep) {
+  return "/" + dep;
+};
+const seen = {};
+const __vitePreload = function preload(baseModule, deps, importerUrl) {
+  if (!deps || deps.length === 0) {
+    return baseModule();
+  }
+  const links = document.getElementsByTagName("link");
+  return Promise.all(deps.map((dep) => {
+    dep = assetsURL(dep);
+    if (dep in seen)
+      return;
+    seen[dep] = true;
+    const isCss = dep.endsWith(".css");
+    const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+    const isBaseRelative = !!importerUrl;
+    if (isBaseRelative) {
+      for (let i2 = links.length - 1; i2 >= 0; i2--) {
+        const link2 = links[i2];
+        if (link2.href === dep && (!isCss || link2.rel === "stylesheet")) {
+          return;
+        }
+      }
+    } else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+      return;
+    }
+    const link = document.createElement("link");
+    link.rel = isCss ? "stylesheet" : scriptRel;
+    if (!isCss) {
+      link.as = "script";
+      link.crossOrigin = "";
+    }
+    link.href = dep;
+    document.head.appendChild(link);
+    if (isCss) {
+      return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }
+  })).then(() => baseModule()).catch((err) => {
+    const e3 = new Event("vite:preloadError", { cancelable: true });
+    e3.payload = err;
+    window.dispatchEvent(e3);
+    if (!e3.defaultPrevented) {
+      throw err;
+    }
+  });
+};
+const _hoisted_1$d = {
+  id: "tooltips",
+  style: {
+    "position": "absolute",
+    "top": "0",
+    "left": "0"
+  }
+};
+function render(_ctx, _cache) {
+  return openBlock(), createElementBlock(
+    "div",
+    {},
+    [(openBlock(true), createElementBlock(
+      Fragment,
+      null,
+      renderList(_ctx.fixedGui, (ui) => {
+        return openBlock(), createElementBlock(
+          Fragment,
+          null,
+          [ui.display ? (openBlock(), createBlock(
+            resolveDynamicComponent(ui.name),
+            normalizeProps(mergeProps({
+              key: 0
+            }, ui.data)),
+            null,
+            16
+            /* FULL_PROPS */
+          )) : createCommentVNode("v-if", true)],
+          64
+          /* STABLE_FRAGMENT */
+        );
+      }),
+      256
+      /* UNKEYED_FRAGMENT */
+    )), createBaseVNode("div", _hoisted_1$d, [(openBlock(true), createElementBlock(
+      Fragment,
+      null,
+      renderList(_ctx.attachedGui, (ui) => {
+        return openBlock(), createElementBlock(
+          Fragment,
+          null,
+          [ui.display ? (openBlock(true), createElementBlock(
+            Fragment,
+            {
+              key: 0
+            },
+            renderList(_ctx.tooltipFilter(_ctx.tooltips, ui), (tooltip) => {
+              return openBlock(), createElementBlock(
+                "div",
+                {
+                  style: normalizeStyle(_ctx.tooltipPosition(tooltip.position))
+                },
+                [(openBlock(), createBlock(
+                  resolveDynamicComponent(ui.name),
+                  mergeProps({
+                    ...ui.data,
+                    spriteData: tooltip
+                  }, {
+                    ref_for: true,
+                    ref: ui.name
+                  }),
+                  null,
+                  16
+                  /* FULL_PROPS */
+                ))],
+                4
+                /* STYLE */
+              );
+            }),
+            256
+            /* UNKEYED_FRAGMENT */
+          )) : createCommentVNode("v-if", true)],
+          64
+          /* STABLE_FRAGMENT */
+        );
+      }),
+      256
+      /* UNKEYED_FRAGMENT */
+    ))])],
+    32
+    /* HYDRATE_EVENTS */
+  );
+}
+class VueGui {
+  constructor(rootEl, parentGui) {
+    this.parentGui = parentGui;
+    this.clientEngine = parentGui.clientEngine;
+    this.renderer = this.clientEngine.renderer;
+    this.gameEngine = this.clientEngine.gameEngine;
+    const {
+      gui
+    } = parentGui;
+    const obj = {
+      render,
+      data() {
+        return {
+          gui: {},
+          tooltips: []
+        };
+      },
+      provide: () => {
+        return parentGui.getInjectObject();
+      },
+      computed: {
+        fixedGui() {
+          return Object.values(this.gui).filter((gui2) => !gui2.attachToSprite);
+        },
+        attachedGui() {
+          return Object.values(this.gui).filter((gui2) => gui2.attachToSprite);
+        }
+      },
+      methods: {
+        tooltipPosition: parentGui.tooltipPosition.bind(parentGui),
+        tooltipFilter: parentGui.tooltipFilter.bind(parentGui)
+      },
+      mounted() {
+      }
+    };
+    this.app = createApp(obj);
+    const guiVue = Object.values(gui).filter((ui) => !isFunction$7(ui));
+    for (let ui of guiVue) {
+      this.app.component(ui.name, ui.gui);
+    }
+    this.vm = this.app.mount(rootEl);
+    this.renderer.app = this.app;
+    this.renderer.vm = this.vm;
+  }
+  _setSceneReady() {
+    var _a;
+    this.parentGui.listenTooltipObjects.subscribe((tooltips) => {
+      this.vm.tooltips = [...tooltips];
+    });
+    (_a = this.parentGui.currentScene) == null ? void 0 : _a.objectsMoving.next({});
+  }
+  set gui(val) {
+    for (let key in val) {
+      if (val[key].isFunction)
+        continue;
+      this.vm.gui[key] = val[key];
+    }
+    this.vm.gui = Object.assign({}, this.vm.gui);
+  }
+}
+const {
+  elementToPositionAbsolute
+} = Utils$1;
+const COMPONENT_LIBRARIES = [VueGui];
+class Gui2 {
+  constructor() {
+    this.gui = {};
+    this.currentScene = null;
+    this.librariesInstances = [];
+  }
+  async _initialize(clientEngine, guiEl) {
+    var _a;
+    this.clientEngine = clientEngine;
+    this.renderer = clientEngine.renderer;
+    this.gameEngine = clientEngine.gameEngine;
+    const {
+      gui
+    } = this.renderer.options;
+    for (let ui of gui) {
+      let name = ui.name;
+      if (isFunction$7(ui)) {
+        name = camelToKebab(name);
+      }
+      this.gui[name] = {
+        data: ui.data,
+        attachToSprite: ui.rpgAttachToSprite,
+        display: false,
+        name,
+        isFunction: isFunction$7(ui),
+        gui: ui
+      };
+    }
+    if ((_a = this.clientEngine.envs) == null ? void 0 : _a["VITE_REACT"]) {
+      console.warn("[RPGJS] React GUI is experimental feature. So, its use may change over time. Not yet in production");
+      COMPONENT_LIBRARIES.push(await __vitePreload(() => import("./React-8bee3b58.js"), true ? [] : void 0).then((m2) => m2.ReactGui));
+    }
+    const propagateEvents = (el) => {
+      const events2 = ["click", "mousedown", "mouseup", "mousemove", "mouseenter", "mouseleave", "mouseover", "mouseout", "contextmenu", "pointerdown", "pointerup", "pointermove", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerupoutside", "pointercancel", "touchstart", "touchend", "touchmove", "touchcancel", "wheel", "keydown", "keyup", "keypress", "keydownoutside", "keyupoutside", "keypressoutside"];
+      for (let type of events2) {
+        el.addEventListener(type, (e3) => {
+          this.renderer.canvas.dispatchEvent(new MouseEvent(type, e3));
+        });
+      }
+    };
+    for (let componentClass of COMPONENT_LIBRARIES) {
+      const el = document.createElement("div");
+      elementToPositionAbsolute(el);
+      el.style["pointer-events"] = "auto";
+      propagateEvents(el);
+      guiEl.appendChild(el);
+      this.librariesInstances.push(new componentClass(el, this));
+    }
+    guiEl.style["pointer-events"] = "none";
+  }
+  _setSceneReady(scene) {
+    this.currentScene = scene;
+    this.librariesInstances.forEach((instance) => {
+      if (instance._setSceneReady)
+        instance._setSceneReady(scene);
+    });
+  }
+  getInjectObject() {
+    const self2 = this;
+    return {
+      /**
+       * Recovery of the current scene
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgScene'],
+       *      mounted() {
+       *          const scene = this.rpgScene()
+       *          scene.stopInputs()
+       *      }
+       * }
+       * ```
+       *
+       * @prop {Function returns RpgScene} [rpgScene]
+       * @memberof VueInject
+       * */
+      rpgScene: this.renderer.getScene.bind(this.renderer),
+      /**
+      * Retrieve the main container of the game
+      *
+      * ```js
+      * export default {
+      *      inject: ['rpgStage'],
+      *      mounted() {
+      *          const blur = new PIXI.BlurFilter()
+                 this.rpgStage.filters = [blur]
+      *      }
+      * }
+      * ```
+      *
+      * @prop {PIXI.Container} [rpgStage]
+      * @memberof VueInject
+      * */
+      rpgStage: this.renderer.stage,
+      /**
+       * Listen to all the objects present in the room (events and players)
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgObjects'],
+       *      mounted() {
+       *          this.obs = this.rpgObjects.subscribe((objects) => {
+       *              for (let id in objects) {
+       *                  const obj = objects[id]
+       *                  console.log(obj.object, obj.paramsChanged)
+       *              }
+       *          })
+       *      },
+       *      unmounted() {
+       *          this.obs.unsubscribe()
+       *      }
+       * }
+       * ```
+       *
+       * > remember to unsubscribe for memory leaks
+       *
+       * It is an observable that returns an object:
+       *
+       * * the key is the object identifier
+       * * The value is an object comprising:
+       *      * `object`: The entire object
+       *      * `paramsChanged`: Only the representation of the properties that have been changed on this object
+       *
+       * @prop {Observable<{ [objectId]: { object: object, paramsChanged: object } }>} [rpgObjects]
+       * @memberof VueInject
+       * */
+      rpgObjects: this.clientEngine.objects,
+      /**
+       * Recovers and listens to the current player
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgCurrentPlayer'],
+       *      mounted() {
+       *          this.obs = this.rpgCurrentPlayer.subscribe((obj) => {
+       *              console.log(obj.object, obj.paramsChanged)
+       *          })
+       *      },
+       *      unmounted() {
+       *          this.obs.unsubscribe()
+       *      }
+       * }
+       * ```
+       *
+       * * `object`: The whole player
+       * * `paramsChanged`: Only the representation of the properties that have been changed on this player
+       *
+       * @prop {Observable<{ object: object, paramsChanged: object }>} [rpgCurrentPlayer]
+       * @memberof VueInject
+       * */
+      rpgCurrentPlayer: this.clientEngine.objects.pipe(map$7((objects) => objects[this.gameEngine.playerId]), filter$1((player) => !!player)),
+      rpgGameEngine: this.gameEngine,
+      /**
+       * Tell the server to close the GUI.
+       *
+       * It is a function with 2 parameters:
+       * * `name`: The name of the component
+       * * `data`: The data you want to pass to the server
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgGuiClose'],
+       *      methods: {
+       *          close() {
+       *              this.rpgGuiClose('gui-name', {
+       *                  amount: 1000
+       *              })
+       *          }
+       *      }
+       * }
+       * ```
+       *
+       * @prop {Function(name, data)} [rpgGuiClose]
+       * @memberof VueInject
+       * */
+      rpgGuiClose(name, data) {
+        var _a;
+        const guiId = name || ((_a = this.$options) == null ? void 0 : _a.name);
+        self2.socket.emit("gui.exit", {
+          guiId,
+          data
+        });
+      },
+      /**
+       * Perform an interaction with the open GUI
+       *
+       * It is a function with 2 parameters:
+       * * `guiId`: The name of the component/Gui
+       * * `name`: The name of the interaction (defined on the server side)
+       * * `data`: Data to be sent
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgGuiInteraction'],
+       *      methods: {
+       *          changeGold() {
+       *              this.rpgGuiInteraction('gui-name', 'change-gold', {
+       *                  amount: 100
+       *              })
+       *          }
+       *      }
+       * }
+       * ```
+       *
+       * @prop {Function(guiId, name, data = {})} [rpgGuiInteraction]
+       * @memberof VueInject
+       * */
+      rpgGuiInteraction: (guiId, name, data = {}) => {
+        this.socket.emit("gui.interaction", {
+          guiId,
+          name,
+          data
+        });
+      },
+      /**
+       * Listen to the keys that are pressed on the keyboard
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgKeypress'],
+       *      mounted() {
+       *          this.obs = this.rpgKeypress.subscribe(({ inputName, control }) => {
+       *              console.log(inputName) // "escape"
+       *              console.log(control.actionName) // "back"
+       *          })
+       *      },
+       *      unmounted() {
+       *          this.obs.unsubscribe()
+       *      }
+       * }
+       * ```
+       *
+       * @prop {Observable<{ inputName: string, control: { actionName: string, options: any } }>} [rpgKeypress]
+       * @memberof VueInject
+       * */
+      rpgKeypress: this.clientEngine.keyChange.pipe(map$7((name) => {
+        const control = this.clientEngine.controls.getControl(name);
+        return {
+          inputName: name,
+          control
+        };
+      })),
+      /**
+       * Recovers the socket.
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgSocket'],
+       *      mounted() {
+       *          const socket = this.rpgSocket()
+       *          socket.emit('foo', 'bar')
+       *      }
+       * }
+       * ```
+       *
+       * @prop {Function returns RpgScene} [rpgSocket]
+       * @memberof VueInject
+       * */
+      rpgSocket: () => this.socket,
+      /**
+       * The RpgGui object to control GUIs
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgGui'],
+       *      mounted() {
+       *         const guis = this.rpgGui.getAll()
+       *      }
+       * }
+       * ```
+       *
+       * @prop {RpgGui} [rpgGui]
+       * @memberof VueInject
+       * */
+      rpgGui: this,
+      /**
+       * Equivalent to RpgSound
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgSound'],
+       *      mounted() {
+       *         this.rpgSound.get('my-sound-id').play()
+       *      }
+       * }
+       * ```
+       *
+       * @prop {RpgSound} [rpgSound]
+       * @memberof VueInject
+       * */
+      rpgSound: RpgSound,
+      /**
+       * Find the game's image and sound library
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgResource'],
+       *      mounted() {
+       *         const resourceImage = this.rpgResource.spritesheets.get('image_id')
+       *         const resourceSound = this.rpgResource.sounds.get('sound_id')
+       *      }
+       * }
+       * ```
+       *
+       * @prop { { spritesheets: Map, sounds: Map } } [rpgResource]
+       * @memberof VueInject
+       * */
+      rpgResource: RpgResource,
+      /**
+       * Get RpgClientEngine instance
+       *
+       * ```js
+       * export default {
+       *      inject: ['rpgEngine'],
+       *      mounted() {
+       *         const vueInstance = this.rpgEngine.vueInstance
+       *      }
+       * }
+       * ```
+       *
+       * @prop {RpgClientEngine} [rpgEngine]
+       * @memberof VueInject
+       * */
+      rpgEngine: this.clientEngine
+    };
+  }
+  /** @internal */
+  _setSocket(socket) {
+    this.socket = socket;
+    this.socket.on("gui.open", ({
+      guiId,
+      data
+    }) => {
+      this.display(guiId, data);
+    });
+    this.socket.on("gui.tooltip", ({
+      players,
+      display
+    }) => {
+      var _a;
+      for (let playerId of players) {
+        const sprite2 = (_a = this.renderer.getScene()) == null ? void 0 : _a.getSprite(playerId);
+        if (sprite2)
+          sprite2.guiDisplay = display;
+      }
+    });
+    this.socket.on("gui.exit", (guiId) => {
+      this.hide(guiId);
+    });
+  }
+  /** @internal */
+  _setGui(id, obj) {
+    const guiObj = this.get(id);
+    if (!guiObj) {
+      throw `The GUI named ${id} is non-existent. Please add the component in the gui property of the decorator @RpgClient`;
+    }
+    for (let key in obj) {
+      guiObj[key] = obj[key];
+    }
+    this.librariesInstances.forEach((instance) => {
+      instance.gui = Object.assign({}, this.gui);
+    });
+  }
+  /**
+  * Get a GUI. You retrieve GUI data and information whether it is displayed or not
+  *
+  * ```ts
+  * import { RpgGui } from '@rpgjs/client'
+  *
+  * const gui = RpgGui.get('my-gui')
+  * console.log(gui.display) // false
+  * ```
+  *
+  * @title Get a GUI
+  * @method RpgGui.get(id)
+  * @param {string} id
+  * @returns { { data: any, display: boolean } }
+  * @memberof RpgGui
+  */
+  get(id) {
+    if (typeof id != "string") {
+      id = id.name;
+    }
+    return this.gui[id];
+  }
+  /**
+   * Get all GUI. You retrieve GUI data and information whether it is displayed or not
+   *
+   * ```ts
+   * import { RpgGui } from '@rpgjs/client'
+   *
+   * const gui = RpgGui.getAll()
+   * console.log(gui) // { 'rpg-dialog': { data: {}, display: true } }
+   * ```
+   *
+   * @title Get all GUI
+   * @method RpgGui.getAll()
+   * @returns { { [guiName]: { data: any, display: boolean }  }}
+   * @memberof RpgGui
+   */
+  getAll() {
+    return this.gui;
+  }
+  /**
+   * Checks if the GUI exists RpgClient's gui array
+   *
+   * ```ts
+   * import { RpgGui } from '@rpgjs/client'
+   *
+   * RpgGui.exists('my-gui') // true
+   * ```
+   *
+   * @title GUI Exists ?
+   * @method RpgGui.exists(id)
+   * @param {string} id
+   * @returns {boolean}
+   * @memberof RpgGui
+   */
+  exists(id) {
+    return !!this.get(id);
+  }
+  /**
+   * Calls a GUI according to identifier. You can send retrievable data in the component
+   *
+   * ```ts
+   * import { RpgGui } from '@rpgjs/client'
+   *
+   * RpgGui.display('my-gui')
+   * ```
+   *
+   * @title Display GUI
+   * @method RpgGui.display(id,data)
+   * @param {string} id
+   * @param {object} [data]
+   * @returns {void}
+   * @memberof RpgGui
+   */
+  display(id, data = {}) {
+    this._setGui(id, {
+      display: true,
+      data
+    });
+  }
+  /**
+   * Hide a GUI according to its identifier
+   *
+   * ```ts
+   * import { RpgGui } from '@rpgjs/client'
+   *
+   * RpgGui.hide('my-gui')
+   * ```
+   *
+   * @title Hide GUI
+   * @method RpgGui.hide(id)
+   * @param {string} id
+   * @returns {void}
+   * @memberof RpgGui
+   */
+  hide(id) {
+    this._setGui(id, {
+      display: false
+    });
+  }
+  /** @internal */
+  clear() {
+    this.gui = {};
+  }
+  /** @internal */
+  tooltipPosition(position) {
+    const scene = this.renderer.getScene();
+    const viewport = scene == null ? void 0 : scene.viewport;
+    if (viewport) {
+      const currentZoom = viewport.scale.x;
+      const left = (position.x - viewport.left) * currentZoom;
+      const top = (position.y - viewport.top) * currentZoom;
+      return {
+        transform: `translate(${left}px,${top}px)`
+      };
+    }
+    return {};
+  }
+  /** @internal */
+  tooltipFilter(sprites) {
+    return sprites.filter((tooltip) => tooltip.guiDisplay);
+  }
+  /** @internal */
+  get listenTooltipObjects() {
+    var _a;
+    return combineLatest([this.clientEngine.gameEngine.all, (_a = this.currentScene) == null ? void 0 : _a.objectsMoving]).pipe(map$7(([objects]) => {
+      return Object.values(objects).map((obj) => obj.object);
+    }));
+  }
+}
+const RpgGui = new Gui2();
+var HitType;
+(function(HitType2) {
+  HitType2["Box"] = "box";
+  HitType2["Circle"] = "circle";
+  HitType2["Polygon"] = "polygon";
+})(HitType || (HitType = {}));
+var MoveClientMode;
+(function(MoveClientMode2) {
+  MoveClientMode2[MoveClientMode2["Disabled"] = 0] = "Disabled";
+  MoveClientMode2[MoveClientMode2["ByDirection"] = 1] = "ByDirection";
+  MoveClientMode2[MoveClientMode2["Drag"] = 2] = "Drag";
+})(MoveClientMode || (MoveClientMode = {}));
+var Behavior;
+(function(Behavior2) {
+  Behavior2[Behavior2["Direction"] = 0] = "Direction";
+  Behavior2[Behavior2["Target"] = 1] = "Target";
+})(Behavior || (Behavior = {}));
+var Direction;
+(function(Direction2) {
+  Direction2[Direction2["Up"] = 1] = "Up";
+  Direction2[Direction2["Down"] = 3] = "Down";
+  Direction2[Direction2["Left"] = 4] = "Left";
+  Direction2[Direction2["Right"] = 2] = "Right";
+  Direction2[Direction2["UpRight"] = 1.5] = "UpRight";
+  Direction2[Direction2["DownRight"] = 2.5] = "DownRight";
+  Direction2[Direction2["DownLeft"] = 3.5] = "DownLeft";
+  Direction2[Direction2["UpLeft"] = 2.5] = "UpLeft";
+})(Direction || (Direction = {}));
+var PlayerType;
+(function(PlayerType2) {
+  PlayerType2["Player"] = "player";
+  PlayerType2["Event"] = "event";
+  PlayerType2["Shape"] = "shape";
+})(PlayerType || (PlayerType = {}));
+var SocketMethods;
+(function(SocketMethods2) {
+  SocketMethods2["CameraFollow"] = "cameraFollow";
+  SocketMethods2["ShowAnimation"] = "showAnimation";
+  SocketMethods2["PlaySound"] = "playSound";
+  SocketMethods2["ModeMove"] = "modeMove";
+})(SocketMethods || (SocketMethods = {}));
+var SocketEvents;
+(function(SocketEvents2) {
+  SocketEvents2["CallMethod"] = "callMethod";
+  SocketEvents2["GameReload"] = "gameReload";
+  SocketEvents2["ChangeServer"] = "changeServer";
+  SocketEvents2["LoadScene"] = "loadScene";
+})(SocketEvents || (SocketEvents = {}));
+var Control;
+(function(Control2) {
+  Control2["Action"] = "action";
+  Control2["Attack"] = "attack";
+  Control2["Defense"] = "defense";
+  Control2["Skill"] = "skill";
+  Control2["Back"] = "back";
+  Control2[Control2["Up"] = 1] = "Up";
+  Control2[Control2["Down"] = 3] = "Down";
+  Control2[Control2["Right"] = 2] = "Right";
+  Control2[Control2["Left"] = 4] = "Left";
+})(Control || (Control = {}));
+var Input;
+(function(Input2) {
+  Input2["Break"] = "break";
+  Input2["Backspace"] = "backspace";
+  Input2["Tab"] = "tab";
+  Input2["Clear"] = "clear";
+  Input2["Enter"] = "enter";
+  Input2["Shift"] = "shift";
+  Input2["Ctrl"] = "ctrl";
+  Input2["Alt"] = "alt";
+  Input2["Pause"] = "pause/break";
+  Input2["CapsLock"] = "caps lock";
+  Input2["Escape"] = "escape";
+  Input2["Conversion"] = "conversion";
+  Input2["NonConversion"] = "non-conversion";
+  Input2["Space"] = "space";
+  Input2["PageUp"] = "page up";
+  Input2["PageDown"] = "page down";
+  Input2["End"] = "end";
+  Input2["Home"] = "home";
+  Input2[Input2["Left"] = 4] = "Left";
+  Input2[Input2["Up"] = 1] = "Up";
+  Input2[Input2["Right"] = 2] = "Right";
+  Input2[Input2["Down"] = 3] = "Down";
+  Input2["Select"] = "select";
+  Input2["Print"] = "print";
+  Input2["Execute"] = "execute";
+  Input2["PrintScreen"] = "Print Screen";
+  Input2["Insert"] = "insert";
+  Input2["Delete"] = "delete";
+  Input2["Zero"] = "0";
+  Input2["One"] = "1";
+  Input2["Two"] = "2";
+  Input2["Three"] = "3";
+  Input2["Four"] = "4";
+  Input2["Five"] = "5";
+  Input2["Six"] = "6";
+  Input2["Seven"] = "7";
+  Input2["Height"] = "8";
+  Input2["Nine"] = "9";
+  Input2["Equal"] = "=";
+  Input2["Semicolon"] = "semicolon (firefox), equals";
+  Input2["LessThan"] = "<";
+  Input2["Equals"] = "equals (firefox)";
+  Input2["Beta"] = "ß";
+  Input2["At"] = "@";
+  Input2["A"] = "a";
+  Input2["B"] = "b";
+  Input2["C"] = "c";
+  Input2["D"] = "d";
+  Input2["E"] = "e";
+  Input2["F"] = "f";
+  Input2["G"] = "g";
+  Input2["H"] = "h";
+  Input2["I"] = "i";
+  Input2["J"] = "j";
+  Input2["K"] = "k";
+  Input2["L"] = "l";
+  Input2["M"] = "m";
+  Input2["N"] = "n";
+  Input2["O"] = "o";
+  Input2["P"] = "p";
+  Input2["Q"] = "q";
+  Input2["R"] = "r";
+  Input2["S"] = "s";
+  Input2["T"] = "t";
+  Input2["U"] = "u";
+  Input2["V"] = "v";
+  Input2["W"] = "w";
+  Input2["X"] = "x";
+  Input2["Y"] = "y";
+  Input2["Z"] = "z";
+  Input2["SearchKey"] = "Windows Key / Left ⌘ / Chromebook Search key";
+  Input2["NumPad0"] = "numpad 0";
+  Input2["NumPad1"] = "numpad 1";
+  Input2["NumPad2"] = "numpad 2";
+  Input2["NumPad3"] = "numpad 3";
+  Input2["NumPad4"] = "numpad 4";
+  Input2["NumPad5"] = "numpad 5";
+  Input2["NumPad6"] = "numpad 6";
+  Input2["NumPad7"] = "numpad 7";
+  Input2["NumPad8"] = "numpad 8";
+  Input2["NumPad9"] = "numpad 9";
+  Input2["Multiply"] = "multiply";
+  Input2["Add"] = "add";
+  Input2["Subtract"] = "subtract";
+  Input2["DecimalPoint"] = "decimal point";
+  Input2["Divide"] = "divide";
+  Input2["F1"] = "f1";
+  Input2["F2"] = "f2";
+  Input2["F3"] = "f3";
+  Input2["F4"] = "f4";
+  Input2["F5"] = "f5";
+  Input2["F6"] = "f6";
+  Input2["F7"] = "f7";
+  Input2["F8"] = "f8";
+  Input2["F9"] = "f9";
+  Input2["F10"] = "f10";
+  Input2["F11"] = "f11";
+  Input2["F12"] = "f12";
+  Input2["F13"] = "f13";
+  Input2["F14"] = "f14";
+  Input2["F15"] = "f15";
+  Input2["F16"] = "f16";
+  Input2["F17"] = "f17";
+  Input2["F18"] = "f18";
+  Input2["F19"] = "f19";
+  Input2["F20"] = "f20";
+  Input2["F21"] = "f21";
+  Input2["F22"] = "f22";
+  Input2["F23"] = "f23";
+  Input2["F24"] = "f24";
+  Input2["NumLock"] = "num lock";
+  Input2["ScrollLock"] = "scroll lock";
+  Input2["CircumflexAccent"] = "^";
+  Input2["ExclamationMark"] = "!";
+  Input2["Hash"] = "#";
+  Input2["Dollar"] = "$";
+  Input2["AccentU"] = "ù";
+  Input2["PageBackward"] = "page backward";
+  Input2["PageForWard"] = "page forward";
+  Input2["Star"] = "*";
+  Input2["DecreaseVolume"] = "decrease volume level";
+  Input2["IncreaseVolume"] = "increase volume level";
+  Input2["Next"] = "next";
+  Input2["Previous"] = "previous";
+  Input2["Stop"] = "stop";
+  Input2["PlayPause"] = "play/pause";
+  Input2["Email"] = "e-mail";
+  Input2["SemiColon"] = "semi-colon / ñ";
+  Input2["EqualSign"] = "equal sign";
+  Input2["Comma"] = "comma";
+  Input2["Dash"] = "dash";
+  Input2["FowardSlach"] = "forward slash / ç";
+  Input2["GraveAccent"] = "grave accent / ñ / æ";
+  Input2["OpenBracket"] = "open bracket";
+  Input2["BackSlach"] = "back slash";
+  Input2["CloseBracket"] = "close bracket / å";
+  Input2["SingleQuote"] = "single quote / ø";
+  Input2["BackQuote"] = "`";
+  Input2["Altgr"] = "altgr";
+})(Input || (Input = {}));
+const {
+  capitalize
+} = Utils$1;
+class Character2 extends Sprite {
+  constructor(component, graphic) {
+    super();
+    this.component = component;
+    this.graphic = graphic;
+    this.playStandardAnimation = true;
+    this.objSaved = {};
+    this.data = {};
+    this.h = 1;
+    this.w = 1;
+    this.data = component.logic;
+    this.setGraphic(graphic);
+  }
+  /** @internal */
+  showAnimation(graphic, animationName) {
+    const refreshAnimation = (graphic2) => {
+      this.removeChild(this.animation);
+      this.animation = new Animation2(graphic2);
+      this.addChild(this.animation);
+      this.setAnimationAnchor();
+    };
+    const memoryGraphic = this.graphic;
+    let graphicId = "";
+    if (isArray$8(graphic)) {
+      graphicId = graphic.find((id) => id == this.graphic);
+    } else {
+      graphicId = graphic;
+    }
+    if (!graphicId) {
+      return null;
+    }
+    refreshAnimation(graphicId);
+    this.component.animationIsPlaying = true;
+    this.animation.onFinish = () => {
+      this.playStandardAnimation = true;
+      this.component.animationIsPlaying = false;
+      refreshAnimation(memoryGraphic);
+      this.update(this.objSaved);
+    };
+    this.playStandardAnimation = false;
+    this.playAnimation(animationName);
+    return this.animation;
+  }
+  /** @internal */
+  setGraphic(graphic) {
+    this.children.forEach((graphic2, index2) => {
+      if (graphic2.id == this.graphic) {
+        this.removeChildAt(index2);
+      }
+    });
+    this.graphic = graphic;
+    this.spritesheet = spritesheets.get(this.graphic);
+    this.animation = new Animation2(this.graphic);
+    this.addChild(this.animation);
+    this.setAnimationAnchor();
+  }
+  getGraphicHeight() {
+    return this.animation.getSpriteHeight();
+  }
+  getGraphicWidth() {
+    return this.animation.getSpriteWidth();
+  }
+  animationSprite() {
+    return this.animation.animation$;
+  }
+  setAnimationAnchor() {
+    this.animation.hitbox = {
+      h: this.data.hHitbox,
+      w: this.data.wHitbox
+    };
+    this.animation.applyTransform = (frame, animation, spritesheet) => {
+      const {
+        spriteWidth,
+        spriteHeight
+      } = animation;
+      const prop = "spriteRealSize";
+      const currentAnchor = frame[prop] || animation[prop] || spritesheet[prop];
+      if (currentAnchor) {
+        return {};
+      }
+      return {
+        spriteRealSize: {
+          width: spriteWidth,
+          height: spriteHeight
+        }
+      };
+    };
+  }
+  /** @internal */
+  update(obj, options = {}, deltaRatio = 1) {
+    const {
+      moving: moving2
+    } = options;
+    this.data = obj;
+    if (this.anim)
+      this.anim.update(deltaRatio);
+    if (this.animation)
+      this.animation.update(deltaRatio);
+    if (this.playStandardAnimation) {
+      if (moving2) {
+        RpgPlugin.emit(HookClient.SpriteMove, this);
+        this.playAnimation(Animation$1.Walk);
+      } else {
+        this.playAnimation(Animation$1.Stand);
+      }
+    }
+    this.objSaved = obj;
+    return {
+      moving: moving2,
+      instance: this
+    };
+  }
+  /** @internal */
+  playAnimation(name) {
+    const hook = `onCharacter${capitalize(name)}`;
+    if (!this.spritesheet)
+      return;
+    if (this.spritesheet[hook]) {
+      this.spritesheet[hook](this);
+    } else if (this.animation.has(name)) {
+      this.animation.play(name, [this.data.direction]);
+    }
+  }
+}
+Character2.id = "graphic";
+const REGEXP_VAR = /{([^\}]+)}/g;
+class AbstractComponent2 extends Container {
+  constructor(component, value2) {
+    var _a;
+    super();
+    this.component = component;
+    this.value = value2;
+    this._onRender$ = new Subject();
+    this._onDestroy$ = new Subject();
+    this.onRender$ = this._onRender$.asObservable();
+    this.game = this.component.game;
+    this.firstRender = true;
+    this.style = (_a = this.value) == null ? void 0 : _a.style;
+    this.cacheText = {};
+  }
+  getStyle() {
+    return this.style || {};
+  }
+  parseTextAndCache(text) {
+    const matches = text.matchAll(REGEXP_VAR);
+    this.cacheParams = [...this.cacheParams, ...Array.from(matches).map((match) => match[1])];
+    return this.cacheParams;
+  }
+  replaceText(object, text) {
+    return text.replace(REGEXP_VAR, (match, key) => {
+      const value2 = get$1(object, key);
+      if (value2 !== void 0) {
+        this.cacheText[key] = value2;
+        return value2 ?? "";
+      }
+      return value2 ?? this.cacheText[key] ?? "";
+    });
+  }
+  getValue(object, expression) {
+    if (typeof expression === "string") {
+      const value2 = get$1(object, expression);
+      if (value2 !== void 0) {
+        if (this.cacheParams.indexOf(expression) === -1)
+          this.cacheParams.push(expression);
+        return value2;
+      }
+    }
+    return expression;
+  }
+  verifyParams() {
+    var _a;
+    const params = this.component.logic;
+    for (const param of this.cacheParams) {
+      if (get$1(params, param) === void 0) {
+        throw new Error(`Param ${param} not found in object ${(_a = this.component.logic) == null ? void 0 : _a.id}`);
+      }
+    }
+  }
+  onInit(cell) {
+    var _a;
+    this.cell = cell;
+    this.verifyParams();
+    const render2 = (object) => {
+      const opacity = this.getValue(object, this.getStyle().opacity || this.value.opacity);
+      if (opacity !== void 0) {
+        this.alpha = Math.min(opacity, 1);
+      }
+    };
+    render2(this.component.logic);
+    const objectId = (_a = this.component.logic) == null ? void 0 : _a.id;
+    this.game.listenObject(objectId).pipe(takeUntil(this._onDestroy$), filter$1((object) => {
+      const params = object == null ? void 0 : object.paramsChanged;
+      if (!params)
+        return false;
+      for (const param of this.cacheParams) {
+        if (get$1(params, param))
+          return true;
+      }
+      return false;
+    })).subscribe(({
+      object
+    }) => {
+      this.updateRender(object, this.firstRender);
+      render2(object);
+      this.firstRender = false;
+      this._onRender$.next(this);
+    });
+  }
+  onRemove() {
+    this._onDestroy$.next();
+    this._onDestroy$.complete();
+  }
+}
+const DEFAULT_COLOR = "#000000";
+class BarComponent2 extends AbstractComponent2 {
+  constructor() {
+    var _a;
+    super(...arguments);
+    this.barContainer = new Graphics();
+    this.barFill = new Graphics();
+    this.textContainer = new Text$1("");
+    this.barHeight = ((_a = this.value.style) == null ? void 0 : _a.height) || 7;
+    this.text = this.value.text || "";
+    this.barStyle = this.getStyle();
+    this.currentValue = 0;
+    this.maxValue = 0;
+    this.nextValue = 0;
+    this.notifier = new Subject();
+    this.cacheParams = [];
+  }
+  get barWidth() {
+    var _a, _b;
+    return ((_a = this.barStyle) == null ? void 0 : _a.width) || ((_b = this.cell) == null ? void 0 : _b.width) || 0;
+  }
+  onInit(cell) {
+    if (!this.value.style) {
+      this.value.style = {
+        fillColor: "#ffffff"
+      };
+    }
+    const {
+      bgColor = DEFAULT_COLOR,
+      borderColor = DEFAULT_COLOR,
+      borderWidth = 1,
+      borderRadius = 0
+    } = this.barStyle || {};
+    this.cell = cell;
+    const {
+      value: color,
+      alpha
+    } = hexaToNumber(bgColor);
+    this.barContainer.beginFill(color, alpha);
+    const paramsRect = [0, 0, this.barWidth, this.barHeight];
+    if (borderWidth) {
+      const {
+        value: color2,
+        alpha: alpha2
+      } = hexaToNumber(borderColor);
+      this.barContainer.lineStyle(borderWidth, color2, alpha2);
+    }
+    if (borderRadius) {
+      this.barContainer.drawRoundedRect(...paramsRect, borderRadius);
+    } else {
+      this.barContainer.drawRect(...paramsRect);
+    }
+    this.barContainer.endFill();
+    this.textContainer.style = {
+      fontSize: 10,
+      fill: "#ffffff",
+      fontWeight: "bold"
+    };
+    this.textContainer.y -= this.barHeight + this.textContainer.height - 5;
+    if (this.text)
+      this.addChild(this.textContainer);
+    this.addChild(this.barContainer);
+    this.barContainer.addChild(this.barFill);
+    this.cacheParams = [this.value.current, this.value.max];
+    this.updateRender(this.component.logic, true);
+    this.firstRender = false;
+    super.onInit(cell);
+  }
+  updateRender(object, firstRender) {
+    this.currentValue = this.nextValue;
+    this.nextValue = get$1(object, this.value.current) ?? this.nextValue ?? 0;
+    this.maxValue = get$1(object, this.value.max) ?? this.maxValue;
+    const style = this.barStyle;
+    const borderRadius = (style == null ? void 0 : style.borderRadius) ?? 0;
+    const borderWidth = (style == null ? void 0 : style.borderWidth) ?? 0;
+    if (firstRender) {
+      this.currentValue = this.nextValue;
+    }
+    const getColor2 = (value2) => {
+      let determineLastColor = DEFAULT_COLOR;
+      const percent = Math.max(0, value2 / this.maxValue * 100);
+      const perPercent = style.perPercent;
+      if (perPercent) {
+        for (const p2 in perPercent) {
+          if (percent <= +p2) {
+            determineLastColor = perPercent[p2].fillColor;
+            break;
+          }
+        }
+      } else {
+        determineLastColor = this.value.style.fillColor;
+      }
+      return determineLastColor;
+    };
+    let colors = [];
+    if (style) {
+      colors = transitionColor(getColor2(this.currentValue), getColor2(this.nextValue), 1);
+    } else {
+      colors = transitionColor(DEFAULT_COLOR, DEFAULT_COLOR, 1);
+    }
+    const render2 = (up = false) => {
+      let currentValue = ~~this.currentValue;
+      if (currentValue < 0)
+        currentValue = 0;
+      if (currentValue > this.maxValue)
+        currentValue = this.maxValue;
+      const percentBetween = ~~Math.max(0, (currentValue - this.nextValue) * 100 / this.nextValue);
+      const colorIndex = Math.max(Math.floor((100 - percentBetween) / (100 / (colors.length - 1))), 0);
+      let fillColor = colors[colorIndex];
+      this.barFill.clear();
+      const {
+        value: color,
+        alpha
+      } = hexaToNumber(fillColor ?? DEFAULT_COLOR);
+      this.barFill.beginFill(color, alpha);
+      const percent = Math.max(0, currentValue / this.maxValue);
+      const bWidth = borderWidth / 4;
+      const paramsRect = [bWidth, bWidth, percent * this.barWidth - bWidth, this.barHeight - bWidth];
+      if (percent > 0) {
+        if (borderRadius) {
+          this.barFill.drawRoundedRect(...paramsRect, borderRadius);
+        } else {
+          this.barFill.drawRect(...paramsRect);
+        }
+      }
+      this.textContainer.text = this.replaceText({
+        ...object,
+        $current: currentValue,
+        $percent: Math.round(percent * 100),
+        $max: this.maxValue
+      }, this.text);
+      this.barFill.endFill();
+    };
+    if (firstRender) {
+      render2();
+      return;
+    }
+    this.notifier.next();
+    this.game.clientEngine.tick.pipe(takeUntil(this.notifier)).subscribe(() => {
+      const speed = Math.abs(this.currentValue - this.nextValue) / 10;
+      let up = false;
+      if (this.currentValue < this.nextValue) {
+        this.currentValue += speed;
+        up = true;
+      } else if (this.currentValue > this.nextValue) {
+        this.currentValue -= speed;
+        up = false;
+      }
+      render2(up);
+      const currentValue = Math.round(this.currentValue);
+      if (!up && (~~currentValue <= ~~this.nextValue || currentValue <= 0)) {
+        this.notifier.next();
+      } else if (up && (~~currentValue >= ~~this.nextValue || currentValue >= this.maxValue)) {
+        this.notifier.next();
+      }
+    });
+  }
+  onRemove() {
+    this.notifier.next();
+    this.notifier.complete();
+    super.onRemove();
+  }
+}
+BarComponent2.id = "bar";
+class ShapeComponent2 extends AbstractComponent2 {
+  constructor() {
+    super(...arguments);
+    this.type = this.value.type;
+    this.container = new Graphics();
+    this.cacheParams = [];
+  }
+  onInit(cell) {
+    this.cell = cell;
+    this.updateRender(this.component.logic);
+    this.addChild(this.container);
+    super.onInit(cell);
+  }
+  updateRender(object) {
+    var _a, _b;
+    const value2 = this.value;
+    const height = this.getValue(object, value2.height) ?? ((_a = this.cell) == null ? void 0 : _a.height) ?? 0;
+    const width = this.getValue(object, value2.width) ?? ((_b = this.cell) == null ? void 0 : _b.width) ?? 0;
+    this.container.clear();
+    const {
+      value: color,
+      alpha
+    } = hexaToNumber(this.value.fill);
+    this.container.beginFill(color, alpha);
+    if (value2.line) {
+      const {
+        value: color2,
+        alpha: alpha2
+      } = hexaToNumber(value2.line.color ?? this.value.fill);
+      this.container.lineStyle(this.getValue(object, value2.line.width) ?? 1, color2, this.getValue(object, value2.line.alpha) ?? alpha2);
+    }
+    switch (this.type) {
+      case "circle":
+        this.container.drawCircle(0, 0, this.getValue(object, value2.radius));
+        break;
+      case "ellipse":
+        this.container.drawEllipse(0, 0, width, height);
+        break;
+      case "line":
+        if (!value2.line) {
+          this.container.lineStyle(1, color, alpha);
+        }
+        this.container.moveTo(this.getValue(object, value2.x1), this.getValue(object, value2.y1));
+        this.container.lineTo(this.getValue(object, value2.x2), this.getValue(object, value2.y2));
+        break;
+      case "polygon":
+        this.container.drawPolygon(value2.points);
+        break;
+      case "rounded-rect":
+        this.container.drawRoundedRect(0, 0, width, height, value2.radius);
+        break;
+      default:
+        this.container.drawRect(0, 0, width, height);
+        break;
+    }
+    this.container.endFill();
+  }
+}
+ShapeComponent2.id = "shape";
+class DebugComponent2 extends AbstractComponent2 {
+  constructor() {
+    super(...arguments);
+    this.color = "#ff0000";
+    this.cacheParams = ["map", "position.x", "position.y"];
+    this.container = new Graphics();
+  }
+  onInit(cell) {
+    this.addChild(this.container);
+    this.updateRender(this.component.logic);
+    this.eventMode = "static";
+    this.on("pointerdown", () => {
+      console.log(this.component.logic);
+    });
+    super.onInit(cell);
+  }
+  updateRender(object) {
+    const hitbox = object.hitbox;
+    const {
+      pos,
+      w: w2,
+      h: h2
+    } = hitbox;
+    this.container.clear();
+    const {
+      value: color,
+      alpha
+    } = hexaToNumber(this.color);
+    this.container.beginFill(color, alpha);
+    this.container.drawRect(0, 0, w2, h2);
+    this.container.endFill();
+  }
+}
+DebugComponent2.id = "debug";
+class ImageComponent2 extends AbstractComponent2 {
+  constructor() {
+    super(...arguments);
+    this.cacheParams = [];
+    this.source = "";
+  }
+  onInit(cell) {
+    super.onInit(cell);
+    this.setImage();
+  }
+  setImage() {
+    if (typeof this.value == "string") {
+      this.source = this.value;
+    } else {
+      this.source = this.value.source;
+    }
+    this.updateRender({});
+  }
+  updateRender(object) {
+    this.removeChildren();
+    const engine = this.component.getScene().game.clientEngine;
+    this.addChild(Sprite.from(engine.getResourceUrl(this.source)));
+  }
+}
+ImageComponent2.id = "image";
+class TextComponent2 extends AbstractComponent2 {
+  constructor() {
+    super(...arguments);
+    this.cacheParams = [];
+    this.container = new Text$1("");
+    this.originValue = "";
+  }
+  onInit(cell) {
+    if (typeof this.value == "string") {
+      this.container.text = this.value;
+    } else if (this.value.style) {
+      this.container.style = this.value.style;
+      this.container.text = this.value.text;
+    }
+    this.container.style = {
+      ...this.container.style,
+      wordWrapWidth: cell.width
+    };
+    this.parseTextAndCache(this.container.text);
+    this.originValue = this.container.text;
+    this.updateRender(this.component.logic);
+    this.addChild(this.container);
+    super.onInit(cell);
+  }
+  updateRender(object) {
+    this.container.text = this.replaceText(object, this.originValue);
+  }
+}
+TextComponent2.id = "text";
+class TileComponent2 extends AbstractComponent2 {
+  constructor() {
+    super(...arguments);
+    this.cacheParams = [];
+    this.gid = 0;
+  }
+  onInit(cell) {
+    this.cell = cell;
+    if (typeof this.value == "number") {
+      this.gid = this.value;
+    } else {
+      this.gid = this.value.gid;
+    }
+    this.updateRender({});
+    super.onInit(cell);
+  }
+  updateRender(object) {
+    var _a, _b;
+    this.removeChildren();
+    const height = typeof this.value != "number" ? this.getValue(object, this.value.height) : ((_a = this.cell) == null ? void 0 : _a.height) ?? 0;
+    const width = typeof this.value != "number" ? this.getValue(object, this.value.width) : ((_b = this.cell) == null ? void 0 : _b.width) ?? 0;
+    const scene = this.component.getScene();
+    const tilemap = scene.tilemap;
+    const tileset = TileLayer2.findTileSet(this.gid, tilemap.tilesets);
+    if (tileset) {
+      const tile = new Tile3({
+        gid: this.gid
+      }, tileset);
+      tile.width = width ?? 0;
+      tile.height = height ?? 0;
+      this.addChild(tile);
+    }
+  }
+}
+TileComponent2.id = "tile";
+var Scene2;
+(function(Scene3) {
+  Scene3["Map"] = "map";
+})(Scene2 || (Scene2 = {}));
+var TransitionMode;
+(function(TransitionMode2) {
+  TransitionMode2[TransitionMode2["None"] = 0] = "None";
+  TransitionMode2[TransitionMode2["Fading"] = 1] = "Fading";
+})(TransitionMode || (TransitionMode = {}));
+var ContainerName;
+(function(ContainerName2) {
+  ContainerName2["Map"] = "map";
+})(ContainerName || (ContainerName = {}));
+globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+  var c3 = arguments.length, r2 = c3 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    r2 = Reflect.decorate(decorators, target, key, desc);
+  else
+    for (var i2 = decorators.length - 1; i2 >= 0; i2--)
+      if (d2 = decorators[i2])
+        r2 = (c3 < 3 ? d2(r2) : c3 > 3 ? d2(target, key, r2) : d2(target, key)) || r2;
+  return c3 > 3 && r2 && Object.defineProperty(target, key, r2), r2;
+};
+const RpgResource = {
+  spritesheets,
+  sounds
+};
+const sprite = {};
+const chat_vue_vue_type_style_index_0_scoped_624067e8_lang = "";
+const _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+const GUI_CONTROLS = "rpg-controls";
+const _sfc_main$i = {
+  name: "rpg-chat",
+  inject: ["rpgEngine", "rpgGui", "rpgSocket"],
+  data() {
+    return {
+      text: "",
+      messages: []
+    };
+  },
+  mounted() {
+    const socket = this.rpgSocket();
+    socket.on("chat-message", ({ message, type }) => {
+      this.messages.push({
+        message,
+        type
+      });
+      const el = this.$refs["chat-list"];
+      el.scrollTop = el.scrollHeight + 100;
+    });
+  },
+  methods: {
+    stopMove() {
+      if (this.rpgGui.exists(GUI_CONTROLS))
+        this.rpgGui.hide(GUI_CONTROLS);
+      this.rpgEngine.controls.stop = true;
+    },
+    startMove() {
+      if (this.rpgGui.exists(GUI_CONTROLS))
+        this.rpgGui.display(GUI_CONTROLS);
+      this.rpgEngine.controls.stop = false;
+    },
+    send() {
+      if (!this.text)
+        return;
+      const socket = this.rpgSocket();
+      socket.emit("chat-message", this.text);
+      this.text = "";
+    }
+  }
+};
+const _hoisted_1$c = { class: "chat" };
+const _hoisted_2$9 = { ref: "chat-list" };
+function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", _hoisted_1$c, [
+    createBaseVNode("ul", _hoisted_2$9, [
+      (openBlock(true), createElementBlock(Fragment, null, renderList($data.messages, (msg, i2) => {
+        return openBlock(), createElementBlock("li", {
+          key: i2,
+          class: normalizeClass(`type-${msg.type}`)
+        }, toDisplayString(msg.message), 3);
+      }), 128))
+    ], 512),
+    withDirectives(createBaseVNode("input", {
+      type: "text",
+      placeholder: "Write yout message and press Enter",
+      onFocus: _cache[0] || (_cache[0] = (...args) => $options.stopMove && $options.stopMove(...args)),
+      onBlur: _cache[1] || (_cache[1] = (...args) => $options.startMove && $options.startMove(...args)),
+      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.text = $event),
+      onKeypress: _cache[3] || (_cache[3] = withKeys((...args) => $options.send && $options.send(...args), ["enter"]))
+    }, null, 544), [
+      [vModelText, $data.text]
+    ])
+  ]);
+}
+const chatGui = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$i], ["__scopeId", "data-v-624067e8"]]);
+const sceneMap$1 = {
+  onAfterLoading(map2) {
+    RpgGui.display("rpg-chat");
+  }
+};
+var __defProp$5 = Object.defineProperty;
+var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+var __decorateClass$5 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+  for (var i2 = decorators.length - 1, decorator; i2 >= 0; i2--)
+    if (decorator = decorators[i2])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$5(target, key, result);
+  return result;
+};
+let RpgClientEngine$2 = class RpgClientEngine2 {
+};
+RpgClientEngine$2 = __decorateClass$5([
+  RpgModule({
+    sprite,
+    scenes: {
+      map: sceneMap$1
+    },
+    gui: [
+      chatGui
+    ]
+  })
+], RpgClientEngine$2);
+const server = null;
+const mmorpg = {
+  client: RpgClientEngine$2,
+  server
+};
 const distance = (p1, p2) => {
   const dx = p2.x - p1.x;
   const dy = p2.y - p1.y;
@@ -58911,16 +62669,16 @@ const nipplejs = {
   factory
 };
 const DIRECTIONS$1 = {
-  [Direction.Left]: "left",
-  [Direction.Right]: "right",
-  [Direction.Up]: "up",
-  [Direction.Down]: "down"
+  [Direction$2.Left]: "left",
+  [Direction$2.Right]: "right",
+  [Direction$2.Up]: "up",
+  [Direction$2.Down]: "down"
 };
 const DIRECTIONS_INVERSE = {
-  left: Direction.Left,
-  right: Direction.Right,
-  up: Direction.Up,
-  down: Direction.Down
+  left: Direction$2.Left,
+  right: Direction$2.Right,
+  up: Direction$2.Up,
+  down: Direction$2.Down
 };
 const _sfc_main$h = {
   name: "rpg-controls",
@@ -58984,21 +62742,14 @@ const _sfc_main$h = {
   },
   methods: {
     openMenu() {
-      this.rpgEngine.controls.applyControl(Control.Back);
+      this.rpgEngine.controls.applyControl(Control$2.Back);
     },
     action() {
-      this.rpgEngine.controls.applyControl(Control.Action);
+      this.rpgEngine.controls.applyControl(Control$2.Action);
     }
   }
 };
-const main_vue_vue_type_style_index_0_scoped_46297a15_lang = "";
-const _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
-  for (const [key, val] of props) {
-    target[key] = val;
-  }
-  return target;
-};
+const main_vue_vue_type_style_index_0_scoped_b058fc9e_lang = "";
 const _hoisted_1$b = { class: "controls" };
 const _hoisted_2$8 = {
   class: "d-pad",
@@ -59020,10 +62771,10 @@ function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     })
   ]);
 }
-const ControlGui = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$h], ["__scopeId", "data-v-46297a15"]]);
+const ControlGui = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$h], ["__scopeId", "data-v-b058fc9e"]]);
 const sceneMap = {
   onAfterLoading() {
-    RpgGui.display(PrebuiltGui.Controls);
+    RpgGui$1.display(PrebuiltGui.Controls);
   }
 };
 var __defProp$4 = Object.defineProperty;
@@ -59037,7 +62788,7 @@ var __decorateClass$4 = (decorators, target, key, kind) => {
     __defProp$4(target, key, result);
   return result;
 };
-let RpgClientEngine$1 = class RpgClientEngine2 {
+let RpgClientEngine$1 = class RpgClientEngine3 {
 };
 RpgClientEngine$1 = __decorateClass$4([
   RpgModule({
@@ -59183,19 +62934,19 @@ const _sfc_main$e = {
         return;
       const name = control.actionName;
       if (this.column > 1) {
-        if (name == Control.Left) {
+        if (name == Control$2.Left) {
           this.selected = Math.floor(this.selected - this.choices.length / this.column);
           this.moveCursor();
-        } else if (name == Control.Right) {
+        } else if (name == Control$2.Right) {
           this.selected = Math.floor(this.choices.length / this.column + this.selected);
           this.moveCursor();
         }
       }
-      if (name == Control.Down)
+      if (name == Control$2.Down)
         this.moveCursor(1);
-      else if (name == Control.Up)
+      else if (name == Control$2.Up)
         this.moveCursor(-1);
-      else if (name == Control.Action)
+      else if (name == Control$2.Action)
         this.$emit("selected", this.selected);
       return false;
     });
@@ -59307,7 +63058,7 @@ const _sfc_main$d = {
       this.obsKeyPress = this.rpgKeypress.subscribe(({
         control
       }) => {
-        if (control && control.actionName == Control.Action) {
+        if (control && control.actionName == Control$2.Action) {
           this.close();
         }
       });
@@ -59659,7 +63410,7 @@ const _sfc_main$8 = {
     }) => {
       if (!control)
         return;
-      if (control.actionName == Control.Back) {
+      if (control.actionName == Control$2.Back) {
         this.$emit("changeLayout", "MainLayout");
       }
     });
@@ -59796,7 +63547,7 @@ const _sfc_main$5 = {
     }) => {
       if (!control)
         return;
-      if (control.actionName == Control.Back) {
+      if (control.actionName == Control$2.Back) {
         this.back();
       }
     });
@@ -59918,20 +63669,20 @@ const _sfc_main$2 = {
       this.selected(this.indexSelected);
     });
     const interactionBuy = (name) => {
-      if (name == Control.Back) {
+      if (name == Control$2.Back) {
         this.step = 0;
-      } else if (name == Control.Up) {
+      } else if (name == Control$2.Up) {
         const nextPrice = this.currentItem.price * (this.quantity + 1);
         if (nextPrice > this.player.gold) {
           return false;
         }
         this.quantity += 1;
-      } else if (name == Control.Down) {
+      } else if (name == Control$2.Down) {
         if (this.quantity - 1 == 0) {
           return false;
         }
         this.quantity -= 1;
-      } else if (name == Control.Action) {
+      } else if (name == Control$2.Action) {
         this.doAction = true;
         this.rpgSocket().emit("gui.interaction", {
           guiId: "rpg-shop",
@@ -59944,19 +63695,19 @@ const _sfc_main$2 = {
       }
     };
     const interactionSell = (name) => {
-      if (name == Control.Back) {
+      if (name == Control$2.Back) {
         this.step = 0;
-      } else if (name == Control.Up) {
+      } else if (name == Control$2.Up) {
         if (this.quantity + 1 > this.currentItem.nb) {
           return false;
         }
         this.quantity += 1;
-      } else if (name == Control.Down) {
+      } else if (name == Control$2.Down) {
         if (this.quantity - 1 == 0) {
           return false;
         }
         this.quantity -= 1;
-      } else if (name == Control.Action) {
+      } else if (name == Control$2.Action) {
         this.doAction = true;
         this.rpgSocket().emit("gui.interaction", {
           guiId: "rpg-shop",
@@ -59975,7 +63726,7 @@ const _sfc_main$2 = {
         return;
       const name = control.actionName;
       if (!this.mode) {
-        if (name == Control.Back) {
+        if (name == Control$2.Back) {
           this.close();
         }
       } else if (this.mode) {
@@ -59985,7 +63736,7 @@ const _sfc_main$2 = {
           if (this.mode == "sell")
             interactionSell(name);
         } else {
-          if (name == Control.Back) {
+          if (name == Control$2.Back) {
             this.mode = "";
             this.description = "";
             this.menuActive = true;
@@ -60275,8 +64026,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   ], 2);
 }
 const NotificationUi = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
-const vitePluginRequire_1696518047313_59271584 = "/assets/error_002-76810ec3.ogg";
-const vitePluginRequire_1696518047311_64018362 = "/assets/confirmation_002-33b17a9a.ogg";
+const vitePluginRequire_1697057471817_538558 = "/assets/error_002-76810ec3.ogg";
+const vitePluginRequire_1697057471816_90118553 = "/assets/confirmation_002-33b17a9a.ogg";
 var __defProp$3 = Object.defineProperty;
 var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
 var __decorateClass$3 = (decorators, target, key, kind) => {
@@ -60292,8 +64043,8 @@ let GuiSounds = class {
 };
 GuiSounds = __decorateClass$3([Sound$1({
   sounds: {
-    alert: vitePluginRequire_1696518047311_64018362,
-    error: vitePluginRequire_1696518047313_59271584
+    alert: vitePluginRequire_1697057471816_90118553,
+    error: vitePluginRequire_1697057471817_538558
   }
 })], GuiSounds);
 var __defProp$2 = Object.defineProperty;
@@ -60307,9 +64058,9 @@ var __decorateClass$2 = (decorators, target, key, kind) => {
     __defProp$2(target, key, result);
   return result;
 };
-let RpgClientEngine3 = class {
+let RpgClientEngine4 = class {
 };
-RpgClientEngine3 = __decorateClass$2([
+RpgClientEngine4 = __decorateClass$2([
   RpgModule({
     gui: [
       DialogUi,
@@ -60324,9 +64075,9 @@ RpgClientEngine3 = __decorateClass$2([
       GuiSounds
     ]
   })
-], RpgClientEngine3);
+], RpgClientEngine4);
 const _rpgjs_default_gui = {
-  client: RpgClientEngine3
+  client: RpgClientEngine4
 };
 var a = { events: {}, publish: function a2(b3, c3) {
   if (this.events.hasOwnProperty(b3))
@@ -60527,8 +64278,8 @@ else {
   window.joypad = {};
   a22("Your browser does not support the Gamepad API - https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API");
 }
-const vitePluginRequire_1696518047323_66254622 = "/assets/error_002-76810ec3.ogg";
-const vitePluginRequire_1696518047322_4204554 = "/assets/confirmation_002-33b17a9a.ogg";
+const vitePluginRequire_1697057471822_79415871 = "/assets/error_002-76810ec3.ogg";
+const vitePluginRequire_1697057471822_3778985 = "/assets/confirmation_002-33b17a9a.ogg";
 var __defProp$1 = Object.defineProperty;
 var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
 var __decorateClass$1 = (decorators, target, key, kind) => {
@@ -60544,8 +64295,8 @@ let GamePadSounds = class {
 };
 GamePadSounds = __decorateClass$1([Sound$1({
   sounds: {
-    connect: vitePluginRequire_1696518047322_4204554,
-    disconnect: vitePluginRequire_1696518047323_66254622
+    connect: vitePluginRequire_1697057471822_3778985,
+    disconnect: vitePluginRequire_1697057471822_79415871
   }
 })], GamePadSounds);
 const icon = "/assets/gamepad-e5a5597c.svg";
@@ -60564,7 +64315,7 @@ const joypad = window["joypad"];
 let moving = false;
 let directions = {};
 let axisDate = 0;
-const DIRECTIONS = [Direction.Left, Direction.Right, Direction.Up, Direction.Down];
+const DIRECTIONS = [Direction$2.Left, Direction$2.Right, Direction$2.Up, Direction$2.Down];
 let RpgClientModule = class {
 };
 RpgClientModule = __decorateClass([
@@ -60598,21 +64349,21 @@ RpgClientModule = __decorateClass([
           }
         };
         joypad.on("connect", (e3) => {
-          RpgGui.display("rpg-notification", optionsConnect);
+          RpgGui$1.display("rpg-notification", optionsConnect);
           setInterval(move, 400);
         });
         joypad.on("disconnect", (e3) => {
-          RpgGui.display("rpg-notification", optionsDisconnect);
+          RpgGui$1.display("rpg-notification", optionsDisconnect);
         });
         joypad.on("button_press", (e3) => {
           const { buttonName } = e3.detail;
           switch (buttonName) {
             case "button_0":
-              engine.controls.applyControl(Control.Action);
+              engine.controls.applyControl(Control$2.Action);
               break;
             case "button_1":
             case "button_9":
-              engine.controls.applyControl(Control.Back);
+              engine.controls.applyControl(Control$2.Back);
               break;
           }
         });
@@ -60621,13 +64372,13 @@ RpgClientModule = __decorateClass([
           axisDate = Date.now();
           let direction = e3.detail.directionOfMovement;
           if (direction == "bottom")
-            direction = Direction.Down;
+            direction = Direction$2.Down;
           else if (direction == "top")
-            direction = Direction.Up;
+            direction = Direction$2.Up;
           else if (direction == "left")
-            direction = Direction.Left;
+            direction = Direction$2.Left;
           else if (direction == "right")
-            direction = Direction.Right;
+            direction = Direction$2.Right;
           directions = {
             [direction]: true
           };
@@ -60659,12 +64410,16 @@ const _rpgjs_gamepad = {
   client: RpgClientModule
 };
 export {
+  BehaviorSubject as B,
   Presets as P,
   RpgModule as R,
   Spritesheet as S,
   _rpgjs_mobile_gui as _,
   _rpgjs_default_gui as a,
   _rpgjs_gamepad as b,
+  map$7 as c,
   entryPoint as e,
-  lookup as l
+  lookup as l,
+  mmorpg as m,
+  tap as t
 };

@@ -1,6 +1,7 @@
 name = 'My Game'
 
 modules = [
+   '@rpgjs/chat',
     './main',
     '@rpgjs/mobile-gui',
     '@rpgjs/default-gui',

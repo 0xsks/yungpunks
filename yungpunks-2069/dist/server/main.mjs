@@ -1,6 +1,74 @@
 import { expressServer } from "@rpgjs/server/express";
 import * as url from "url";
-import { Components, Control, EventData, RpgEvent, RpgModule } from "@rpgjs/server";
+import { RpgWorld, RpgModule, Components, Control, EventData, RpgEvent } from "@rpgjs/server";
+const client$4 = null;
+function sendMessage(obj) {
+  const {
+    message,
+    map,
+    player: player2,
+    type
+  } = obj;
+  const data = {
+    message,
+    date: Date.now(),
+    type: type || "player"
+  };
+  if (player2) {
+    data.sender = player2.id;
+  }
+  RpgWorld.getPlayersOfMap(map.id).forEach((p) => {
+    p.emit("chat-message", data);
+  });
+}
+const player$1 = {
+  onJoinMap(player2, map) {
+    sendMessage({
+      message: `${player2.name} join this map`,
+      map,
+      player: player2,
+      type: "info"
+    });
+    player2.off("chat-message");
+    player2.on("chat-message", (message) => {
+      sendMessage({
+        message: `${player2.name}: ${message}`,
+        map,
+        player: player2
+      });
+    });
+  },
+  onLeaveMap(player2, map) {
+    sendMessage({
+      message: `${player2.name} left this map`,
+      map,
+      player: player2,
+      type: "info"
+    });
+  }
+};
+var __defProp$2 = Object.defineProperty;
+var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
+var __decorateClass$2 = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result)
+    __defProp$2(target, key, result);
+  return result;
+};
+let RpgServerEngine = class {
+};
+RpgServerEngine = __decorateClass$2([
+  RpgModule({
+    player: player$1
+  })
+], RpgServerEngine);
+const mmorpg = {
+  client: client$4,
+  server: RpgServerEngine
+};
 const client$3 = null;
 const _main_worlds_myworldworld = { "maps": [{ "fileName": "maps/simplemap.tmx", "height": 640, "width": 800, "x": 64, "y": -160 }, { "fileName": "maps/simplemap2.tmx", "height": 640, "width": 640, "x": -160, "y": 480 }], "onlyShowAdjacentMaps": false, "type": "world", "basePath": "./main/worlds", "id": "./main/worlds/myworld.world" };
 const player = {
@@ -104,6 +172,7 @@ const _rpgjs_gamepad = {
   client
 };
 const modules = [
+  mmorpg,
   _main,
   _rpgjs_mobile_gui,
   _rpgjs_default_gui,
